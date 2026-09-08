@@ -9,7 +9,7 @@ and optional background music.
 Runtime deps: moviepy, pillow<10, numpy, imageio-ffmpeg (Python) + the Rhubarb
 CLI + ffmpeg. Point SEABINI_RHUBARB at rhubarb.exe (or set it below).
 """
-import os, json, math, wave, random, subprocess, pathlib, urllib.request, tempfile
+import os, json, math, wave, random, subprocess, pathlib, urllib.request, tempfile, base64, time
 import numpy as np
 import imageio_ffmpeg
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
@@ -94,6 +94,51 @@ def _get_voiceover_kokoro(text, tag, voice, speed):
         wf.writeframes(pcm.tobytes())
     mp3 = str(WORK / f"{tag}.mp3")
     subprocess.run([FF, "-y", "-i", wav_path, mp3], check=True, capture_output=True)
+    return mp3
+
+def _replicate_key():
+    k = os.environ.get("REPLICATE_API_TOKEN")
+    if k: return k
+    for line in (HERE / ".APIs.txt").read_text().splitlines():
+        if line.lower().startswith("replicate"): return line.split("=", 1)[1].strip()
+    raise SystemExit("No REPLICATE_API_TOKEN")
+
+def _fit_lyrics(lyrics, limit=390):
+    """minimax/music-01 hard-caps lyrics at 350-400 chars and errors past that;
+    the writer LLM isn't reliable at precise character counting, so truncate at
+    a line boundary as a safety net rather than trust the prompt alone."""
+    if len(lyrics) <= limit:
+        return lyrics
+    lines, out, total = lyrics.split("\n"), [], 0
+    for line in lines:
+        if total + len(line) + 1 > limit:
+            break
+        out.append(line); total += len(line) + 1
+    return "\n".join(out).strip()
+
+def get_song(lyrics, tag):
+    """Sung closing number via Replicate's minimax/music-01, voice-anchored to
+    Bini's own Kokoro voice (seabini_assets/voice/bini_song_ref.mp3) so the
+    singing voice matches her speaking voice. ~$0.04/song."""
+    lyrics = _fit_lyrics(lyrics)
+    voice_ref = ASSET / "voice" / "bini_song_ref.mp3"
+    voice_b64 = base64.b64encode(voice_ref.read_bytes()).decode()
+    body = {"input": {"lyrics": f"##\n{lyrics}\n##", "voice_file": f"data:audio/mpeg;base64,{voice_b64}"}}
+    headers = {"Authorization": f"Bearer {_replicate_key()}", "Content-Type": "application/json", "Prefer": "wait"}
+    req = urllib.request.Request("https://api.replicate.com/v1/models/minimax/music-01/predictions",
+                                  data=json.dumps(body).encode(), headers=headers)
+    resp = json.loads(urllib.request.urlopen(req, timeout=180).read())
+    poll_url = f"https://api.replicate.com/v1/predictions/{resp['id']}"
+    while resp["status"] not in ("succeeded", "failed", "canceled"):
+        time.sleep(3)
+        r = urllib.request.Request(poll_url, headers={"Authorization": f"Bearer {_replicate_key()}"})
+        resp = json.loads(urllib.request.urlopen(r).read())
+    if resp["status"] != "succeeded":
+        raise SystemExit(f"Song generation failed: {resp.get('error')}")
+    out_url = resp["output"]
+    if isinstance(out_url, list): out_url = out_url[0]
+    mp3 = str(WORK / f"{tag}.mp3")
+    urllib.request.urlretrieve(out_url, mp3)
     return mp3
 
 def get_voiceover(text, tag, ch):
@@ -216,6 +261,44 @@ def render_scene(speaker, location, line, tag):
         frames.append(np.array(win.convert("RGB")))
     return frames, baby
 
+def _song_to_wav(mp3, tag):
+    wav = str(WORK / f"{tag}_song.wav")
+    subprocess.run([FF, "-y", "-i", mp3, "-ac", "2", "-ar", str(SR), wav], check=True, capture_output=True)
+    return wav
+
+def _dance_scene(song_wav, tag):
+    """Bini's closing sing-and-dance number. The song audio is a mixed vocal+
+    instrumental track (not a clean vocal stem), so there's no reliable way to
+    phoneme-align it with Rhubarb; instead the mouth cycles on a steady beat
+    and the whole rig bounces/sways well beyond the talking-scene motion."""
+    ch = CHARACTERS["bini"]
+    base = Image.open(str(ASSET / "characters" / ch["base"])).convert("RGBA")
+    s = TH/base.height; base = base.resize((int(base.width*s), TH)); BW, BH = base.size
+    heads = _build_heads(base, ch)
+    wf = wave.open(song_wav, "rb"); dur = wf.getnframes()/wf.getframerate(); wf.close()
+    bg, bgx, bgy = _prep_bg(bg_for("Rainbow Reef"))
+    seed = sum(ord(c) for c in tag); rays = _light_rays(seed)
+    bub = Image.new("RGBA", (30, 30), (0, 0, 0, 0)); ImageDraw.Draw(bub).ellipse((2, 2, 28, 28), outline=(255, 255, 255, 200), width=2, fill=(255, 255, 255, 45))
+    random.seed(11); bubbles = [(random.randint(30, W-30), random.uniform(70, 130), random.uniform(0, dur), random.uniform(0.4, 1.1)) for _ in range(14)]
+    mouth_cycle = ["closed", "wide", "round", "mid"]
+    frames = []
+    for i in range(int(dur*FPS)):
+        t = i/FPS
+        panx, pany = int(18*math.sin(t*0.3)), int(6*math.sin(t*0.22+1))
+        x0 = max(0, min(bg.width-W, bgx+panx)); y0 = max(0, min(bg.height-H, bgy+pany))
+        win = bg.crop((x0, y0, x0+W, y0+H)).convert("RGBA")
+        _draw_rays(win, rays, t)
+        for bx, sp, ph, sz in bubbles: win.alpha_composite(bub.resize((int(30*sz), int(30*sz))), (bx, int(H-(sp*(t+ph)) % (H+40))))
+        beat = t*1.5  # gentle, unhurried sway — matches the slow lullaby-adjacent song tempo
+        bounce = 30*abs(math.sin(beat)); sway = 26*math.sin(beat*0.6); sc = 1+0.06*abs(math.sin(beat))
+        rot = 8*math.sin(beat*0.6)
+        head = heads[mouth_cycle[int(t*2.2) % 4]]
+        im2 = head.resize((int(BW*sc), int(BH*sc))).rotate(rot, expand=True, resample=Image.BICUBIC, fillcolor=(0, 0, 0, 0))
+        px, py = W/2+sway, H*0.46-bounce
+        win.alpha_composite(im2, (int(px-im2.width/2), int(py-im2.height/2)))
+        frames.append(np.array(win.convert("RGB")))
+    return frames, song_wav
+
 def _card(title, sub, dur=1.8):
     bg, bgx, bgy = _prep_bg(bg_for("Rainbow Reef")); frame0 = bg.crop((bgx, bgy, bgx+W, bgy+H)).convert("RGBA")
     head = Image.open(str(ASSET / "characters" / "bini_base.png")).convert("RGBA")
@@ -257,6 +340,19 @@ def build_episode(episode, out_path, music=None):
         else:  # loop music to cover the whole episode
             reps = int(np.ceil(len(narration) / len(a))); m = np.tile(a, (reps, 1))[:len(narration)]
         narration = np.clip(narration + m.astype(np.float32) * 0.20, -32768, 32767)
+
+    song = episode.get("song")
+    if song and song.get("lyrics"):
+        print("generating song...")
+        song_mp3 = get_song(song["lyrics"], "song0")
+        song_wav = _song_to_wav(song_mp3, "song0")
+        song_frames, _ = _dance_scene(song_wav, "song0")
+        n = int(round(len(song_frames)/FPS*SR))
+        song_audio = _wav_samples(song_wav, n).astype(np.float32)
+        all_frames = all_frames + song_frames
+        narration = np.vstack([narration, song_audio])
+        print("added song:", song.get("title"), round(len(song_frames)/FPS, 1), "s")
+
     final = narration.astype(np.int16)
     wav_path = str(WORK / "episode_audio.wav")
     ww = wave.open(wav_path, "wb"); ww.setnchannels(2); ww.setsampwidth(2); ww.setframerate(SR); ww.writeframes(final.tobytes()); ww.close()

@@ -64,6 +64,7 @@ jobs:
       - name: Render episode
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
           SEABINI_RHUBARB: ${{ github.workspace }}/rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb
           SEABINI_VOICE_ENGINE: kokoro
           SEABINI_KOKORO_MODEL: ${{ github.workspace }}/kokoro_model/kokoro-v1.0.int8.onnx
