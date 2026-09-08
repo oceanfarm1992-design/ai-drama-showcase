@@ -161,8 +161,14 @@ def render_scene(speaker, location, line, tag):
     s = TH/base.height; base = base.resize((int(base.width*s), TH)); BW, BH = base.size
     heads = _build_heads(base, ch)
     mp3 = get_voiceover(line, tag)
+    mp3_probe = subprocess.run([FF, "-i", mp3], capture_output=True, text=True).stderr
     clean, baby = _prep_audio(mp3, tag, ch["pitch"], ch["speed"])
     wf = wave.open(baby, "rb"); dur = wf.getnframes()/wf.getframerate(); wf.close()
+    wfc = wave.open(clean, "rb"); clean_dur = wfc.getnframes()/wfc.getframerate(); wfc.close()
+    import re as _re
+    m = _re.search(r"Duration: (\d+):(\d+):([\d.]+)", mp3_probe)
+    mp3_dur = (int(m.group(1))*3600+int(m.group(2))*60+float(m.group(3))) if m else -1
+    print(f"DEBUG durs[{tag}]: mp3_dur={mp3_dur:.2f}s clean_dur={clean_dur:.2f}s baby_dur={dur:.2f}s pitch={ch['pitch']} speed={ch['speed']}")
     cues = _cues(clean, dur); starts = np.array([c["start"] for c in cues])
     shape_at = lambda t: VMAP.get(cues[max(0, min(np.searchsorted(starts, t+0.05, side="right")-1, len(cues)-1))]["value"], "closed")
     bg, bgx, bgy = _prep_bg(bg_for(location))
