@@ -3,6 +3,15 @@
     {
       "series_title": "SEABINI",
       "title": "The Curious Crab",
+      "episode_number": 3,
+      "series_length": 3,
+      "language": "en",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-163900/episode.mp4",
+      "published_at": "2026-09-08T16:39:02.618774Z"
+    },
+    {
+      "series_title": "SEABINI",
+      "title": "The Curious Crab",
       "episode_number": 2,
       "series_length": 2,
       "language": "en",
