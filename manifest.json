@@ -2,6 +2,15 @@
   "episodes": [
     {
       "series_title": "SEABINI",
+      "title": "The Clever Octopus",
+      "episode_number": 5,
+      "series_length": 5,
+      "language": "en",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-172957/episode.mp4",
+      "published_at": "2026-09-08T17:29:59.631941Z"
+    },
+    {
+      "series_title": "SEABINI",
       "title": "Bubbles and Discoveries",
       "episode_number": 4,
       "series_length": 4,
