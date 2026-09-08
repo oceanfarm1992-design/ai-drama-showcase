@@ -70,6 +70,9 @@ def _get_voiceover_piper(text, tag):
     text = text.replace("\u2019", "'").replace("\u2018", "'")
     with wave.open(wav_path, "wb") as wf:
         _PIPER_VOICE.synthesize_wav(text, wf)
+    with wave.open(wav_path, "rb") as wf:
+        raw_dur = wf.getnframes() / wf.getframerate()
+    print(f"DEBUG piper[{tag}]: chars={len(text)} raw_wav_dur={raw_dur:.2f}s text={text!r}")
     mp3 = str(WORK / f"{tag}.mp3")
     subprocess.run([FF, "-y", "-i", wav_path, mp3], check=True, capture_output=True)
     return mp3
