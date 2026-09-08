@@ -70,9 +70,6 @@ def _get_voiceover_piper(text, tag):
     text = text.replace("\u2019", "'").replace("\u2018", "'")
     with wave.open(wav_path, "wb") as wf:
         _PIPER_VOICE.synthesize_wav(text, wf)
-    with wave.open(wav_path, "rb") as wf:
-        raw_dur = wf.getnframes() / wf.getframerate()
-    print(f"DEBUG piper[{tag}]: chars={len(text)} raw_wav_dur={raw_dur:.2f}s text={text!r}")
     mp3 = str(WORK / f"{tag}.mp3")
     subprocess.run([FF, "-y", "-i", wav_path, mp3], check=True, capture_output=True)
     return mp3
@@ -86,8 +83,12 @@ def get_voiceover(text, tag):
 def _prep_audio(mp3, tag, pitch, speed):
     clean, baby = str(WORK / f"{tag}_clean.wav"), str(WORK / f"{tag}_baby.wav")
     subprocess.run([FF, "-y", "-i", mp3, "-ac", "1", "-ar", "44100", clean], check=True, capture_output=True)
+    # asetrate relabels the sample rate to fake a pitch shift, so the audio must
+    # already be true 44100Hz going in (an explicit aresample first) — Piper's
+    # amy-medium voice synthesizes at 22050Hz, and skipping this made asetrate's
+    # "44100*pitch" label roughly double the real shift, halving duration.
     subprocess.run([FF, "-y", "-i", mp3, "-ac", "2", "-ar", "44100", "-af",
-                    f"asetrate=44100*{pitch},aresample=44100,atempo={(1/pitch)*speed:.4f}", baby], check=True, capture_output=True)
+                    f"aresample=44100,asetrate=44100*{pitch},aresample=44100,atempo={(1/pitch)*speed:.4f}", baby], check=True, capture_output=True)
     return clean, baby
 
 def _cues(clean_wav, dur):
@@ -161,14 +162,8 @@ def render_scene(speaker, location, line, tag):
     s = TH/base.height; base = base.resize((int(base.width*s), TH)); BW, BH = base.size
     heads = _build_heads(base, ch)
     mp3 = get_voiceover(line, tag)
-    mp3_probe = subprocess.run([FF, "-i", mp3], capture_output=True, text=True).stderr
     clean, baby = _prep_audio(mp3, tag, ch["pitch"], ch["speed"])
     wf = wave.open(baby, "rb"); dur = wf.getnframes()/wf.getframerate(); wf.close()
-    wfc = wave.open(clean, "rb"); clean_dur = wfc.getnframes()/wfc.getframerate(); wfc.close()
-    import re as _re
-    m = _re.search(r"Duration: (\d+):(\d+):([\d.]+)", mp3_probe)
-    mp3_dur = (int(m.group(1))*3600+int(m.group(2))*60+float(m.group(3))) if m else -1
-    print(f"DEBUG durs[{tag}]: mp3_dur={mp3_dur:.2f}s clean_dur={clean_dur:.2f}s baby_dur={dur:.2f}s pitch={ch['pitch']} speed={ch['speed']}")
     cues = _cues(clean, dur); starts = np.array([c["start"] for c in cues])
     shape_at = lambda t: VMAP.get(cues[max(0, min(np.searchsorted(starts, t+0.05, side="right")-1, len(cues)-1))]["value"], "closed")
     bg, bgx, bgy = _prep_bg(bg_for(location))
