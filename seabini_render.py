@@ -24,14 +24,17 @@ FF = imageio_ffmpeg.get_ffmpeg_exe()
 W, H, FPS, SR, TH = 720, 1280, 24, 44100, int(1280 * 0.42)
 VMAP = {"A": "closed", "X": "closed", "B": "mid", "G": "mid", "H": "mid", "C": "wide", "D": "wide", "E": "round", "F": "round"}
 
-# Finalized per-character rig params + a distinct voice (pitch/speed vary the
-# shared ElevenLabs voice so each personality sounds different but reliable).
+# Finalized per-character rig params. pitch/speed drive the Piper/ElevenLabs
+# pitch-shift hack (one shared voice, reshaped per character); kokoro_voice
+# picks a genuinely distinct natural voice, then kokoro_pitch/kokoro_post_speed
+# push it toward a baby/funny character read (user-approved anchor: bini at
+# pitch=1.35, post_speed=0.85 — others scaled proportionally from the old table).
 CHARACTERS = {
-    "bini": dict(base="bini_base.png", cx=180, cy=284, lip=(222, 106, 114), dark=(58, 16, 24), tongue=(239, 130, 140), ms=1.0, erase_mult=1.0, face_pt=(180, 262), pitch=1.28, speed=0.86),
-    "tula": dict(base="tula_base.png", cx=216, cy=303, lip=(120, 140, 70), dark=(58, 18, 20), tongue=(185, 70, 68), ms=1.2, erase_mult=1.15, face_pt=(216, 282), pitch=1.05, speed=0.82),
-    "ollo": dict(base="ollo_base.png", cx=275, cy=262, lip=(133, 81, 189), dark=(50, 12, 22), tongue=(150, 55, 60), ms=1.15, erase_mult=1.15, face_pt=(275, 240), pitch=1.15, speed=0.95),
-    "dodo": dict(base="dodo_base.png", cx=188, cy=235, lip=(110, 170, 200), dark=(55, 24, 28), tongue=(160, 65, 68), ms=1.4, erase_mult=1.7, face_pt=(188, 180), pitch=1.20, speed=1.04),
-    "pipi": dict(base="pipi_base.png", cx=165, cy=266, lip=(234, 159, 66), dark=(60, 26, 32), tongue=(170, 68, 72), ms=0.9, erase_mult=1.15, face_pt=(165, 240), pitch=1.35, speed=0.92),
+    "bini": dict(base="bini_base.png", cx=180, cy=284, lip=(222, 106, 114), dark=(58, 16, 24), tongue=(239, 130, 140), ms=1.0, erase_mult=1.0, face_pt=(180, 262), pitch=1.28, speed=0.86, kokoro_voice="af_heart", kokoro_speed=1.0, kokoro_pitch=1.35, kokoro_post_speed=0.85),
+    "tula": dict(base="tula_base.png", cx=216, cy=303, lip=(120, 140, 70), dark=(58, 18, 20), tongue=(185, 70, 68), ms=1.2, erase_mult=1.15, face_pt=(216, 282), pitch=1.05, speed=0.82, kokoro_voice="af_bella", kokoro_speed=1.0, kokoro_pitch=1.11, kokoro_post_speed=0.81),
+    "ollo": dict(base="ollo_base.png", cx=275, cy=262, lip=(133, 81, 189), dark=(50, 12, 22), tongue=(150, 55, 60), ms=1.15, erase_mult=1.15, face_pt=(275, 240), pitch=1.15, speed=0.95, kokoro_voice="bf_emma", kokoro_speed=1.0, kokoro_pitch=1.21, kokoro_post_speed=0.94),
+    "dodo": dict(base="dodo_base.png", cx=188, cy=235, lip=(110, 170, 200), dark=(55, 24, 28), tongue=(160, 65, 68), ms=1.4, erase_mult=1.7, face_pt=(188, 180), pitch=1.20, speed=1.04, kokoro_voice="am_fenrir", kokoro_speed=1.0, kokoro_pitch=1.27, kokoro_post_speed=1.03),
+    "pipi": dict(base="pipi_base.png", cx=165, cy=266, lip=(234, 159, 66), dark=(60, 26, 32), tongue=(170, 68, 72), ms=0.9, erase_mult=1.15, face_pt=(165, 240), pitch=1.35, speed=0.92, kokoro_voice="af_nicole", kokoro_speed=1.0, kokoro_pitch=1.42, kokoro_post_speed=0.91),
 }
 VOICE_ID = "MF3mGyEYCl7XYWbV9V6O"  # ElevenLabs "Elli"; pitch/speed per character above
 LOC_BG = {"rainbow reef": "reef.png", "seagrass garden": "seagrass.png", "shell beach": "starfish.png",
@@ -40,8 +43,9 @@ LOC_BG = {"rainbow reef": "reef.png", "seagrass garden": "seagrass.png", "shell 
 def bg_for(loc):
     return str(ASSET / "backgrounds" / LOC_BG.get((loc or "").strip().lower(), "reef.png"))
 
-VOICE_ENGINE = os.environ.get("SEABINI_VOICE_ENGINE", "piper")  # "piper" (free, local) or "elevenlabs" (paid, cloud)
+VOICE_ENGINE = os.environ.get("SEABINI_VOICE_ENGINE", "kokoro")  # "kokoro" (free, local, natural) / "piper" (free, local, robotic) / "elevenlabs" (paid, cloud)
 _PIPER_VOICE = None  # lazy-loaded singleton; loading the model is the slow part
+_KOKORO = None
 
 def _eleven_key():
     k = os.environ.get("ELEVENLABS_API_KEY")
@@ -74,10 +78,31 @@ def _get_voiceover_piper(text, tag):
     subprocess.run([FF, "-y", "-i", wav_path, mp3], check=True, capture_output=True)
     return mp3
 
-def get_voiceover(text, tag):
-    """Free local Piper by default; set SEABINI_VOICE_ENGINE=elevenlabs for the paid cloud voice."""
+def _get_voiceover_kokoro(text, tag, voice, speed):
+    global _KOKORO
+    if _KOKORO is None:
+        from kokoro_onnx import Kokoro  # optional dep; only needed for this engine
+        model = os.environ.get("SEABINI_KOKORO_MODEL", str(ASSET / "voice" / "kokoro-v1.0.int8.onnx"))
+        voices = os.environ.get("SEABINI_KOKORO_VOICES", str(ASSET / "voice" / "voices-v1.0.bin"))
+        _KOKORO = Kokoro(model, voices)
+    text = text.replace("’", "'").replace("‘", "'")
+    samples, sr = _KOKORO.create(text, voice=voice, speed=speed, lang="en-us")
+    wav_path = str(WORK / f"{tag}_kokoro.wav")
+    pcm = np.clip(samples * 32767, -32768, 32767).astype(np.int16)
+    with wave.open(wav_path, "wb") as wf:
+        wf.setnchannels(1); wf.setsampwidth(2); wf.setframerate(sr)
+        wf.writeframes(pcm.tobytes())
+    mp3 = str(WORK / f"{tag}.mp3")
+    subprocess.run([FF, "-y", "-i", wav_path, mp3], check=True, capture_output=True)
+    return mp3
+
+def get_voiceover(text, tag, ch):
+    """Free local Kokoro (natural) by default; SEABINI_VOICE_ENGINE=piper for the
+    faster-but-robotic local engine, or =elevenlabs for the paid cloud voice."""
     if VOICE_ENGINE == "elevenlabs":
         return _get_voiceover_elevenlabs(text, tag)
+    if VOICE_ENGINE == "kokoro":
+        return _get_voiceover_kokoro(text, tag, ch["kokoro_voice"], ch["kokoro_speed"])
     return _get_voiceover_piper(text, tag)
 
 def _prep_audio(mp3, tag, pitch, speed):
@@ -161,8 +186,14 @@ def render_scene(speaker, location, line, tag):
     base = Image.open(str(ASSET / "characters" / ch["base"])).convert("RGBA")
     s = TH/base.height; base = base.resize((int(base.width*s), TH)); BW, BH = base.size
     heads = _build_heads(base, ch)
-    mp3 = get_voiceover(line, tag)
-    clean, baby = _prep_audio(mp3, tag, ch["pitch"], ch["speed"])
+    mp3 = get_voiceover(line, tag, ch)
+    # Kokoro already applies its own per-character voice + speed at synthesis
+    # time (its voice bank is all adult narrators, so a modest pitch-only lift
+    # still helps it read as younger); speed=1.0 keeps duration unchanged.
+    if VOICE_ENGINE == "kokoro":
+        clean, baby = _prep_audio(mp3, tag, ch["kokoro_pitch"], ch["kokoro_post_speed"])
+    else:
+        clean, baby = _prep_audio(mp3, tag, ch["pitch"], ch["speed"])
     wf = wave.open(baby, "rb"); dur = wf.getnframes()/wf.getframerate(); wf.close()
     cues = _cues(clean, dur); starts = np.array([c["start"] for c in cues])
     shape_at = lambda t: VMAP.get(cues[max(0, min(np.searchsorted(starts, t+0.05, side="right")-1, len(cues)-1))]["value"], "closed")

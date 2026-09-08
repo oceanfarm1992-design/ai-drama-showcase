@@ -43,15 +43,31 @@ jobs:
           unzip -q rhubarb.zip -d rhubarb
           chmod +x rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb
 
+      - name: Cache Kokoro TTS model
+        id: kokoro-cache
+        uses: actions/cache@v4
+        with:
+          path: kokoro_model
+          key: kokoro-v1.0-int8
+
+      - name: Download Kokoro TTS model
+        if: steps.kokoro-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p kokoro_model
+          curl -sL -o kokoro_model/kokoro-v1.0.int8.onnx "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.int8.onnx"
+          curl -sL -o kokoro_model/voices-v1.0.bin "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/voices-v1.0.bin"
+
       - name: Install Python deps
         run: |
-          pip install --quiet moviepy==1.0.3 "pillow<10" "numpy<2" imageio-ffmpeg piper-tts
+          pip install --quiet moviepy==1.0.3 "pillow<10" "numpy<2" imageio-ffmpeg kokoro-onnx
 
       - name: Render episode
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           SEABINI_RHUBARB: ${{ github.workspace }}/rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb
-          SEABINI_VOICE_ENGINE: piper
+          SEABINI_VOICE_ENGINE: kokoro
+          SEABINI_KOKORO_MODEL: ${{ github.workspace }}/kokoro_model/kokoro-v1.0.int8.onnx
+          SEABINI_KOKORO_VOICES: ${{ github.workspace }}/kokoro_model/voices-v1.0.bin
         run: |
           python seabini_episode.py "${{ github.event.inputs.theme }}" episode.mp4
 
