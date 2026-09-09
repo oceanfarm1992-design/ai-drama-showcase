@@ -3,26 +3,17 @@
     {
       "series_title": "SEABINI",
       "title": "The Clever Octopus",
-      "episode_number": 6,
-      "series_length": 6,
+      "episode_number": 3,
+      "series_length": 3,
       "language": "en",
       "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-182433/episode.mp4",
       "published_at": "2026-09-08T18:24:40.048376Z"
     },
     {
       "series_title": "SEABINI",
-      "title": "The Clever Octopus",
-      "episode_number": 5,
-      "series_length": 5,
-      "language": "en",
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-172957/episode.mp4",
-      "published_at": "2026-09-08T17:29:59.631941Z"
-    },
-    {
-      "series_title": "SEABINI",
       "title": "Bubbles and Discoveries",
-      "episode_number": 4,
-      "series_length": 4,
+      "episode_number": 2,
+      "series_length": 3,
       "language": "en",
       "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-164552/episode.mp4",
       "published_at": "2026-09-08T16:45:56.181448Z"
@@ -30,29 +21,11 @@
     {
       "series_title": "SEABINI",
       "title": "The Curious Crab",
-      "episode_number": 3,
+      "episode_number": 1,
       "series_length": 3,
       "language": "en",
       "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-163900/episode.mp4",
       "published_at": "2026-09-08T16:39:02.618774Z"
-    },
-    {
-      "series_title": "SEABINI",
-      "title": "The Curious Crab",
-      "episode_number": 2,
-      "series_length": 2,
-      "language": "en",
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-163508/episode.mp4",
-      "published_at": "2026-09-08T16:35:10.688632Z"
-    },
-    {
-      "series_title": "SEABINI",
-      "title": "The Curious Crab",
-      "episode_number": 1,
-      "series_length": 1,
-      "language": "en",
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260908-163026/episode.mp4",
-      "published_at": "2026-09-08T16:30:28.806210Z"
     }
   ]
 }
