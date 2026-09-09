@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "SEABINI",
+      "title": "The Starfish's Secret",
+      "episode_number": 6,
+      "series_length": 6,
+      "language": "en",
+      "learning_objective": "A sea star usually has five arms.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260909-090525/episode.mp4",
+      "published_at": "2026-09-09T09:05:27.478345Z"
+    },
+    {
+      "series_title": "SEABINI",
       "title": "Dodo's Dolphin Discovery",
       "episode_number": 5,
       "series_length": 5,
