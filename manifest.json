@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "SEABINI",
+      "title": "Dodo's Dolphin Discovery",
+      "episode_number": 5,
+      "series_length": 5,
+      "language": "en",
+      "learning_objective": "A dolphin is a mammal that breathes air.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260909-085853/episode.mp4",
+      "published_at": "2026-09-09T08:58:55.498441Z"
+    },
+    {
+      "series_title": "SEABINI",
       "title": "Growing Arms with Starfish",
       "episode_number": 4,
       "series_length": 4,
