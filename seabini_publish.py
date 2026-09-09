@@ -128,7 +128,7 @@ def _captions(title: str, objective: str) -> dict:
 def _buffer_post(channel_id: str, service: str, video_url: str,
                  captions: dict, title: str):
     text = captions.get(service, captions["youtube"])
-    assets = [{"url": video_url, "metadata": {"title": title}}]
+    assets = [{"video": {"url": video_url, "metadata": {"title": title}}}]
     metadata = {}
     if service == "youtube":
         metadata["youtube"] = {
@@ -145,7 +145,14 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
             "title": f"SEABINI | {title} 🌊",
             "isAiGenerated": True,
         }
-    post_input = {"channelId": channel_id, "text": text, "assets": assets}
+    post_input = {
+        "channelId": channel_id,
+        "text": text,
+        "assets": assets,
+        "mode": "shareNow",
+        "schedulingType": "automatic",
+        "needsApproval": False,
+    }
     if metadata:
         post_input["metadata"] = metadata
 
