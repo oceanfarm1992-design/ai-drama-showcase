@@ -1,13 +1,17 @@
-# Build output (the video is published as a Release asset, never committed)
-episode.mp4
-*_meta.json
-seabini_build/
-rhubarb/
-
-# Never commit local secrets
-.APIs.txt
-*.APIs.txt
-
-# Python noise
 __pycache__/
 *.pyc
+.env
+.venv/
+venv/
+*.egg-info/
+.DS_Store
+.Sectret/
+.claude/
+.APIs.txt
+*.APIs.txt
+Private Branding/
+re.zip
+*.mp4
+seabini_build/
+seabini_assets/music/*.wav
+manifest.json
