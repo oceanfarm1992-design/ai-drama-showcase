@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "SEABINI",
+      "title": "The Amazing Starfish Arms",
+      "episode_number": 10,
+      "series_length": 10,
+      "language": "en",
+      "learning_objective": "A sea star can grow a new arm if it loses one.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260912-121440/episode.mp4",
+      "published_at": "2026-09-12T12:14:42.107395Z"
+    },
+    {
+      "series_title": "SEABINI",
       "title": "The Clever Octopus",
       "episode_number": 9,
       "series_length": 9,
