@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "SEABINI",
+      "title": "Bubbles on the Move",
+      "episode_number": 13,
+      "series_length": 13,
+      "language": "en",
+      "learning_objective": "Bubbles float up to the top because air is lighter than water.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260915-133705/episode.mp4",
+      "published_at": "2026-09-15T13:37:08.125396Z"
+    },
+    {
+      "series_title": "SEABINI",
       "title": "The Little Starfish",
       "episode_number": 12,
       "series_length": 12,
