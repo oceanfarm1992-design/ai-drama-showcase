@@ -1,6 +1,16 @@
 {
   "episodes": [
     {
+      "series_title": "SEABINI",
+      "title": "The Clever Octopus",
+      "episode_number": 14,
+      "series_length": 14,
+      "language": "en",
+      "learning_objective": "An octopus has eight arms and is clever at solving puzzles.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260916-133606/episode.mp4",
+      "published_at": "2026-09-16T13:36:09.210099Z"
+    },
+    {
       "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "episode_number": 1,
