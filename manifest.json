@@ -1,6 +1,16 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Real Ocean",
+      "title": "Octopus: A Closer Look",
+      "episode_number": 2,
+      "series_length": 2,
+      "language": "en",
+      "learning_objective": "Wow! Look at the octopus swim! It moves so smoothly through the water.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260916-181646/episode.mp4",
+      "published_at": "2026-09-16T18:16:48.723829Z"
+    },
+    {
       "series_title": "SEABINI",
       "title": "The Clever Octopus",
       "episode_number": 14,
