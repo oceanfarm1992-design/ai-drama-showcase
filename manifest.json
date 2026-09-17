@@ -1,6 +1,16 @@
 {
   "episodes": [
     {
+      "series_title": "SEABINI",
+      "title": "The Amazing Sea Star",
+      "episode_number": 15,
+      "series_length": 15,
+      "language": "en",
+      "learning_objective": "A sea star can grow a new arm.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260917-133158/episode.mp4",
+      "published_at": "2026-09-17T13:32:00.286355Z"
+    },
+    {
       "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "episode_number": 2,
