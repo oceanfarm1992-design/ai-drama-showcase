@@ -1,6 +1,16 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Real Ocean",
+      "title": "Seahorse: A Closer Look",
+      "episode_number": 4,
+      "series_length": 4,
+      "language": "en",
+      "learning_objective": "Look at the seahorse! It swims slowly and gracefully. What a beautiful dancer!",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260918-174646/episode.mp4",
+      "published_at": "2026-09-18T17:46:48.836000Z"
+    },
+    {
       "series_title": "SEABINI",
       "title": "The Amazing Sea Star",
       "episode_number": 16,
