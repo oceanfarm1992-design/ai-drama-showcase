@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: Floating Gracefully",
+      "narrator": "Pipi",
+      "episode_number": 14,
+      "series_length": 14,
+      "language": "en",
+      "learning_objective": "Look at how the jellyfish floats! It moves so smoothly through the water, like a little balloon.",
+      "search_hook": "how do jellyfish move through the water",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-222658/episode.mp4",
+      "published_at": "2026-09-20T22:26:59.961695Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Coral: The Colorful Home",
       "narrator": "Pipi",
       "episode_number": 13,
