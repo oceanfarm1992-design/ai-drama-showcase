@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Closer Look",
+      "episode_number": 7,
+      "series_length": 7,
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It sways gently with the water. It's like a little dancing flower in the ocean!",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-093630/episode.mp4",
+      "published_at": "2026-09-20T09:36:33.397999Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorse: A Closer Look",
       "episode_number": 6,
       "series_length": 6,
