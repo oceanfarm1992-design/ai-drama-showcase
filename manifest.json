@@ -2,6 +2,16 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorse: A Closer Look",
+      "episode_number": 6,
+      "series_length": 6,
+      "language": "en",
+      "learning_objective": "Look at the seahorse swim! It moves so gently through the water.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-092021/episode.mp4",
+      "published_at": "2026-09-20T09:20:23.122193Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "episode_number": 5,
       "series_length": 5,
