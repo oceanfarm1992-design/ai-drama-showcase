@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Colorful Home",
+      "narrator": "Pipi",
+      "episode_number": 13,
+      "series_length": 13,
+      "language": "en",
+      "learning_objective": "Look at the coral! It grows slowly, bit by bit. It’s like a big underwater garden!",
+      "search_hook": "how does coral grow in the ocean",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-200713/episode.mp4",
+      "published_at": "2026-09-20T20:07:16.113332Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Dodo",
       "episode_number": 12,
