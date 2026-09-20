@@ -2,6 +2,17 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: A Colorful Friend",
+      "narrator": "Dodo",
+      "episode_number": 9,
+      "series_length": 9,
+      "language": "en",
+      "learning_objective": "Look at that clownfish! It swims so happily between the coral! Whee!",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-143145/episode.mp4",
+      "published_at": "2026-09-20T14:31:47.167211Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Coral: A Colorful World",
       "narrator": "Tula",
       "episode_number": 8,
