@@ -2,6 +2,17 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: A Colorful World",
+      "narrator": "Tula",
+      "episode_number": 8,
+      "series_length": 8,
+      "language": "en",
+      "learning_objective": "Look how patiently coral grows! Just tiny pieces building up, over many years.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-132650/episode.mp4",
+      "published_at": "2026-09-20T13:26:52.919773Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: A Closer Look",
       "episode_number": 7,
       "series_length": 7,
