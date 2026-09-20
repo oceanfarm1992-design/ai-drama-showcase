@@ -2,6 +2,17 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: A Closer Look",
+      "narrator": "Pipi",
+      "episode_number": 11,
+      "series_length": 11,
+      "language": "en",
+      "learning_objective": "Look at the octopus! It swims so smoothly. Its arms are like soft ribbons in the water.",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-143253/episode.mp4",
+      "published_at": "2026-09-20T14:32:55.739377Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Joyful Swimmers",
       "narrator": "Ollo",
       "episode_number": 10,
