@@ -2,6 +2,17 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Closer Look",
+      "narrator": "Dodo",
+      "episode_number": 12,
+      "series_length": 12,
+      "language": "en",
+      "learning_objective": "Wow! Look at that jellyfish float! It's like a magical umbrella dancing in the sea!",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-181541/episode.mp4",
+      "published_at": "2026-09-20T18:15:42.839855Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Pipi",
       "episode_number": 11,
