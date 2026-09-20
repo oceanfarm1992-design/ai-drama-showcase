@@ -2,6 +2,17 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Joyful Swimmers",
+      "narrator": "Ollo",
+      "episode_number": 10,
+      "series_length": 10,
+      "language": "en",
+      "learning_objective": "Look at those dolphins! They swim so fast and jump high! They love to play in the water!",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260920-143215/episode.mp4",
+      "published_at": "2026-09-20T14:32:17.151281Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Colorful Friend",
       "narrator": "Dodo",
       "episode_number": 9,
