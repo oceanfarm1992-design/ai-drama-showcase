@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Closer Look",
+      "narrator": "Bini",
+      "episode_number": 15,
+      "series_length": 15,
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It's swaying gently in the water. It's like a little plant party under the sea!",
+      "search_hook": "how do sea anemones catch food",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260921-080046/episode.mp4",
+      "published_at": "2026-09-21T08:00:49.409145Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: Floating Gracefully",
       "narrator": "Pipi",
       "episode_number": 14,
