@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: Little Ocean Movers",
+      "narrator": "Dodo",
+      "episode_number": 18,
+      "series_length": 18,
+      "language": "en",
+      "learning_objective": "Look at that crab! It's scurrying sideways across the sand. What a funny little mover!",
+      "search_hook": "how do crabs walk sideways",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260921-200332/episode.mp4",
+      "published_at": "2026-09-21T20:03:34.780735Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: The Amazing Arms",
       "narrator": "Ollo",
       "episode_number": 17,
