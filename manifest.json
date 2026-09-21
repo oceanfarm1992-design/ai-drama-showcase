@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Joyful Swimmers",
+      "narrator": "Pipi",
+      "episode_number": 19,
+      "series_length": 19,
+      "language": "en",
+      "learning_objective": "Wow! Look at that dolphin jump! It loves to leap high into the air!",
+      "search_hook": "how do dolphins communicate with each other",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260921-231757/episode.mp4",
+      "published_at": "2026-09-21T23:18:00.323763Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crabs: Little Ocean Movers",
       "narrator": "Dodo",
       "episode_number": 18,
