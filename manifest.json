@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: The Sideways Swimmers",
+      "narrator": "Tula",
+      "episode_number": 16,
+      "series_length": 16,
+      "language": "en",
+      "learning_objective": "Look at that crab! It walks sideways on the sandy beach. Isn't that a funny way to move?",
+      "search_hook": "how do crabs walk sideways in the sand",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260921-132122/episode.mp4",
+      "published_at": "2026-09-21T13:21:24.410885Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: A Closer Look",
       "narrator": "Bini",
       "episode_number": 15,
