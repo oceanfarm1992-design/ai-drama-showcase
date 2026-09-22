@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtles: Swimming Free",
+      "narrator": "Bini",
+      "episode_number": 20,
+      "series_length": 20,
+      "language": "en",
+      "learning_objective": "Look at that sea turtle! Wow, it swims gracefully through the water. Just like a big, gentle bird in the ocean!",
+      "search_hook": "how do sea turtles swim underwater",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260922-074502/episode.mp4",
+      "published_at": "2026-09-22T07:45:05.869200Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Joyful Swimmers",
       "narrator": "Pipi",
       "episode_number": 19,
