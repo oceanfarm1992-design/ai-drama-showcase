@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: A Closer Look",
+      "narrator": "Tula",
+      "episode_number": 21,
+      "series_length": 21,
+      "language": "en",
+      "learning_objective": "Look at that crab! It walks sideways so easily. Its legs are strong and quick!",
+      "search_hook": "how do crabs walk sideways on the beach",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260922-120459/episode.mp4",
+      "published_at": "2026-09-22T12:05:01.534259Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtles: Swimming Free",
       "narrator": "Bini",
       "episode_number": 20,
