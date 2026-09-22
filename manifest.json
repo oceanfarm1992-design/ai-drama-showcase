@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Colorful Home",
+      "narrator": "Pipi",
+      "episode_number": 24,
+      "series_length": 24,
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It sways gently in the water. It's like a beautiful dance with the ocean!",
+      "search_hook": "why do clownfish live in sea anemones",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260922-225758/episode.mp4",
+      "published_at": "2026-09-22T22:58:00.239644Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: Gentle Swimmers",
       "narrator": "Dodo",
       "episode_number": 23,
