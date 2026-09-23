@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: A Closer Look",
+      "narrator": "Tula",
+      "episode_number": 26,
+      "series_length": 26,
+      "language": "en",
+      "learning_objective": "Look at the octopus swim! It glides gently through the water, using its arms to push. What a beautiful dancer!",
+      "search_hook": "how do octopuses change color",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260923-120822/episode.mp4",
+      "published_at": "2026-09-23T12:08:24.083085Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Bini",
       "episode_number": 25,
