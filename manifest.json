@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: Marvels of the Sea",
+      "narrator": "Ollo",
+      "episode_number": 27,
+      "series_length": 27,
+      "language": "en",
+      "learning_objective": "Look at that seahorse! It swims by fluttering its tiny fins. So delicate and beautiful!",
+      "search_hook": "how do seahorses swim and move",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260923-151426/episode.mp4",
+      "published_at": "2026-09-23T15:14:29.054759Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Tula",
       "episode_number": 26,
