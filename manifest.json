@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Closer Look",
+      "narrator": "Pipi",
+      "episode_number": 29,
+      "series_length": 29,
+      "language": "en",
+      "learning_objective": "Look at the jellyfish! It drifts so softly through the water. It looks like a beautiful balloon!",
+      "search_hook": "how do jellyfish move through water",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260923-225823/episode.mp4",
+      "published_at": "2026-09-23T22:58:25.383066Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Underwater Friends",
       "narrator": "Dodo",
       "episode_number": 28,
