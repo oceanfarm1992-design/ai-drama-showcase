@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: Underwater Friends",
+      "narrator": "Dodo",
+      "episode_number": 28,
+      "series_length": 28,
+      "language": "en",
+      "learning_objective": "Look at that clownfish go! It swims happily around the coral, darting in and out!",
+      "search_hook": "how do clownfish protect themselves",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260923-190853/episode.mp4",
+      "published_at": "2026-09-23T19:08:55.571540Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: Marvels of the Sea",
       "narrator": "Ollo",
       "episode_number": 27,
