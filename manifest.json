@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Manta Ray: A Gentle Giant",
+      "narrator": "Tula",
+      "creature": "manta ray",
+      "language": "en",
+      "learning_objective": "Look how gracefully the manta ray glides through the water. It's like a beautiful bird flying in the sea!",
+      "search_hook": "how do manta rays swim gracefully",
+      "footage_ids": [
+        "pexels:31999875",
+        "pexels:33956997",
+        "pexels:35681606",
+        "pexels:39608300"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-134807/episode.mp4",
+      "published_at": "2026-09-24T13:48:09.706163Z",
+      "episode_number": 33,
+      "series_length": 33
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Closer Look",
       "narrator": "Tula",
       "episode_number": 32,
