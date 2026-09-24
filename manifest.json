@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: Waddle and Swim!",
+      "narrator": "Dodo",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that little penguin waddle! They walk like this to keep their balance on the slippery ice!",
+      "search_hook": "why do penguins waddle when they walk",
+      "footage_ids": [
+        "pexels:37331912",
+        "pexels:38248203",
+        "pixabay:114415",
+        "pixabay:185273"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-191914/episode.mp4",
+      "published_at": "2026-09-24T19:19:16.528184Z",
+      "episode_number": 35,
+      "series_length": 35
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whales: Gentle Giants of the Ocean",
       "narrator": "Ollo",
       "creature": "whale",
