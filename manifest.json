@@ -2,6 +2,18 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crab: A Closer Look",
+      "narrator": "Bini",
+      "episode_number": 30,
+      "series_length": 30,
+      "language": "en",
+      "learning_objective": "Look at this crab! It walks sideways. Isn’t that silly? It’s so fun to see!",
+      "search_hook": "how do crabs walk sideways",
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-073738/episode.mp4",
+      "published_at": "2026-09-24T07:37:48.735116Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Pipi",
       "episode_number": 29,
