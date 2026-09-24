@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: A Closer Look",
+      "narrator": "Tula",
+      "episode_number": 32,
+      "series_length": 32,
+      "language": "en",
+      "learning_objective": "Look at the clownfish! It swims happily among the coral. It moves in little zigzags, just like a happy dance.",
+      "search_hook": "why do clownfish live in anemones",
+      "footage_ids": [
+        "pexels:11403584",
+        "pexels:17474817",
+        "pexels:18271055",
+        "pexels:35661824"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-121327/episode.mp4",
+      "published_at": "2026-09-24T12:13:29.850141Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: A Closer Look",
       "narrator": "Ollo",
       "episode_number": 31,
