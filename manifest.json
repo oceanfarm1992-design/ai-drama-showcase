@@ -2,6 +2,23 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtle: A Closer Look",
+      "narrator": "Ollo",
+      "episode_number": 31,
+      "series_length": 31,
+      "language": "en",
+      "learning_objective": "Look at that sea turtle glide! It moves so gracefully through the water, just like a dancer!",
+      "search_hook": "how do sea turtles swim gracefully",
+      "footage_ids": [
+        "pexels:18042759",
+        "pexels:36529187",
+        "pexels:39358309"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-080416/episode.mp4",
+      "published_at": "2026-09-24T08:04:19.831962Z"
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crab: A Closer Look",
       "narrator": "Bini",
       "episode_number": 30,
