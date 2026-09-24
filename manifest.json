@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Whales: Gentle Giants of the Ocean",
+      "narrator": "Ollo",
+      "creature": "whale",
+      "language": "en",
+      "learning_objective": "Look at that whale gliding through the water! It moves so smoothly, like a big ocean ballet.",
+      "search_hook": "how do whales communicate with each other",
+      "footage_ids": [
+        "pexels:13433624",
+        "pexels:28668320",
+        "pexels:39056884",
+        "pixabay:244188"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-153450/episode.mp4",
+      "published_at": "2026-09-24T15:34:52.519410Z",
+      "episode_number": 34,
+      "series_length": 34
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: A Gentle Giant",
       "narrator": "Tula",
       "creature": "manta ray",
