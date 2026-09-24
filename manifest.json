@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: A Colorful Home",
+      "narrator": "Pipi",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral! It sways gently in the water. Just like dancing!",
+      "search_hook": "why are corals colorful in the ocean",
+      "footage_ids": [
+        "pexels:32751112",
+        "pexels:35745442",
+        "pixabay:263255",
+        "pixabay:51594"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260924-231417/episode.mp4",
+      "published_at": "2026-09-24T23:14:19.070658Z",
+      "episode_number": 36,
+      "series_length": 36
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Penguins: Waddle and Swim!",
       "narrator": "Dodo",
       "creature": "penguin",
