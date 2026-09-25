@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Closer Look",
+      "narrator": "Pipi",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at the jellyfish! It drifts and dances in the water. Isn't it beautiful?",
+      "search_hook": "how do jellyfish move through water",
+      "footage_ids": [
+        "pexels:16451799",
+        "pixabay:158",
+        "pixabay:213511",
+        "pixabay:4294"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260925-232000/episode.mp4",
+      "published_at": "2026-09-25T23:20:02.218727Z",
+      "episode_number": 41,
+      "series_length": 41
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Silly Swimmers",
       "narrator": "Dodo",
       "creature": "seal",
