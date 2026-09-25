@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Silly Swimmers",
+      "narrator": "Dodo",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal go! It's swimming so gracefully through the water!",
+      "search_hook": "how do seals swim underwater",
+      "footage_ids": [
+        "pexels:35311069",
+        "pixabay:205259",
+        "pixabay:284558",
+        "pixabay:94463"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260925-192216/episode.mp4",
+      "published_at": "2026-09-25T19:22:18.174711Z",
+      "episode_number": 40,
+      "series_length": 40
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Shark: Gentle Giant",
       "narrator": "Ollo",
       "creature": "whale shark",
