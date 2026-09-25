@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: Underwater Dancers",
+      "narrator": "Bini",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look how fast the shrimp swims! It moves its tail like a little paddle.",
+      "search_hook": "how do shrimp swim so fast",
+      "footage_ids": [
+        "pexels:7362020",
+        "pexels:8856782",
+        "pixabay:11675",
+        "pixabay:3625"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260925-075029/episode.mp4",
+      "published_at": "2026-09-25T07:50:30.756041Z",
+      "episode_number": 37,
+      "series_length": 37
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Coral: A Colorful Home",
       "narrator": "Pipi",
       "creature": "coral",
