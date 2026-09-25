@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Whale Shark: Gentle Giant",
+      "narrator": "Ollo",
+      "creature": "whale shark",
+      "language": "en",
+      "learning_objective": "Look at this big, friendly whale shark! It opens its huge mouth to sip up tiny plankton. Yum!",
+      "search_hook": "how do whale sharks eat food",
+      "footage_ids": [
+        "pexels:32173597",
+        "pixabay:124837",
+        "pixabay:32451"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260925-153824/episode.mp4",
+      "published_at": "2026-09-25T15:38:26.216200Z",
+      "episode_number": 39,
+      "series_length": 39
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: A Gentle Glider",
       "narrator": "Tula",
       "creature": "stingray",
