@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtles: Gentle Giants",
+      "narrator": "Tula",
+      "creature": "sea turtle",
+      "language": "en",
+      "learning_objective": "Look at the sea turtle glide! Its strong flippers help it swim smoothly through the water.",
+      "search_hook": "how do sea turtles swim so gracefully",
+      "footage_ids": [
+        "pexels:12391982",
+        "pixabay:273304",
+        "pixabay:273306"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260926-114747/episode.mp4",
+      "published_at": "2026-09-26T11:47:49.741041Z",
+      "episode_number": 43,
+      "series_length": 43
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Bini",
       "creature": "pelican",
