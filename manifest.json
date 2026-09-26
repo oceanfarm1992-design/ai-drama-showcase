@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Pelican: A Closer Look",
+      "narrator": "Bini",
+      "creature": "pelican",
+      "language": "en",
+      "learning_objective": "Look at that pelican soar! Its big wings help it glide smoothly above the water.",
+      "search_hook": "how do pelicans catch their food",
+      "footage_ids": [
+        "pexels:12715036",
+        "pexels:29742538",
+        "pexels:36895928"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260926-074226/episode.mp4",
+      "published_at": "2026-09-26T07:42:28.476354Z",
+      "episode_number": 42,
+      "series_length": 42
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Pipi",
       "creature": "jellyfish",
