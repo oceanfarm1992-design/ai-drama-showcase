@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Colorful Home",
+      "narrator": "Pipi",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at this sea anemone! It sways gently with the water. It looks like a colorful flower!",
+      "search_hook": "how do sea anemones catch food",
+      "footage_ids": [
+        "pexels:39233892",
+        "pexels:39305714",
+        "pixabay:265144"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260927-230137/episode.mp4",
+      "published_at": "2026-09-27T23:01:38.730462Z",
+      "episode_number": 51,
+      "series_length": 51
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Fun in the Ocean",
       "narrator": "Dodo",
       "creature": "dolphin",
