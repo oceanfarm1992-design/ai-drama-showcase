@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Fun in the Ocean",
+      "narrator": "Dodo",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Wow! Look at that dolphin jump! It soars high into the air, like a superhero!",
+      "search_hook": "how do dolphins jump out of water",
+      "footage_ids": [
+        "pexels:11042818",
+        "pexels:31985790",
+        "pexels:38882575",
+        "pixabay:30968"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260927-190512/episode.mp4",
+      "published_at": "2026-09-27T19:05:14.148405Z",
+      "episode_number": 50,
+      "series_length": 50
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Urchin: Spiky Friends",
       "narrator": "Ollo",
       "creature": "sea urchin",
