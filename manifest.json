@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Spiky Friends",
+      "narrator": "Ollo",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Look at the sea urchin! It's slowly moving across the rocks, using its tiny tube feet. How cool!",
+      "search_hook": "how do sea urchins move around",
+      "footage_ids": [
+        "pexels:30211482",
+        "pexels:30211485",
+        "pexels:35521546"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260927-152503/episode.mp4",
+      "published_at": "2026-09-27T15:25:05.332083Z",
+      "episode_number": 49,
+      "series_length": 49
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Tula",
       "creature": "octopus",
