@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Starfish: A Closer Look",
+      "narrator": "Bini",
+      "creature": "starfish",
+      "language": "en",
+      "learning_objective": "Look at this starfish! It's moving slowly along the sand. Its tiny tube feet help it crawl. Isn’t that neat?",
+      "search_hook": "how do starfish move along the sea floor",
+      "footage_ids": [
+        "pexels:34437721",
+        "pexels:35196035",
+        "pexels:36481878",
+        "pexels:8456359"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260928-084422/episode.mp4",
+      "published_at": "2026-09-28T08:44:25.624063Z",
+      "episode_number": 52,
+      "series_length": 52
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: A Colorful Home",
       "narrator": "Pipi",
       "creature": "sea anemone",
