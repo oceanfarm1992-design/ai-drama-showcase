@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: Magical Swimmers",
+      "narrator": "Dodo",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at that seahorse! It swims by moving its little fins super fast. So cute and quick!",
+      "search_hook": "how do seahorses swim in the ocean",
+      "footage_ids": [
+        "pexels:27302760",
+        "pexels:34448747",
+        "pexels:38583389",
+        "pexels:8556934"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260928-211906/episode.mp4",
+      "published_at": "2026-09-28T21:19:08.512822Z",
+      "episode_number": 55,
+      "series_length": 55
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtles: Gentle Swimmers",
       "narrator": "Ollo",
       "creature": "sea turtle",
