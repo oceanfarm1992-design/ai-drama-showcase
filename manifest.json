@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Whale Shark: Gentle Giants",
+      "narrator": "Tula",
+      "creature": "whale shark",
+      "language": "en",
+      "learning_objective": "Look at the whale shark! It's swimming so gently through the water. These giants are the biggest fish in the ocean!",
+      "search_hook": "how do whale sharks eat plankton",
+      "footage_ids": [
+        "pexels:39056884",
+        "pixabay:110315",
+        "pixabay:125737",
+        "pixabay:326788"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260928-143003/episode.mp4",
+      "published_at": "2026-09-28T14:30:06.098964Z",
+      "episode_number": 53,
+      "series_length": 53
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: A Closer Look",
       "narrator": "Bini",
       "creature": "starfish",
