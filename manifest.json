@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: Curious Creatures",
+      "narrator": "Pipi",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that crab! It walks sideways so quickly. Isn't that funny?",
+      "search_hook": "how do crabs walk sideways",
+      "footage_ids": [
+        "pexels:34366128",
+        "pexels:36010572",
+        "pixabay:136464",
+        "pixabay:9891"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260929-234316/episode.mp4",
+      "published_at": "2026-09-29T23:43:18.166526Z",
+      "episode_number": 61,
+      "series_length": 61
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Penguins: Waddle and Play!",
       "narrator": "Dodo",
       "creature": "penguin",
