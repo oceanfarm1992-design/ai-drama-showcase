@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingray: A Gentle Glide",
+      "narrator": "Tula",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Look at the stingray! It glides so gracefully through the water. Its wings move like a bird's.",
+      "search_hook": "how do stingrays swim gracefully",
+      "footage_ids": [
+        "pexels:35601210",
+        "pexels:35703768",
+        "pexels:6205988"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260929-132132/episode.mp4",
+      "published_at": "2026-09-29T13:21:34.928663Z",
+      "episode_number": 58,
+      "series_length": 58
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Rays: A Gentle Glide",
       "narrator": "Bini",
       "creature": "manta ray",
