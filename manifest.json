@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Playful Swimmers",
+      "narrator": "Ollo",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Wow! Look at that dolphin jumping! Isn’t it so playful? It loves to leap high into the air!",
+      "search_hook": "why do dolphins leap out of the water",
+      "footage_ids": [
+        "pexels:11042822",
+        "pexels:12073471",
+        "pexels:33768424",
+        "pexels:39322897"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260930-163506/episode.mp4",
+      "published_at": "2026-09-30T16:35:09.170260Z",
+      "episode_number": 64,
+      "series_length": 64
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: An Underwater Garden",
       "narrator": "Tula",
       "creature": "sea anemone",
