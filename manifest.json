@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: An Underwater Garden",
+      "narrator": "Tula",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It's swaying softly with the water. It looks like a beautiful dancing flower underwater.",
+      "search_hook": "how do sea anemones eat their food",
+      "footage_ids": [
+        "pixabay:134169",
+        "pixabay:182908",
+        "pixabay:273756"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260930-130354/episode.mp4",
+      "published_at": "2026-09-30T13:03:56.787062Z",
+      "episode_number": 63,
+      "series_length": 63
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: The Color Changer",
       "narrator": "Bini",
       "creature": "cuttlefish",
