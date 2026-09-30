@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Whale Shark: Gentle Giant",
+      "narrator": "Dodo",
+      "creature": "whale shark",
+      "language": "en",
+      "learning_objective": "Look at that big whale shark swim! It's so graceful in the water!",
+      "search_hook": "how does a whale shark eat",
+      "footage_ids": [
+        "pexels:20699003",
+        "pexels:32173594",
+        "pexels:32173597",
+        "pixabay:32451"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260930-201113/episode.mp4",
+      "published_at": "2026-09-30T20:11:15.802934Z",
+      "episode_number": 65,
+      "series_length": 65
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Playful Swimmers",
       "narrator": "Ollo",
       "creature": "dolphin",
