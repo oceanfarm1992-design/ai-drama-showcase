@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: The Color Changer",
+      "narrator": "Bini",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Look at that cuttlefish! It's changing colors! Wow, it's like magic underwater!",
+      "search_hook": "how do cuttlefish change color",
+      "footage_ids": [
+        "pixabay:277224",
+        "pixabay:277227",
+        "pixabay:277231",
+        "pixabay:3625"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260930-083625/episode.mp4",
+      "published_at": "2026-09-30T08:36:28.168089Z",
+      "episode_number": 62,
+      "series_length": 62
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crabs: Curious Creatures",
       "narrator": "Pipi",
       "creature": "crab",
