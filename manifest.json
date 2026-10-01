@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Lion: Playful Swimmers",
+      "narrator": "Bini",
+      "creature": "sea lion",
+      "language": "en",
+      "learning_objective": "Look at those sea lions swim! They glide through the water like little torpedoes. Wow, they move so fast!",
+      "search_hook": "how do sea lions swim so fast",
+      "footage_ids": [
+        "pexels:4434202",
+        "pixabay:139248",
+        "pixabay:261266",
+        "pixabay:3344"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261001-085740/episode.mp4",
+      "published_at": "2026-10-01T08:57:42.811983Z",
+      "episode_number": 67,
+      "series_length": 67
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Colorful Home",
       "narrator": "Pipi",
       "creature": "clownfish",
