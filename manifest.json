@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Colorful Builders",
+      "narrator": "Dodo",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral! It's growing slowly, building a home for so many fish!",
+      "search_hook": "how do corals create reefs",
+      "footage_ids": [
+        "pexels:10604884",
+        "pexels:34632830",
+        "pixabay:273747"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261001-204052/episode.mp4",
+      "published_at": "2026-10-01T20:40:54.612918Z",
+      "episode_number": 70,
+      "series_length": 70
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Ollo",
       "creature": "pelican",
