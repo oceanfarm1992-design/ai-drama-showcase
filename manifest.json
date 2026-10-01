@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Squid: A Closer Look",
+      "narrator": "Tula",
+      "creature": "squid",
+      "language": "en",
+      "learning_objective": "Look how the squid swims! It glides through the water like it's dancing.",
+      "search_hook": "how do squids change color to hide",
+      "footage_ids": [
+        "pexels:27862865",
+        "pixabay:1496",
+        "pixabay:1497",
+        "pixabay:26241"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261001-135738/episode.mp4",
+      "published_at": "2026-10-01T13:57:41.814355Z",
+      "episode_number": 68,
+      "series_length": 68
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Lion: Playful Swimmers",
       "narrator": "Bini",
       "creature": "sea lion",
