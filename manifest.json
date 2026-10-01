@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Pelican: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "pelican",
+      "language": "en",
+      "learning_objective": "Look at that pelican gliding! It's flying with its big wings, so graceful and free!",
+      "search_hook": "how do pelicans catch fish",
+      "footage_ids": [
+        "pexels:36895928",
+        "pixabay:137410",
+        "pixabay:176207",
+        "pixabay:372990"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261001-174426/episode.mp4",
+      "published_at": "2026-10-01T17:44:29.251411Z",
+      "episode_number": 69,
+      "series_length": 69
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Tula",
       "creature": "squid",
