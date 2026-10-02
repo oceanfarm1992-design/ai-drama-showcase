@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtle: A Calm Journey",
+      "narrator": "Tula",
+      "creature": "sea turtle",
+      "language": "en",
+      "learning_objective": "Look at how gracefully the sea turtle swims! Its flippers move gently, helping it glide through the water.",
+      "search_hook": "how do sea turtles swim gracefully",
+      "footage_ids": [
+        "pexels:35615961",
+        "pixabay:131645",
+        "pixabay:161578",
+        "pixabay:308502"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261002-131229/episode.mp4",
+      "published_at": "2026-10-02T13:12:31.528754Z",
+      "episode_number": 73,
+      "series_length": 73
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: Gliding Through the Sea",
       "narrator": "Bini",
       "creature": "manta ray",
