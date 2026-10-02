@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: A Gentle Swim",
+      "narrator": "Pipi",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at the seahorse! It swims so gently. It moves its fins to glide through the water.",
+      "search_hook": "how do seahorses swim in the ocean",
+      "footage_ids": [
+        "pexels:27302760",
+        "pexels:34448747",
+        "pexels:34617329",
+        "pexels:38583389"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261002-234809/episode.mp4",
+      "published_at": "2026-10-02T23:48:11.415882Z",
+      "episode_number": 76,
+      "series_length": 76
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Playful Swimmers",
       "narrator": "Dodo",
       "creature": "dolphin",
