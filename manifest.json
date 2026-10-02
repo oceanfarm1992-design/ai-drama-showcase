@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Nature's Little Spiky Friend",
+      "narrator": "Ollo",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Look at that sea urchin! It moves slowly along the ocean floor. What a tiny traveler!",
+      "search_hook": "how do sea urchins move underwater",
+      "footage_ids": [
+        "pexels:35521546",
+        "pexels:35521555",
+        "pexels:9116191",
+        "pixabay:133544"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261002-162733/episode.mp4",
+      "published_at": "2026-10-02T16:27:36.323944Z",
+      "episode_number": 74,
+      "series_length": 74
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: A Calm Journey",
       "narrator": "Tula",
       "creature": "sea turtle",
