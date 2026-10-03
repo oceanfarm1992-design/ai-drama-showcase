@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingray: A Closer Look",
+      "narrator": "Bini",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Look at that stingray swim! It glides so smoothly through the water, like a big, gentle bird.",
+      "search_hook": "how do stingrays swim in the ocean",
+      "footage_ids": [
+        "pexels:28197985",
+        "pexels:30807086",
+        "pexels:37929962",
+        "pixabay:156110"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261003-080928/episode.mp4",
+      "published_at": "2026-10-03T08:09:31.469584Z",
+      "episode_number": 77,
+      "series_length": 77
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: A Gentle Swim",
       "narrator": "Pipi",
       "creature": "seahorse",
