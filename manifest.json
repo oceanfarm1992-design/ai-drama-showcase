@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguin: A Closer Look",
+      "narrator": "Tula",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at the penguins! They glide through the water like a little torpedo. Swimming is so much fun for them!",
+      "search_hook": "how do penguins stay warm in cold water",
+      "footage_ids": [
+        "pexels:12802151",
+        "pexels:38248203",
+        "pixabay:178335",
+        "pixabay:303785"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261003-120321/episode.mp4",
+      "published_at": "2026-10-03T12:03:23.047245Z",
+      "episode_number": 78,
+      "series_length": 78
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: A Closer Look",
       "narrator": "Bini",
       "creature": "stingray",
