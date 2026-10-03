@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemones: Colorful Homes",
+      "narrator": "Dodo",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at that sea anemone! It's swaying in the water like a gentle dance. So beautiful!",
+      "search_hook": "why do sea anemones have bright colors",
+      "footage_ids": [
+        "pexels:39233892",
+        "pixabay:134169",
+        "pixabay:265144",
+        "pixabay:265145"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261003-184519/episode.mp4",
+      "published_at": "2026-10-03T18:45:21.991218Z",
+      "episode_number": 80,
+      "series_length": 80
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: Masters of Disguise",
       "narrator": "Ollo",
       "creature": "cuttlefish",
