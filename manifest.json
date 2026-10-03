@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: Bright and Friendly",
+      "narrator": "Pipi",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Look at the clownfish! It swims happily between the anemones. They are such good friends!",
+      "search_hook": "how do clownfish and anemones work together",
+      "footage_ids": [
+        "pexels:12860659",
+        "pexels:32376199",
+        "pexels:8856785"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261003-225352/episode.mp4",
+      "published_at": "2026-10-03T22:53:55.455493Z",
+      "episode_number": 81,
+      "series_length": 81
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemones: Colorful Homes",
       "narrator": "Dodo",
       "creature": "sea anemone",
