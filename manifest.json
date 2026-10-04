@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Lions: Playful Pups of the Ocean",
+      "narrator": "Ollo",
+      "creature": "sea lion",
+      "language": "en",
+      "learning_objective": "Listen to those funny barks! Sea lions love to communicate with each other.",
+      "search_hook": "why do sea lions bark and swim",
+      "footage_ids": [
+        "pexels:4434202",
+        "pixabay:129597",
+        "pixabay:134260",
+        "pixabay:139245"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261004-153419/episode.mp4",
+      "published_at": "2026-10-04T15:34:21.297228Z",
+      "episode_number": 84,
+      "series_length": 84
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Tula",
       "creature": "pelican",
