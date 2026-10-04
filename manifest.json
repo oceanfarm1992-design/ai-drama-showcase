@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: A Closer Look",
+      "narrator": "Bini",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at that shrimp go! It swims backward with tiny flicks of its tail. So cool!",
+      "search_hook": "how do shrimp swim in the ocean",
+      "footage_ids": [
+        "pexels:7362020",
+        "pexels:8856782",
+        "pixabay:133871",
+        "pixabay:3625"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261004-083159/episode.mp4",
+      "published_at": "2026-10-04T08:32:01.887319Z",
+      "episode_number": 82,
+      "series_length": 82
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Bright and Friendly",
       "narrator": "Pipi",
       "creature": "clownfish",
