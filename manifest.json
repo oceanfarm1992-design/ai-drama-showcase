@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Pelican: A Closer Look",
+      "narrator": "Tula",
+      "creature": "pelican",
+      "language": "en",
+      "learning_objective": "Look at the pelican gliding through the air! It uses its big wings to fly high and gracefully.",
+      "search_hook": "how do pelicans catch their food",
+      "footage_ids": [
+        "pexels:12715040",
+        "pexels:35552011",
+        "pexels:36894703",
+        "pixabay:47336"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261004-125337/episode.mp4",
+      "published_at": "2026-10-04T12:53:39.667769Z",
+      "episode_number": 83,
+      "series_length": 83
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Shrimp: A Closer Look",
       "narrator": "Bini",
       "creature": "shrimp",
