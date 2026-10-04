@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Fun and Playful Friends",
+      "narrator": "Dodo",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal zooming through the water! It swims so fast and gracefully, just like a little rocket!",
+      "search_hook": "how do seals swim so fast",
+      "footage_ids": [
+        "pixabay:140080",
+        "pixabay:205259",
+        "pixabay:284575",
+        "pixabay:94463"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261004-184339/episode.mp4",
+      "published_at": "2026-10-04T18:43:41.411553Z",
+      "episode_number": 85,
+      "series_length": 85
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Lions: Playful Pups of the Ocean",
       "narrator": "Ollo",
       "creature": "sea lion",
