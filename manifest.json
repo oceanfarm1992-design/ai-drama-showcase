@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Starfish: Amazing Arms",
+      "narrator": "Tula",
+      "creature": "starfish",
+      "language": "en",
+      "learning_objective": "Look at this starfish! It's moving slowly across the sand. Each arm helps it glide smoothly.",
+      "search_hook": "how do starfish move their arms",
+      "footage_ids": [
+        "pexels:34437721",
+        "pexels:35196035",
+        "pexels:8456359"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261005-151756/episode.mp4",
+      "published_at": "2026-10-05T15:17:59.227512Z",
+      "episode_number": 88,
+      "series_length": 88
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Ocean Dancers",
       "narrator": "Bini",
       "creature": "dolphin",
