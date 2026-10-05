@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Ocean Dancers",
+      "narrator": "Bini",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Look at those dolphins! They swim so fast and playful. They leap through the waves like they're dancing!",
+      "search_hook": "how do dolphins communicate with each other",
+      "footage_ids": [
+        "pexels:32509694",
+        "pexels:34732424",
+        "pixabay:115736"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261005-090411/episode.mp4",
+      "published_at": "2026-10-05T09:04:15.119197Z",
+      "episode_number": 87,
+      "series_length": 87
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Pipi",
       "creature": "octopus",
