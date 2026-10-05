@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: Magical Movers",
+      "narrator": "Dodo",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Wow! Look at that seahorse swimming! It moves like a little dancer in the water!",
+      "search_hook": "how do seahorses swim so uniquely",
+      "footage_ids": [
+        "pexels:34617328",
+        "pexels:8556940",
+        "pixabay:1080",
+        "pixabay:32136"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261005-220749/episode.mp4",
+      "published_at": "2026-10-05T22:07:50.900088Z",
+      "episode_number": 89,
+      "series_length": 89
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: Amazing Arms",
       "narrator": "Tula",
       "creature": "starfish",
