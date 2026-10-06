@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: A Colorful Home",
+      "narrator": "Tula",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Look at the clownfish swim! They move so gracefully through the coral reefs.",
+      "search_hook": "why do clownfish live in sea anemones",
+      "footage_ids": [
+        "pexels:31201154",
+        "pexels:33508479",
+        "pexels:34227810",
+        "pexels:35058825"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-133858/episode.mp4",
+      "published_at": "2026-10-06T13:39:00.378801Z",
+      "episode_number": 92,
+      "series_length": 92
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Bini",
       "creature": "jellyfish",
