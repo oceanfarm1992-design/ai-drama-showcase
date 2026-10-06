@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Closer Look",
+      "narrator": "Bini",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at that jellyfish! It swims so gracefully. Just floating and gliding through the water!",
+      "search_hook": "how do jellyfish move in the water",
+      "footage_ids": [
+        "pexels:16451799",
+        "pexels:34268912",
+        "pixabay:128421",
+        "pixabay:213617"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-090201/episode.mp4",
+      "published_at": "2026-10-06T09:02:03.966262Z",
+      "episode_number": 91,
+      "series_length": 91
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Pipi",
       "creature": "squid",
