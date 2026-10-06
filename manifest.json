@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: A Colorful Home",
+      "narrator": "Pipi",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral grow! It makes a big, beautiful home for many fish.",
+      "search_hook": "how do corals help ocean life",
+      "footage_ids": [
+        "pexels:34227592",
+        "pixabay:156149",
+        "pixabay:263254",
+        "pixabay:5270"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-234927/episode.mp4",
+      "published_at": "2026-10-06T23:49:30.237874Z",
+      "episode_number": 95,
+      "series_length": 95
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Urchin: Spiky Friends",
       "narrator": "Dodo",
       "creature": "sea urchin",
