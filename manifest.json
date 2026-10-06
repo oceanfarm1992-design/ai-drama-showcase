@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Manta Rays: Gentle Giants",
+      "narrator": "Ollo",
+      "creature": "manta ray",
+      "language": "en",
+      "learning_objective": "Look at that manta ray gliding through the water! It moves so smoothly, like a big bird in the ocean.",
+      "search_hook": "how do manta rays eat their food",
+      "footage_ids": [
+        "pexels:31999875",
+        "pexels:35691339",
+        "pexels:36433871",
+        "pexels:37929958"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-170044/episode.mp4",
+      "published_at": "2026-10-06T17:00:48.054198Z",
+      "episode_number": 93,
+      "series_length": 93
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Colorful Home",
       "narrator": "Tula",
       "creature": "clownfish",
