@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Spiky Friends",
+      "narrator": "Dodo",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Look at that sea urchin! It's slowly moving along the ocean floor. What a little explorer!",
+      "search_hook": "how do sea urchins protect themselves",
+      "footage_ids": [
+        "pexels:35521546",
+        "pexels:9116191",
+        "pixabay:133544"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-202532/episode.mp4",
+      "published_at": "2026-10-06T20:25:34.920011Z",
+      "episode_number": 94,
+      "series_length": 94
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Rays: Gentle Giants",
       "narrator": "Ollo",
       "creature": "manta ray",
