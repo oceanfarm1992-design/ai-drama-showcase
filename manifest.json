@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Squid: A Closer Look",
+      "narrator": "Pipi",
+      "creature": "squid",
+      "language": "en",
+      "learning_objective": "Wow! Look at that squid! It can change color. Isn't that amazing? It helps it hide!",
+      "search_hook": "how does a squid change color",
+      "footage_ids": [
+        "pexels:38210834",
+        "pixabay:1496",
+        "pixabay:1497",
+        "pixabay:207990"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-012215/episode.mp4",
+      "published_at": "2026-10-06T01:22:16.912073Z",
+      "episode_number": 90,
+      "series_length": 90
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: Magical Movers",
       "narrator": "Dodo",
       "creature": "seahorse",
