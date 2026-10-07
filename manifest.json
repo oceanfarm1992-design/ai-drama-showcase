@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: Masters of Disguise",
+      "narrator": "Tula",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Look at that cuttlefish! Isn’t it amazing how it changes colors? It can blend right into its surroundings like magic!",
+      "search_hook": "how does a cuttlefish change color",
+      "footage_ids": [
+        "pexels:39032276",
+        "pixabay:277224",
+        "pixabay:277227",
+        "pixabay:277231"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261007-135800/episode.mp4",
+      "published_at": "2026-10-07T13:58:03.303728Z",
+      "episode_number": 97,
+      "series_length": 97
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: A Closer Look",
       "narrator": "Bini",
       "creature": "sea turtle",
