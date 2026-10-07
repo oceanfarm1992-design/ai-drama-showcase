@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that crab! It’s dancing sideways across the sand. Such a silly way to move!",
+      "search_hook": "how do crabs walk sideways in the sand",
+      "footage_ids": [
+        "pexels:36852904",
+        "pexels:5097346",
+        "pixabay:46312"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261007-173544/episode.mp4",
+      "published_at": "2026-10-07T17:35:47.871631Z",
+      "episode_number": 98,
+      "series_length": 98
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: Masters of Disguise",
       "narrator": "Tula",
       "creature": "cuttlefish",
