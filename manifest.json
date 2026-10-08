@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: Colorful Friends",
+      "narrator": "Dodo",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Wow! Look at the clownfish swimming! They zip around like little orange rockets!",
+      "search_hook": "how do clownfish live in anemones",
+      "footage_ids": [
+        "pexels:33127756",
+        "pexels:33377766",
+        "pexels:34227804",
+        "pexels:37949910"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261008-204600/episode.mp4",
+      "published_at": "2026-10-08T20:46:02.891823Z",
+      "episode_number": 104,
+      "series_length": 104
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: A Closer Look",
       "narrator": "Ollo",
       "creature": "starfish",
