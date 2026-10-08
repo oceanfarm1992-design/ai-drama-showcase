@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Closer Look",
+      "narrator": "Pipi",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It floats gently in the water. Isn't it pretty?",
+      "search_hook": "why do sea anemones move like that",
+      "footage_ids": [
+        "pexels:8856780",
+        "pixabay:127713",
+        "pixabay:263034",
+        "pixabay:265144"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261008-001316/episode.mp4",
+      "published_at": "2026-10-08T00:13:19.108885Z",
+      "episode_number": 100,
+      "series_length": 100
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Shark Wonders",
       "narrator": "Dodo",
       "creature": "whale shark",
