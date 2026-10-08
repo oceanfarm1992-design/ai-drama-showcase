@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: Tiny Dancers",
+      "narrator": "Bini",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at those little shrimp! They swim by flicking their tails. It's like they're dancing through the water!",
+      "search_hook": "how do shrimp move in the ocean",
+      "footage_ids": [
+        "pexels:8856782",
+        "pixabay:11713",
+        "pixabay:133870",
+        "pixabay:133871"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261008-085938/episode.mp4",
+      "published_at": "2026-10-08T08:59:40.957623Z",
+      "episode_number": 101,
+      "series_length": 101
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: A Closer Look",
       "narrator": "Pipi",
       "creature": "sea anemone",
