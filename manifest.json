@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Starfish: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "starfish",
+      "language": "en",
+      "learning_objective": "Look at this starfish! It’s slowly crawling on the rocks. Such a neat way to move, isn't it?",
+      "search_hook": "how do starfish move on the ocean floor",
+      "footage_ids": [
+        "pexels:36481878",
+        "pexels:36906736",
+        "pixabay:76868"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261008-173944/episode.mp4",
+      "published_at": "2026-10-08T17:39:48.077691Z",
+      "episode_number": 103,
+      "series_length": 103
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whales: Gentle Giants of the Ocean",
       "narrator": "Tula",
       "creature": "whale",
