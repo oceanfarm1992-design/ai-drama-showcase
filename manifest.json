@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Playful Swimmers",
+      "narrator": "Dodo",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal! It swims so gracefully, gliding through the water like a fish. Isn’t it amazing?",
+      "search_hook": "how do seals swim so gracefully",
+      "footage_ids": [
+        "pexels:16913218",
+        "pexels:33391959",
+        "pexels:38438882",
+        "pixabay:261270"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261009-201200/episode.mp4",
+      "published_at": "2026-10-09T20:12:02.285716Z",
+      "episode_number": 109,
+      "series_length": 109
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Coral: Underwater Home Builders",
       "narrator": "Ollo",
       "creature": "coral",
