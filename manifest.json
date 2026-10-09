@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: Underwater Home Builders",
+      "narrator": "Ollo",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral grow! It builds its home slowly over time. Isn't that amazing?",
+      "search_hook": "how do corals build their reefs",
+      "footage_ids": [
+        "pexels:10604884",
+        "pexels:37059649",
+        "pixabay:156111",
+        "pixabay:263255"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261009-171606/episode.mp4",
+      "published_at": "2026-10-09T17:16:08.447446Z",
+      "episode_number": 108,
+      "series_length": 108
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Lions: Playful Friends",
       "narrator": "Tula",
       "creature": "sea lion",
