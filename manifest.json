@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: A Closer Look",
+      "narrator": "Tula",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at that shrimp! It swims by quickly moving its little tail. Such a fast and gentle swimmer!",
+      "search_hook": "how do shrimp move and swim",
+      "footage_ids": [
+        "pexels:34633053",
+        "pexels:7362020",
+        "pixabay:11621",
+        "pixabay:3625"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261010-130711/episode.mp4",
+      "published_at": "2026-10-10T13:07:14.128693Z",
+      "episode_number": 112,
+      "series_length": 112
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: A Closer Look",
       "narrator": "Bini",
       "creature": "cuttlefish",
