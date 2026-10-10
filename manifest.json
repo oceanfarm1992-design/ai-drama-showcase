@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Playful Swimmers",
+      "narrator": "Pipi",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Look at those dolphins! They jump so high. It's like they're playing!",
+      "search_hook": "how do dolphins communicate with each other",
+      "footage_ids": [
+        "pexels:11042818",
+        "pexels:11042821",
+        "pexels:12121501",
+        "pexels:31733333"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261010-000250/episode.mp4",
+      "published_at": "2026-10-10T00:02:52.721524Z",
+      "episode_number": 110,
+      "series_length": 110
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Playful Swimmers",
       "narrator": "Dodo",
       "creature": "seal",
