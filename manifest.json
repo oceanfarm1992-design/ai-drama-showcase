@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: A Closer Look",
+      "narrator": "Pipi",
+      "creature": "octopus",
+      "language": "en",
+      "learning_objective": "Look at that octopus! It’s swimming so smoothly. It pushes the water with its arms. Isn’t that amazing?",
+      "search_hook": "how does an octopus change color",
+      "footage_ids": [
+        "pexels:36642196",
+        "pixabay:119818",
+        "pixabay:310715",
+        "pixabay:332342"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261010-233531/episode.mp4",
+      "published_at": "2026-10-10T23:35:34.267978Z",
+      "episode_number": 115,
+      "series_length": 115
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: Amazing Swimmers",
       "narrator": "Dodo",
       "creature": "seahorse",
