@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: Amazing Swimmers",
+      "narrator": "Dodo",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at that seahorse! It swims upright like a little dancer. Isn't it graceful?",
+      "search_hook": "how do seahorses swim upright",
+      "footage_ids": [
+        "pexels:27302760",
+        "pexels:29499634",
+        "pexels:34448747",
+        "pexels:38583389"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261010-192426/episode.mp4",
+      "published_at": "2026-10-10T19:24:28.777452Z",
+      "episode_number": 114,
+      "series_length": 114
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: Gliding Through the Ocean",
       "narrator": "Ollo",
       "creature": "manta ray",
