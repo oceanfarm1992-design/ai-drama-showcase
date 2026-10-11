@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: Playful Pals",
+      "narrator": "Ollo",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that penguin! It's sliding on its belly down the ice. Whee! What a fun way to move!",
+      "search_hook": "how do penguins slide on ice",
+      "footage_ids": [
+        "pexels:34155272",
+        "pexels:35325871",
+        "pixabay:327101"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261011-162820/episode.mp4",
+      "published_at": "2026-10-11T16:28:22.720481Z",
+      "episode_number": 118,
+      "series_length": 118
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Closer Look",
       "narrator": "Tula",
       "creature": "jellyfish",
