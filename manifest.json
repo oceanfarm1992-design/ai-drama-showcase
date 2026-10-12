@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: Color Changers",
+      "narrator": "Dodo",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Look at the cuttlefish! It's swimming so smoothly and gracefully. Such a cool creature!",
+      "search_hook": "how does a cuttlefish change color",
+      "footage_ids": [
+        "pixabay:1081",
+        "pixabay:277224",
+        "pixabay:277227",
+        "pixabay:277231"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261012-223358/episode.mp4",
+      "published_at": "2026-10-12T22:34:00.910363Z",
+      "episode_number": 124,
+      "series_length": 124
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Shrimp: A Closer Look",
       "narrator": "Ollo",
       "creature": "shrimp",
