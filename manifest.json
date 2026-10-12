@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Friends of the Ocean",
+      "narrator": "Bini",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Oh, look at that dolphin! It's jumping so high! Dolphins love to leap and play in the waves.",
+      "search_hook": "how do dolphins communicate with each other",
+      "footage_ids": [
+        "pexels:11042822",
+        "pexels:32509694",
+        "pexels:37028508",
+        "pexels:37028616"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261012-091348/episode.mp4",
+      "published_at": "2026-10-12T09:13:52.246042Z",
+      "episode_number": 121,
+      "series_length": 121
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Pipi",
       "creature": "squid",
