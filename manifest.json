@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: The Curious Creatures",
+      "narrator": "Tula",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that crab! It walks sideways along the sand. Isn't that fun to see? It helps them move quickly!",
+      "search_hook": "how do crabs walk sideways on the beach",
+      "footage_ids": [
+        "pexels:34617338",
+        "pexels:36010572",
+        "pexels:5097346",
+        "pixabay:136465"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261012-160742/episode.mp4",
+      "published_at": "2026-10-12T16:07:44.558261Z",
+      "episode_number": 122,
+      "series_length": 122
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Friends of the Ocean",
       "narrator": "Bini",
       "creature": "dolphin",
