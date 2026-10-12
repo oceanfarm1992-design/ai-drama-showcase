@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at that shrimp swimming! It uses its little legs to paddle through the water. So fast and wiggly!",
+      "search_hook": "how do shrimp swim underwater",
+      "footage_ids": [
+        "pexels:8856782",
+        "pixabay:133870",
+        "pixabay:133871"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261012-200352/episode.mp4",
+      "published_at": "2026-10-12T20:03:54.200318Z",
+      "episode_number": 123,
+      "series_length": 123
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crabs: The Curious Creatures",
       "narrator": "Tula",
       "creature": "crab",
