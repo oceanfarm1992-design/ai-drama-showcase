@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Manta Rays: Gliding Giants",
+      "narrator": "Dodo",
+      "creature": "manta ray",
+      "language": "en",
+      "learning_objective": "Look at that manta ray glide! It's like a big bird flying underwater. So smooth and gentle!",
+      "search_hook": "how do manta rays swim gracefully",
+      "footage_ids": [
+        "pexels:33956997",
+        "pexels:37929957",
+        "pexels:39608300",
+        "pexels:39608308"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261013-204702/episode.mp4",
+      "published_at": "2026-10-13T20:47:04.311000Z",
+      "episode_number": 129,
+      "series_length": 129
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Ollo",
       "creature": "pelican",
