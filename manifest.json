@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: A Magical Ride",
+      "narrator": "Pipi",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at the seahorse! It's swimming in a gentle, swirly way. They use their tiny fins to flap and move.",
+      "search_hook": "how do seahorses move in water",
+      "footage_ids": [
+        "pexels:11358398",
+        "pexels:27862862",
+        "pexels:34227595",
+        "pexels:39305714"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261013-020335/episode.mp4",
+      "published_at": "2026-10-13T02:03:37.915435Z",
+      "episode_number": 125,
+      "series_length": 125
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: Color Changers",
       "narrator": "Dodo",
       "creature": "cuttlefish",
