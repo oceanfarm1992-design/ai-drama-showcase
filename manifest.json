@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: Colorful Friends",
+      "narrator": "Bini",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It floats softly with the waves. Isn't it beautiful and colorful?",
+      "search_hook": "how do sea anemones move",
+      "footage_ids": [
+        "pexels:8856785",
+        "pixabay:265144",
+        "pixabay:265145"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261013-092718/episode.mp4",
+      "published_at": "2026-10-13T09:27:20.770887Z",
+      "episode_number": 126,
+      "series_length": 126
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: A Magical Ride",
       "narrator": "Pipi",
       "creature": "seahorse",
