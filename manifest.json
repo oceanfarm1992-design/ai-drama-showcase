@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Living Reef",
+      "narrator": "Pipi",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral! It’s building a big home. Corals grow slowly, layer by layer, like tiny builders!",
+      "search_hook": "how do corals grow in the ocean",
+      "footage_ids": [
+        "pixabay:156151",
+        "pixabay:309460",
+        "pixabay:51594"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261013-235136/episode.mp4",
+      "published_at": "2026-10-13T23:51:38.517971Z",
+      "episode_number": 130,
+      "series_length": 130
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Rays: Gliding Giants",
       "narrator": "Dodo",
       "creature": "manta ray",
