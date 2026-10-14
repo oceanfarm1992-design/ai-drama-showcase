@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: Waddling Wonders",
+      "narrator": "Tula",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that little penguin go! It wobbles side to side as it walks on the ice.",
+      "search_hook": "how do penguins keep warm in cold",
+      "footage_ids": [
+        "pexels:11403283",
+        "pexels:34532645",
+        "pixabay:114413"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261014-122250/episode.mp4",
+      "published_at": "2026-10-14T12:22:53.286681Z",
+      "episode_number": 132,
+      "series_length": 132
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Playful Swimmers",
       "narrator": "Bini",
       "creature": "seal",
