@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Glowing Wonder",
+      "narrator": "Tula",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at that! The jellyfish is glowing. It sparkles like stars in the water!",
+      "search_hook": "how do jellyfish glow in the dark",
+      "footage_ids": [
+        "pexels:16521053",
+        "pexels:28635600",
+        "pixabay:15324",
+        "pixabay:268215"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-120826/episode.mp4",
+      "published_at": "2026-10-15T12:08:28.598983Z",
+      "episode_number": 137,
+      "series_length": 137
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Bini",
       "creature": "squid",
