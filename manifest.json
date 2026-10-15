@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Squid: A Closer Look",
+      "narrator": "Bini",
+      "creature": "squid",
+      "language": "en",
+      "learning_objective": "Look at that squid go! It swims so smoothly through the water, like a little dancer.",
+      "search_hook": "how do squids change color",
+      "footage_ids": [
+        "pixabay:1496",
+        "pixabay:1497",
+        "pixabay:26241"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-072903/episode.mp4",
+      "published_at": "2026-10-15T07:29:05.862776Z",
+      "episode_number": 136,
+      "series_length": 136
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whales: Gentle Giants of the Ocean",
       "narrator": "Pipi",
       "creature": "whale",
