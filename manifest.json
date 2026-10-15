@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingray: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Look at that stingray! It glides through the water like a graceful bird. Isn't it beautiful?",
+      "search_hook": "how do stingrays swim so gracefully",
+      "footage_ids": [
+        "pexels:33873173",
+        "pexels:33994395",
+        "pexels:34197907"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-152302/episode.mp4",
+      "published_at": "2026-10-15T15:23:04.999637Z",
+      "episode_number": 138,
+      "series_length": 138
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: A Glowing Wonder",
       "narrator": "Tula",
       "creature": "jellyfish",
