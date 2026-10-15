@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: Tiny Ocean Helpers",
+      "narrator": "Pipi",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at that little shrimp! It swims quickly with its tiny legs. Such a busy little swimmer!",
+      "search_hook": "how do shrimp clean the ocean",
+      "footage_ids": [
+        "pexels:8856782",
+        "pixabay:133870",
+        "pixabay:133871"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-230508/episode.mp4",
+      "published_at": "2026-10-15T23:05:11.309177Z",
+      "episode_number": 140,
+      "series_length": 140
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crab Adventures: A Closer Look",
       "narrator": "Dodo",
       "creature": "crab",
