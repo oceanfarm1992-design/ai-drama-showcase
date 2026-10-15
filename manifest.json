@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crab Adventures: A Closer Look",
+      "narrator": "Dodo",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that crab go! It walks sideways with such style!",
+      "search_hook": "why do crabs walk sideways",
+      "footage_ids": [
+        "pexels:34366128",
+        "pexels:36010572",
+        "pixabay:136463",
+        "pixabay:46312"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-191742/episode.mp4",
+      "published_at": "2026-10-15T19:17:45.051284Z",
+      "episode_number": 139,
+      "series_length": 139
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: A Closer Look",
       "narrator": "Ollo",
       "creature": "stingray",
