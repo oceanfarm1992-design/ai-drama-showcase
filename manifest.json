@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: The Colorful Chameleon",
+      "narrator": "Tula",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Look at that cuttlefish! It's changing colors so quickly. It can blend in with its surroundings!",
+      "search_hook": "how do cuttlefish change their color",
+      "footage_ids": [
+        "pexels:37885077",
+        "pixabay:277224",
+        "pixabay:277227",
+        "pixabay:277231"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261016-115716/episode.mp4",
+      "published_at": "2026-10-16T11:57:18.848812Z",
+      "episode_number": 142,
+      "series_length": 142
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Bini",
       "creature": "octopus",
