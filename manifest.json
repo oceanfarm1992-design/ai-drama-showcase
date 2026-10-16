@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: Colorful Friends",
+      "narrator": "Pipi",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Look at that little clownfish! It swims so gracefully among the coral. Isn’t it beautiful?",
+      "search_hook": "why do clownfish live in anemones",
+      "footage_ids": [
+        "pexels:18191868",
+        "pexels:33377766",
+        "pexels:33508479",
+        "pexels:34484804"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261016-225120/episode.mp4",
+      "published_at": "2026-10-16T22:51:23.620018Z",
+      "episode_number": 145,
+      "series_length": 145
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: A Gliding Wonder",
       "narrator": "Dodo",
       "creature": "manta ray",
