@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: Waddle and Swim!",
+      "narrator": "Ollo",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that little penguin go! It swims so smoothly in the water!",
+      "search_hook": "how do penguins swim underwater",
+      "footage_ids": [
+        "pexels:11403283",
+        "pexels:12802151",
+        "pexels:31937366",
+        "pexels:34197905"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261017-140057/episode.mp4",
+      "published_at": "2026-10-17T14:00:59.827162Z",
+      "episode_number": 148,
+      "series_length": 148
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtles: Gentle Gliders",
       "narrator": "Tula",
       "creature": "sea turtle",
