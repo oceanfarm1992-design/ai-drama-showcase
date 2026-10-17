@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: Colorful Life Underwater",
+      "narrator": "Dodo",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at this coral growing! It's like a beautiful underwater garden!",
+      "search_hook": "why do corals come in so many colors",
+      "footage_ids": [
+        "pexels:38253940",
+        "pexels:39330399",
+        "pexels:39501365",
+        "pixabay:26572"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261017-175453/episode.mp4",
+      "published_at": "2026-10-17T17:54:55.991001Z",
+      "episode_number": 149,
+      "series_length": 149
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Penguins: Waddle and Swim!",
       "narrator": "Ollo",
       "creature": "penguin",
