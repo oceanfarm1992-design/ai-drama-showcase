@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Friendly Swimmers",
+      "narrator": "Bini",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Wow! Look at those dolphins! They jump high into the air, like they're playing. Isn't that fun?",
+      "search_hook": "why do dolphins jump out of water",
+      "footage_ids": [
+        "pexels:29208640",
+        "pexels:38882575",
+        "pixabay:372241"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261017-065925/episode.mp4",
+      "published_at": "2026-10-17T06:59:29.540910Z",
+      "episode_number": 146,
+      "series_length": 146
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Colorful Friends",
       "narrator": "Pipi",
       "creature": "clownfish",
