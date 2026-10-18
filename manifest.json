@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Pelican: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "pelican",
+      "language": "en",
+      "learning_objective": "Look at that pelican soaring! It glides so gracefully over the water.",
+      "search_hook": "how do pelicans catch their food",
+      "footage_ids": [
+        "pexels:15363016",
+        "pexels:26548733",
+        "pexels:36894703",
+        "pixabay:81547"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261018-141354/episode.mp4",
+      "published_at": "2026-10-18T14:13:55.884891Z",
+      "episode_number": 153,
+      "series_length": 153
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Shark: Gentle Giants",
       "narrator": "Tula",
       "creature": "whale shark",
