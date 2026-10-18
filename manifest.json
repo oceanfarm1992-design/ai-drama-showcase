@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: Tiny Wonders",
+      "narrator": "Bini",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at that shrimp! It's using its tiny legs to clean its body. Isn’t that funny? A little scrub-a-dub!",
+      "search_hook": "how do shrimp clean themselves",
+      "footage_ids": [
+        "pexels:39590523",
+        "pixabay:11621",
+        "pixabay:11713",
+        "pixabay:11714"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261018-071831/episode.mp4",
+      "published_at": "2026-10-18T07:18:34.345015Z",
+      "episode_number": 151,
+      "series_length": 151
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Pipi",
       "creature": "squid",
