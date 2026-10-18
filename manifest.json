@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: A Closer Look",
+      "narrator": "Dodo",
+      "creature": "octopus",
+      "language": "en",
+      "learning_objective": "Wow! Look at that octopus! It can change colors! Isn't it amazing how it blends in with the rocks?",
+      "search_hook": "how does an octopus change color",
+      "footage_ids": [
+        "pexels:36642196",
+        "pexels:39373500",
+        "pexels:7301866",
+        "pixabay:329847"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261018-181550/episode.mp4",
+      "published_at": "2026-10-18T18:15:52.725983Z",
+      "episode_number": 154,
+      "series_length": 154
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Ollo",
       "creature": "pelican",
