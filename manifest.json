@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingrays: Gentle Gliders",
+      "narrator": "Pipi",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Look at the stingray! It's gliding so gracefully through the water. It moves its wings like a bird. How beautiful!",
+      "search_hook": "how do stingrays swim gracefully",
+      "footage_ids": [
+        "pexels:28197985",
+        "pexels:35703768",
+        "pexels:37929975",
+        "pexels:4628755"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261019-233813/episode.mp4",
+      "published_at": "2026-10-19T23:38:15.470144Z",
+      "episode_number": 160,
+      "series_length": 160
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Colorful Friends",
       "narrator": "Dodo",
       "creature": "clownfish",
