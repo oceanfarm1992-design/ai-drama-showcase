@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemones: Colorful Friends",
+      "narrator": "Ollo",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at those beautiful tentacles! They wave in the water like a dance!",
+      "search_hook": "how do sea anemones catch food",
+      "footage_ids": [
+        "pexels:12860659",
+        "pixabay:134169",
+        "pixabay:263034",
+        "pixabay:265144"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261019-171546/episode.mp4",
+      "published_at": "2026-10-19T17:15:48.783623Z",
+      "episode_number": 158,
+      "series_length": 158
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Lions: Playful Swimmers",
       "narrator": "Tula",
       "creature": "sea lion",
