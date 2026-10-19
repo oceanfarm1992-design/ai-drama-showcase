@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Lions: Playful Swimmers",
+      "narrator": "Tula",
+      "creature": "sea lion",
+      "language": "en",
+      "learning_objective": "Look at that! Sea lions are such graceful swimmers. They zip through the water like little torpedoes!",
+      "search_hook": "how do sea lions swim so fast",
+      "footage_ids": [
+        "pexels:34565809",
+        "pexels:36118169",
+        "pixabay:134264",
+        "pixabay:139250"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261019-135845/episode.mp4",
+      "published_at": "2026-10-19T13:58:47.914377Z",
+      "episode_number": 157,
+      "series_length": 157
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: A Closer Look",
       "narrator": "Bini",
       "creature": "starfish",
