@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: A Closer Look",
+      "narrator": "Ollo",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that penguin! Wheee! It's sliding on its belly. Such a fun way to move fast!",
+      "search_hook": "how do penguins slide on ice",
+      "footage_ids": [
+        "pexels:31750543",
+        "pexels:35325871",
+        "pexels:9116188",
+        "pixabay:127477"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261020-152734/episode.mp4",
+      "published_at": "2026-10-20T15:27:37.519961Z",
+      "episode_number": 163,
+      "series_length": 163
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Rays: Gentle Giants",
       "narrator": "Tula",
       "creature": "manta ray",
