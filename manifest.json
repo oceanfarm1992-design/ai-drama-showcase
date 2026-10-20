@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Manta Rays: Gentle Giants",
+      "narrator": "Tula",
+      "creature": "manta ray",
+      "language": "en",
+      "learning_objective": "Look at that manta ray! It's gliding smoothly through the water like a bird in the sky.",
+      "search_hook": "how do manta rays glide through the water",
+      "footage_ids": [
+        "pexels:31999875",
+        "pexels:35681606",
+        "pexels:39608300"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261020-121034/episode.mp4",
+      "published_at": "2026-10-20T12:10:37.107384Z",
+      "episode_number": 162,
+      "series_length": 162
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: A Gentle Swimmer",
       "narrator": "Bini",
       "creature": "sea turtle",
