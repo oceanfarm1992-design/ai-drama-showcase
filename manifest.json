@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtle: A Gentle Swimmer",
+      "narrator": "Bini",
+      "creature": "sea turtle",
+      "language": "en",
+      "learning_objective": "Look at that sea turtle! It glides so gracefully through the water. What a smooth swimmer!",
+      "search_hook": "how do sea turtles swim underwater",
+      "footage_ids": [
+        "pexels:18042759",
+        "pexels:35745440",
+        "pixabay:273312"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261020-073216/episode.mp4",
+      "published_at": "2026-10-20T07:32:19.899489Z",
+      "episode_number": 161,
+      "series_length": 161
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingrays: Gentle Gliders",
       "narrator": "Pipi",
       "creature": "stingray",
