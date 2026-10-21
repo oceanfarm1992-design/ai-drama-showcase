@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Colorful Gardens",
+      "narrator": "Tula",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at all the little fish swimming around the coral! They like to play and hide among the colorful branches.",
+      "search_hook": "why are coral reefs so colorful",
+      "footage_ids": [
+        "pexels:31855152",
+        "pexels:38248211",
+        "pixabay:156151"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261021-122509/episode.mp4",
+      "published_at": "2026-10-21T12:25:11.482234Z",
+      "episode_number": 167,
+      "series_length": 167
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Bini",
       "creature": "octopus",
