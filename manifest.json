@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: A Closer Look",
+      "narrator": "Dodo",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at that jellyfish floating! It's like a little balloon in the sea. So graceful!",
+      "search_hook": "how do jellyfish float in the ocean",
+      "footage_ids": [
+        "pexels:28635600",
+        "pexels:30043254",
+        "pixabay:268215",
+        "pixabay:4294"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261021-192349/episode.mp4",
+      "published_at": "2026-10-21T19:23:52.693483Z",
+      "episode_number": 169,
+      "series_length": 169
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: A Closer Look",
       "narrator": "Ollo",
       "creature": "starfish",
