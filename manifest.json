@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: A Colorful Wonder",
+      "narrator": "Bini",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Wow! Look at that cuttlefish! It’s changing colors. Isn’t it beautiful? It can blend in with the sand!",
+      "search_hook": "how do cuttlefish change color",
+      "footage_ids": [
+        "pixabay:277224",
+        "pixabay:277227",
+        "pixabay:277231"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261022-073446/episode.mp4",
+      "published_at": "2026-10-22T07:34:49.145352Z",
+      "episode_number": 171,
+      "series_length": 171
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Shark: Gentle Giants",
       "narrator": "Pipi",
       "creature": "whale shark",
