@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Spiky and Special",
+      "narrator": "Pipi",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Look at this sea urchin! It moves slowly, crawling on the rocks. Its tiny tube feet help it explore.",
+      "search_hook": "how do sea urchins move around",
+      "footage_ids": [
+        "pexels:35521555",
+        "pixabay:121700",
+        "pixabay:133544"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261022-232044/episode.mp4",
+      "published_at": "2026-10-22T23:20:46.879331Z",
+      "episode_number": 175,
+      "series_length": 175
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Lions: Playful Pals",
       "narrator": "Dodo",
       "creature": "sea lion",
