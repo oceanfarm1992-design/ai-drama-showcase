@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Pelican: A Closer Look",
+      "narrator": "Tula",
+      "creature": "pelican",
+      "language": "en",
+      "learning_objective": "Look at the pelican flying high! It glides gracefully, using its wide wings to soar.",
+      "search_hook": "how do pelicans catch fish",
+      "footage_ids": [
+        "pexels:36208238",
+        "pexels:36895928",
+        "pixabay:372995",
+        "pixabay:80989"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261022-122504/episode.mp4",
+      "published_at": "2026-10-22T12:25:06.645240Z",
+      "episode_number": 172,
+      "series_length": 172
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: A Colorful Wonder",
       "narrator": "Bini",
       "creature": "cuttlefish",
