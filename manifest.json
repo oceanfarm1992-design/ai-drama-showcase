@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Lions: Playful Pals",
+      "narrator": "Dodo",
+      "creature": "sea lion",
+      "language": "en",
+      "learning_objective": "Wow! Listen to that sea lion barking! It’s talking to its friends on the rocks!",
+      "search_hook": "why do sea lions bark and play",
+      "footage_ids": [
+        "pexels:36985340",
+        "pixabay:131556",
+        "pixabay:134264",
+        "pixabay:139248"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261022-195514/episode.mp4",
+      "published_at": "2026-10-22T19:55:17.020364Z",
+      "episode_number": 174,
+      "series_length": 174
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Playful Ocean Friends",
       "narrator": "Ollo",
       "creature": "seal",
