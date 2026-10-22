@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Playful Ocean Friends",
+      "narrator": "Ollo",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal go! It swims so gracefully through the water!",
+      "search_hook": "how do seals swim so fast",
+      "footage_ids": [
+        "pexels:11358398",
+        "pexels:28699817",
+        "pexels:34954308",
+        "pexels:36985151"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261022-161035/episode.mp4",
+      "published_at": "2026-10-22T16:10:38.404118Z",
+      "episode_number": 173,
+      "series_length": 173
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: A Closer Look",
       "narrator": "Tula",
       "creature": "pelican",
