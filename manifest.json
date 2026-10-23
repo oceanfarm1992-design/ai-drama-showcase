@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphin: A Playful Friend",
+      "narrator": "Bini",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Look at that dolphin jump! It dances in the waves like it’s having so much fun!",
+      "search_hook": "how do dolphins communicate with each other",
+      "footage_ids": [
+        "pexels:12121501",
+        "pexels:32509693",
+        "pexels:33768425",
+        "pixabay:30968"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261023-080131/episode.mp4",
+      "published_at": "2026-10-23T08:01:35.144436Z",
+      "episode_number": 176,
+      "series_length": 176
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Urchin: Spiky and Special",
       "narrator": "Pipi",
       "creature": "sea urchin",
