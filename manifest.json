@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Colorful Builders",
+      "narrator": "Pipi",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the tiny coral polyps! They work together to build big reefs. It takes a long time, but they create beautiful homes!",
+      "search_hook": "how do corals make reefs",
+      "footage_ids": [
+        "pexels:35417979",
+        "pexels:35661718",
+        "pexels:39501363",
+        "pixabay:26572"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261023-231016/episode.mp4",
+      "published_at": "2026-10-23T23:10:18.464439Z",
+      "episode_number": 180,
+      "series_length": 180
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: Gliding Through the Sea",
       "narrator": "Dodo",
       "creature": "stingray",
