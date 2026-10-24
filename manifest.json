@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: A Close-Up Adventure",
+      "narrator": "Tula",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that little crab go! It moves sideways, quickly scuttling along the sand.",
+      "search_hook": "how do crabs move sideways on the sand",
+      "footage_ids": [
+        "pexels:18649123",
+        "pexels:34617338",
+        "pexels:36010572",
+        "pixabay:47896"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261024-113846/episode.mp4",
+      "published_at": "2026-10-24T11:38:48.246992Z",
+      "episode_number": 182,
+      "series_length": 182
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Wonders: Swimming Giants",
       "narrator": "Bini",
       "creature": "whale",
