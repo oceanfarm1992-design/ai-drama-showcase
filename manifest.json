@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: Waddle and Play",
+      "narrator": "Dodo",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at that penguin go! It waddles with its little feet. So cute and funny!",
+      "search_hook": "how do penguins stay warm in the cold",
+      "footage_ids": [
+        "pexels:12463591",
+        "pexels:12802151",
+        "pexels:34533199",
+        "pexels:9140345"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261024-181727/episode.mp4",
+      "published_at": "2026-10-24T18:17:29.758131Z",
+      "episode_number": 184,
+      "series_length": 184
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: Gentle Giants of the Sea",
       "narrator": "Ollo",
       "creature": "manta ray",
