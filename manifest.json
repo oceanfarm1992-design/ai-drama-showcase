@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: Dancing in the Sea",
+      "narrator": "Pipi",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at the seahorse! It swims by gently moving its tiny fins. So delicate and graceful!",
+      "search_hook": "how do seahorses swim in the ocean",
+      "footage_ids": [
+        "pexels:27302760",
+        "pexels:34448747",
+        "pexels:38583389",
+        "pexels:40470273"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261024-222946/episode.mp4",
+      "published_at": "2026-10-24T22:29:49.045492Z",
+      "episode_number": 185,
+      "series_length": 185
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Penguins: Waddle and Play",
       "narrator": "Dodo",
       "creature": "penguin",
