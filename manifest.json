@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Squid: A Closer Look",
+      "narrator": "Pipi",
+      "creature": "squid",
+      "language": "en",
+      "learning_objective": "Look at that squid! It swims so elegantly through the water. Isn't it beautiful?",
+      "search_hook": "how does a squid change color",
+      "footage_ids": [
+        "pexels:27862865",
+        "pixabay:1496",
+        "pixabay:1497",
+        "pixabay:26241"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261025-224906/episode.mp4",
+      "published_at": "2026-10-25T22:49:08.977716Z",
+      "episode_number": 190,
+      "series_length": 190
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Closer Look",
       "narrator": "Dodo",
       "creature": "clownfish",
