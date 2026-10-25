@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Playful Swimmers",
+      "narrator": "Tula",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal swim! It moves so smoothly through the water, just like a little rocket!",
+      "search_hook": "how do seals swim so gracefully",
+      "footage_ids": [
+        "pexels:20501969",
+        "pixabay:130849",
+        "pixabay:140080",
+        "pixabay:261267"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261025-120105/episode.mp4",
+      "published_at": "2026-10-25T12:01:08.056995Z",
+      "episode_number": 187,
+      "series_length": 187
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: Masters of Camouflage",
       "narrator": "Bini",
       "creature": "cuttlefish",
