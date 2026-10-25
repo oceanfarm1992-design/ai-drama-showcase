@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Cuttlefish: Masters of Camouflage",
+      "narrator": "Bini",
+      "creature": "cuttlefish",
+      "language": "en",
+      "learning_objective": "Look at this cuttlefish! It can change color so quickly! It's like a magic show under the sea.",
+      "search_hook": "how does a cuttlefish change color",
+      "footage_ids": [
+        "pexels:35661898",
+        "pexels:37885077",
+        "pexels:37981488",
+        "pexels:6675671"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261025-073953/episode.mp4",
+      "published_at": "2026-10-25T07:39:56.250024Z",
+      "episode_number": 186,
+      "series_length": 186
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: Dancing in the Sea",
       "narrator": "Pipi",
       "creature": "seahorse",
