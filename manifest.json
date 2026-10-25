@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: The Clever Color-Changer",
+      "narrator": "Ollo",
+      "creature": "octopus",
+      "language": "en",
+      "learning_objective": "Look at that octopus swim! It glides through the water like a dancer, changing direction so easily!",
+      "search_hook": "how does an octopus change color",
+      "footage_ids": [
+        "pexels:36642196",
+        "pixabay:119818",
+        "pixabay:310715",
+        "pixabay:31722"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261025-144122/episode.mp4",
+      "published_at": "2026-10-25T14:41:24.772474Z",
+      "episode_number": 188,
+      "series_length": 188
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Playful Swimmers",
       "narrator": "Tula",
       "creature": "seal",
