@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingray: A Closer Look",
+      "narrator": "Bini",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Look at that stingray swim! It glides so smoothly, like a big bird in the water.",
+      "search_hook": "how do stingrays move through water",
+      "footage_ids": [
+        "pexels:33873340",
+        "pexels:33994395",
+        "pexels:35601210",
+        "pexels:37929962"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261026-082419/episode.mp4",
+      "published_at": "2026-10-26T08:24:22.885592Z",
+      "episode_number": 191,
+      "series_length": 191
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Squid: A Closer Look",
       "narrator": "Pipi",
       "creature": "squid",
