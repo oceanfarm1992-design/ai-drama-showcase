@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: A Colorful World",
+      "narrator": "Tula",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral polyps! They are tiny animals. They work together to build a beautiful reef.",
+      "search_hook": "how do corals grow underwater",
+      "footage_ids": [
+        "pexels:13320442",
+        "pexels:34127731",
+        "pexels:39285630",
+        "pexels:39516119"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261026-133531/episode.mp4",
+      "published_at": "2026-10-26T13:35:34.572159Z",
+      "episode_number": 192,
+      "series_length": 192
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: A Closer Look",
       "narrator": "Bini",
       "creature": "stingray",
