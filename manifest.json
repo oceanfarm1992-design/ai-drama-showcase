@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Spiky Friends!",
+      "narrator": "Dodo",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Look at this little sea urchin moving! It uses its tube feet to crawl around. Go, little buddy!",
+      "search_hook": "how do sea urchins move around",
+      "footage_ids": [
+        "pexels:30211483",
+        "pexels:9116191",
+        "pixabay:133544"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261026-211126/episode.mp4",
+      "published_at": "2026-10-26T21:11:28.504251Z",
+      "episode_number": 194,
+      "series_length": 194
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtle: A Closer Look",
       "narrator": "Ollo",
       "creature": "sea turtle",
