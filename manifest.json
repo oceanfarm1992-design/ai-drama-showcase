@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: Floating Wonders",
+      "narrator": "Bini",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at that jellyfish! It’s floating so gently. Wow, it looks like a beautiful balloon in the water!",
+      "search_hook": "how do jellyfish move underwater",
+      "footage_ids": [
+        "pexels:11043117",
+        "pexels:28635605",
+        "pexels:38192807",
+        "pixabay:15324"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261027-075250/episode.mp4",
+      "published_at": "2026-10-27T07:52:53.672521Z",
+      "episode_number": 195,
+      "series_length": 195
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Urchin: Spiky Friends!",
       "narrator": "Dodo",
       "creature": "sea urchin",
