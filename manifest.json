@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Colorful Dance",
+      "narrator": "Ollo",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at how the sea anemone dances! It sways gently with the ocean currents. So graceful!",
+      "search_hook": "how do sea anemones catch food",
+      "footage_ids": [
+        "pexels:39233892",
+        "pexels:8856785",
+        "pixabay:134169",
+        "pixabay:263033"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261027-160637/episode.mp4",
+      "published_at": "2026-10-27T16:06:40.149180Z",
+      "episode_number": 197,
+      "series_length": 197
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Ray: Gentle Giants",
       "narrator": "Tula",
       "creature": "manta ray",
