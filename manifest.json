@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Starfish: Amazing Movers",
+      "narrator": "Bini",
+      "creature": "starfish",
+      "language": "en",
+      "learning_objective": "Look at this starfish! It is slowly crawling on the sand. Those little tube feet help it move. Isn't that neat?",
+      "search_hook": "how do starfish move on the ocean floor",
+      "footage_ids": [
+        "pexels:34437721",
+        "pexels:8186429",
+        "pexels:8456359"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261028-082854/episode.mp4",
+      "published_at": "2026-10-28T08:28:57.670514Z",
+      "episode_number": 200,
+      "series_length": 200
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Cuttlefish: Masters of Disguise",
       "narrator": "Pipi",
       "creature": "cuttlefish",
