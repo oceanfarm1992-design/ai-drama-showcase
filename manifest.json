@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorse: A Closer Look",
+      "narrator": "Dodo",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "Look at that seahorse! It swims upright, like it's dancing! How cool is that?",
+      "search_hook": "how do seahorses swim through water",
+      "footage_ids": [
+        "pexels:27302760",
+        "pexels:34448747",
+        "pexels:38583389",
+        "pexels:40470273"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261028-202457/episode.mp4",
+      "published_at": "2026-10-28T20:24:59.313753Z",
+      "episode_number": 203,
+      "series_length": 203
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: A Closer Look",
       "narrator": "Ollo",
       "creature": "octopus",
