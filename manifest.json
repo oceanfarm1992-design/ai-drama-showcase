@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: A Swimmer's Joy",
+      "narrator": "Pipi",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at the penguins swim! They glide through the water like little rockets. Isn't that amazing?",
+      "search_hook": "how do penguins swim underwater",
+      "footage_ids": [
+        "pexels:31750543",
+        "pixabay:114413",
+        "pixabay:127477"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261029-235603/episode.mp4",
+      "published_at": "2026-10-29T23:56:05.824469Z",
+      "episode_number": 209,
+      "series_length": 209
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: A Closer Look",
       "narrator": "Dodo",
       "creature": "sea anemone",
