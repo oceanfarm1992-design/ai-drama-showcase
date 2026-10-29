@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seals: Playful Swimmers",
+      "narrator": "Tula",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at that seal gliding through the water! It swishes its flippers and moves so gracefully.",
+      "search_hook": "how do seals swim in the ocean",
+      "footage_ids": [
+        "pexels:34954308",
+        "pixabay:261267",
+        "pixabay:261270"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261029-134350/episode.mp4",
+      "published_at": "2026-10-29T13:43:52.797288Z",
+      "episode_number": 206,
+      "series_length": 206
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: A Closer Look",
       "narrator": "Bini",
       "creature": "stingray",
