@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: A Closer Look",
+      "narrator": "Dodo",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at those colorful tentacles! They wave gently in the water, just like a dance!",
+      "search_hook": "why do sea anemones wave their tentacles",
+      "footage_ids": [
+        "pexels:39305714",
+        "pexels:8856780",
+        "pixabay:127713"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261029-202307/episode.mp4",
+      "published_at": "2026-10-29T20:23:09.492376Z",
+      "episode_number": 208,
+      "series_length": 208
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Colorful Adventure",
       "narrator": "Ollo",
       "creature": "clownfish",
