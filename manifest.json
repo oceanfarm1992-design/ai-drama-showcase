@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: A Colorful Adventure",
+      "narrator": "Ollo",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Look at that colorful clownfish swimming! It moves so gracefully among the coral.",
+      "search_hook": "how do clownfish live in anemones",
+      "footage_ids": [
+        "pexels:12860659",
+        "pexels:31201154",
+        "pexels:40470123",
+        "pexels:5302702"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261029-171035/episode.mp4",
+      "published_at": "2026-10-29T17:10:38.711574Z",
+      "episode_number": 207,
+      "series_length": 207
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Playful Swimmers",
       "narrator": "Tula",
       "creature": "seal",
