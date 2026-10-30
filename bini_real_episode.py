@@ -17,11 +17,12 @@ from bini_real_script import CREATURES, generate_real_episode
 
 SERIES_TITLE = "Bini's Real Ocean"
 _MANIFEST_URL = "https://raw.githubusercontent.com/oceanfarm1992-design/ai-drama-showcase/master/manifest.json"
-_RECENT_CREATURES = 15   # with 22 creatures and 1 episode/day, no animal repeats within 15 days
+_RECENT_CREATURES = 15   # with 21 creatures and 1 episode/day, no animal repeats within 15 days
 _RECENT_EPISODES_FOR_CLIPS = 15   # clips from these are never reused
 _SOFT_EPISODES_FOR_CLIPS = 60     # clips from these are only used if nothing fresher fits
 _RECENT_TITLES = 30
 _MIN_SEGMENTS = 2
+_CREATURE_ATTEMPTS = 3   # creatures tried before giving up when footage won't verify
 _MUSIC_GAIN = 0.15
 _END_CARD_SEC = 1.8
 # Facebook Reels rejects videos over 1m30s; leave a little headroom for
@@ -104,16 +105,10 @@ def _fit_song(song_wav, budget):
     return trimmed
 
 
-def build_real_episode(theme, out_path, character="bini"):
-    recent_creatures, recent_clips, older_clips, recent_titles = _recent_history()
-    theme = _pick_theme(theme, recent_creatures)
-    episode = generate_real_episode(theme, character, avoid_titles=recent_titles)
+def _shoot(episode, character, hook, recent_clips, older_clips):
+    """Fetch + render each segment's footage; segments without a verified
+    clip are dropped. Returns (segments, segment_videos, used_clips)."""
     creature = episode["creature"]
-    name = character.title()
-    title = episode.get("title", f"{name}'s Real Ocean: {creature}")
-    hook = episode.get("search_hook", "").strip()
-    print(f"EPISODE: {title} ({creature}) — narrated by {character}")
-
     # Open straight on real footage with the search question on screen:
     # on Shorts/TikTok the first second decides whether a viewer swipes away,
     # so the branded title card moved to the end.
@@ -132,7 +127,27 @@ def build_real_episode(theme, out_path, character="bini"):
         segments.append((frames, wav))
         segment_videos.append(video_path)
         print(f"    rendered {len(frames)} frames")
+    return segments, segment_videos, used_clips
 
+
+def build_real_episode(theme, out_path, character="bini"):
+    recent_creatures, recent_clips, older_clips, recent_titles = _recent_history()
+    name = character.title()
+    tried = []
+    for attempt in range(_CREATURE_ATTEMPTS):
+        pick = _pick_theme(theme, recent_creatures + tried)
+        episode = generate_real_episode(pick, character, avoid_titles=recent_titles)
+        creature = episode["creature"]
+        title = episode.get("title", f"{name}'s Real Ocean: {creature}")
+        hook = episode.get("search_hook", "").strip()
+        print(f"EPISODE: {title} ({creature}) — narrated by {character}")
+        segments, segment_videos, used_clips = _shoot(episode, character, hook, recent_clips, older_clips)
+        if len(segments) >= _MIN_SEGMENTS:
+            break
+        print(f"Only {len(segments)} segment(s) of {creature} had verified footage.")
+        if theme:  # a manually chosen theme: don't silently swap the animal
+            break
+        tried += [pick, creature]
     if len(segments) < _MIN_SEGMENTS:
         raise SystemExit(f"Only {len(segments)} segment(s) had usable footage — not publishing a too-short episode.")
 

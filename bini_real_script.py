@@ -13,11 +13,13 @@ import seabini_script as ss  # reuse _openai_key() and the verified creature fac
 
 # Each has 10+ free stock clips whose Pexels/Pixabay metadata actually names it
 # (checked 2026-09-24); gentle animals only, no sharks-that-bite/orcas/eels.
+# Squid was dropped 2026-10-30: stock "squid" results are mostly cooking and
+# Squid Game clips, and none of 4 audited squid episodes showed a live squid.
 CREATURES = [
     "jellyfish", "crab", "starfish", "octopus", "seahorse", "clownfish",
     "sea turtle", "dolphin", "coral", "sea anemone", "penguin", "seal",
     "sea lion", "stingray", "manta ray", "whale shark", "whale", "pelican",
-    "shrimp", "sea urchin", "squid", "cuttlefish",
+    "shrimp", "sea urchin", "cuttlefish",
 ]
 _MIN_NARRATION_WORDS = 45  # ~20s of speech; below this episodes felt too thin (one was 15s)
 

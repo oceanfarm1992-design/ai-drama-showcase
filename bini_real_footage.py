@@ -7,9 +7,14 @@ which clip is used:
      subject creature are tried first (stock search is fuzzy: a "walrus"
      query happily returns generic ocean footage);
   2. novelty - clip ids already used recently are skipped;
-  3. a vision check on 3 frames - the creature must actually be visible
-     and nothing may be scary for a 2-6 year old (this is real footage, so
-     the script's safety rules can't guarantee what the camera shows).
+  3. a vision check on 3 frames - the creature must actually be visible,
+     ALIVE in water or its natural habitat (not food, cooking, a market or
+     a decoration), and nothing may be scary for a 2-6 year old (this is
+     real footage, so the script's safety rules can't guarantee what the
+     camera shows). A clip that fails is never used; if the check can't run,
+     the clip is rejected rather than trusted.
+Clips whose metadata talks about food are dropped before download: stock
+searches for squid/octopus/shrimp/urchin return lots of cooking footage.
 """
 import base64, json, os, pathlib, random, re, ssl, subprocess, urllib.parse, urllib.request
 
@@ -24,6 +29,15 @@ _MIN_DUR, _MAX_DUR = 6, 40  # seconds — long enough to loop cleanly, short eno
 _MAX_TRIES = 4              # candidate clips downloaded + vision-checked per segment
 _EXTRA_TRIES = 3            # more tries from a broadened search before settling for an unclear clip
 _STOP = {"sea", "of", "the", "school", "moon", "a"}
+# Whole words from a clip's slug/tags that mean food, cooking or fishing.
+_FOOD = {
+    "cook", "cooks", "cooking", "cooked", "cuisine", "recipe", "dish", "dishes", "food", "foods",
+    "meal", "dinner", "lunch", "snack", "restaurant", "kitchen", "chef", "plate", "plated",
+    "fry", "fried", "frying", "grill", "grilled", "grilling", "roast", "roasted", "boiled",
+    "boiling", "steamed", "baked", "stew", "soup", "sauce", "pan", "wok", "calamari", "sushi",
+    "sashimi", "takoyaki", "seafood", "tempura", "paella", "ceviche", "market", "fishmonger",
+    "dried", "cocktail", "drink", "drinks", "bar", "delicious", "tasty", "menu", "game",
+}
 # Pixabay's CDN (and some Pexels edge cases) 403 requests with Python's default
 # urllib User-Agent; a normal browser UA avoids that.
 _UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
@@ -93,6 +107,12 @@ def _pixabay_search(query):
     return out
 
 
+def _is_food(text):
+    """Does a clip's slug/tags describe food or cooking rather than a live
+    animal? ("game" catches the many Squid Game clips.)"""
+    return not _FOOD.isdisjoint(re.findall(r"[a-z]+", text.lower()))
+
+
 def _mentions(text, subject):
     """Does a clip's slug/tags name the subject? Letters-only matching so
     'clown-fish' matches 'clownfish' and 'sea-turtle' matches 'sea turtle'."""
@@ -113,13 +133,14 @@ def _normalize_vertical(src_path, dst_path, ff_exe):
 
 
 def _vision_check(video_path, duration, subject, ff_exe):
-    """(subject_visible, kid_safe) from 3 frames. Best-effort: if the check
-    itself can't run (no key, network), the clip is accepted as before."""
+    """(usable, reason) from 3 frames. If the check can't run (no key,
+    network) the clip is rejected: unverified real footage once put cooked
+    squid and a sushi bar into kids' episodes."""
     try:
         import seabini_script as ss
         key = ss._openai_key()
     except BaseException:
-        return True, True
+        return False, "vision check unavailable (no OpenAI key)"
     images = []
     for frac in (0.2, 0.5, 0.8):
         jpg = f"{video_path}.{int(frac * 100)}.jpg"
@@ -129,10 +150,15 @@ def _vision_check(video_path, duration, subject, ff_exe):
             b64 = base64.b64encode(pathlib.Path(jpg).read_bytes()).decode()
             images.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}", "detail": "low"}})
     if not images:
-        return True, True
-    prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) video about a {subject}. "
-              'Reply with JSON only: {"subject_visible": true/false, "kid_safe": true/false}. '
-              f"subject_visible = a {subject} is clearly visible in at least one frame. "
+        return False, "could not extract frames"
+    prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video about a LIVE {subject}. "
+              'Reply with JSON only: {"subject_visible": true/false, "alive_in_habitat": true/false, '
+              '"is_food": true/false, "kid_safe": true/false}. '
+              f"subject_visible = a real {subject} (not a different animal) is clearly visible in at least one frame. "
+              f"alive_in_habitat = the {subject} is a living animal in the sea, on a shore, or in an aquarium "
+              "(false if it is dead, dried, a shell or decoration, held out of water, or a cartoon/toy/costume). "
+              "is_food = ANY frame shows food or eating by people: cooking, a pan or wok, a plate or dish, "
+              "a restaurant, sushi, a drink or glass, a fish market, or a caught animal. "
               "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
               "or eaten animal, hunting/attacking, fishing hooks or nets with caught animals, trash-choked "
               "animals, or anything violent. Divers, boats and ordinary ocean scenes are fine.")
@@ -143,10 +169,17 @@ def _vision_check(video_path, duration, subject, ff_exe):
                                      headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
         verdict = json.loads(json.loads(urllib.request.urlopen(req, context=_SSL, timeout=60).read())
                              ["choices"][0]["message"]["content"])
-        return bool(verdict.get("subject_visible")), bool(verdict.get("kid_safe"))
     except Exception as exc:
-        print(f"[footage] vision check unavailable ({exc}), accepting clip")
-        return True, True
+        return False, f"vision check unavailable ({exc})"
+    if verdict.get("is_food") is not False:
+        return False, "shows food/cooking"
+    if verdict.get("kid_safe") is not True:
+        return False, "not kid-safe"
+    if verdict.get("subject_visible") is not True:
+        return False, f"no {subject} visible"
+    if verdict.get("alive_in_habitat") is not True:
+        return False, f"{subject} not alive in its habitat"
+    return True, ""
 
 
 def _download(url, raw_path, out_path, ff_exe):
@@ -160,6 +193,8 @@ def _ranked(cands, used, avoid, subject, exclude=()):
     before not, older-episode clips (`avoid`) after fresh ones."""
     seen, pool = set(exclude), []
     for c in cands:
+        if _is_food(c[2]):
+            continue
         if c[0] not in seen:
             seen.add(c[0]); pool.append(c)
     fresh = [c for c in pool if c[0] not in used] or pool
@@ -188,12 +223,11 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
         print(f"[footage] No results for '{query}' on Pexels or Pixabay")
         return None
 
-    fallback = None
     tried = set()
     for round_no in range(2):
         if round_no == 1:
-            # Nothing clearly showed the creature: before settling for an
-            # unclear clip (or none), try a few more from a broader search.
+            # Nothing passed: try a few more from a broader search before
+            # giving up on this segment.
             more = [] if broadened else _pexels_search(broad) + _pixabay_search(broad)
             batch = _ranked(fresh + more, used, avoid, subject, exclude=tried)[:_EXTRA_TRIES]
         else:
@@ -208,18 +242,12 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
             except Exception as exc:
                 print(f"[footage] download failed for {clip_id}: {exc}")
                 continue
-            visible, safe = _vision_check(out_path, duration, subject, ff_exe)
-            if not safe:
-                print(f"[footage] rejected {clip_id}: not kid-safe")
-                continue
-            if visible:
+            ok, reason = _vision_check(out_path, duration, subject, ff_exe)
+            if ok:
                 used.add(clip_id)
                 print(f"[footage] {clip_id}: '{query}' -> {out_path}")
                 return out_path
-            print(f"[footage] rejected {clip_id}: no {subject} visible")
-            fallback = fallback or (clip_id, out_path)
-    if fallback:  # safe but the creature wasn't clearly visible - better than nothing
-        used.add(fallback[0])
-        print(f"[footage] {fallback[0]}: using best available (subject unclear)")
-        return fallback[1]
+            print(f"[footage] rejected {clip_id}: {reason}")
+    # No clip verifiably shows a live, real one: skip the segment rather than
+    # narrate "look at the squid!" over something else.
     return None
