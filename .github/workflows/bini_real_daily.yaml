@@ -2,15 +2,10 @@ name: Bini's Real Ocean Daily Episode
 
 on:
   schedule:
-    # One episode per character per day, all deliberately off-hour (GitHub's
-    # own docs warn crons pinned to :00 are most likely to be delayed/dropped
-    # under platform-wide load) and irregularly spaced (not evenly divided)
-    # across the day for both scheduling safety and audience-timezone spread.
-    - cron: '15 2 * * *'    # ~02:15 UTC - Bini (with song)
-    - cron: '40 6 * * *'    # ~06:40 UTC - Tula
-    - cron: '55 10 * * *'   # ~10:55 UTC - Ollo
-    - cron: '25 15 * * *'   # ~15:25 UTC - Dodo
-    - cron: '10 20 * * *'   # ~20:10 UTC - Pipi
+    # One episode per day, narrators taking turns (see "Determine narrator").
+    # Off the hour on purpose: GitHub's own docs warn crons pinned to :00 are
+    # the most likely to be delayed/dropped under platform-wide load.
+    - cron: '15 2 * * *'    # ~02:15 UTC
   workflow_dispatch:
     inputs:
       theme:
@@ -44,15 +39,15 @@ jobs:
 
       - name: Determine narrator for this run
         id: narrator
+        # Scheduled runs rotate through the five narrators by UTC day number,
+        # so each one (Bini with the song) comes round every 5 days.
         run: |
-          case "${{ github.event.schedule }}" in
-            '15 2 * * *')  echo "name=bini" >> "$GITHUB_OUTPUT" ;;
-            '40 6 * * *')  echo "name=tula" >> "$GITHUB_OUTPUT" ;;
-            '55 10 * * *') echo "name=ollo" >> "$GITHUB_OUTPUT" ;;
-            '25 15 * * *') echo "name=dodo" >> "$GITHUB_OUTPUT" ;;
-            '10 20 * * *') echo "name=pipi" >> "$GITHUB_OUTPUT" ;;
-            *) echo "name=${{ github.event.inputs.character || 'bini' }}" >> "$GITHUB_OUTPUT" ;;
-          esac
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            narrators=(bini tula ollo dodo pipi)
+            echo "name=${narrators[$(( $(date -u +%s) / 86400 % 5 ))]}" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=${{ github.event.inputs.character || 'bini' }}" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Install system deps (ffmpeg)
         run: sudo apt-get update && sudo apt-get install -y ffmpeg

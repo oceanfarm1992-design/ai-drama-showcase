@@ -17,7 +17,7 @@ from bini_real_script import CREATURES, generate_real_episode
 
 SERIES_TITLE = "Bini's Real Ocean"
 _MANIFEST_URL = "https://raw.githubusercontent.com/oceanfarm1992-design/ai-drama-showcase/master/manifest.json"
-_RECENT_CREATURES = 15   # with 22 creatures and 5 episodes/day, no animal repeats within 3 days
+_RECENT_CREATURES = 15   # with 22 creatures and 1 episode/day, no animal repeats within 15 days
 _RECENT_EPISODES_FOR_CLIPS = 15   # clips from these are never reused
 _SOFT_EPISODES_FOR_CLIPS = 60     # clips from these are only used if nothing fresher fits
 _RECENT_TITLES = 30
