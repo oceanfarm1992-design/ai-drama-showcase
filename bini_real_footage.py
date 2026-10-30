@@ -22,6 +22,7 @@ except ImportError:
 HERE = pathlib.Path(__file__).resolve().parent
 _MIN_DUR, _MAX_DUR = 6, 40  # seconds — long enough to loop cleanly, short enough to stay small
 _MAX_TRIES = 4              # candidate clips downloaded + vision-checked per segment
+_EXTRA_TRIES = 3            # more tries from a broadened search before settling for an unclear clip
 _STOP = {"sea", "of", "the", "school", "moon", "a"}
 # Pixabay's CDN (and some Pexels edge cases) 403 requests with Python's default
 # urllib User-Agent; a normal browser UA avoids that.
@@ -154,46 +155,69 @@ def _download(url, raw_path, out_path, ff_exe):
     _normalize_vertical(raw_path, out_path, ff_exe)
 
 
-def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None):
-    """Returns a local mp4 path, normalized to vertical 720x1280 @24fps, or
-    None if no suitable footage exists. `used` is a set of clip ids already
-    used (this episode + recent ones); the chosen clip's id is added to it.
-    `subject` is the creature the footage must actually show."""
-    used = used if used is not None else set()
-    subject = subject or query
-    cands = _pexels_search(query) + _pixabay_search(query)
-    if len(cands) < 5:  # very specific phrasing found little; broaden once
-        cands += _pexels_search(f"{subject} underwater") + _pixabay_search(f"{subject} underwater")
-    seen, pool = set(), []
+def _ranked(cands, used, avoid, subject, exclude=()):
+    """Dedupe and order candidates: never-used before `used`, relevant
+    before not, older-episode clips (`avoid`) after fresh ones."""
+    seen, pool = set(exclude), []
     for c in cands:
         if c[0] not in seen:
             seen.add(c[0]); pool.append(c)
     fresh = [c for c in pool if c[0] not in used] or pool
     random.shuffle(fresh)
-    fresh.sort(key=lambda c: not _mentions(c[2], subject))  # stable: relevant first, random within
+    # stable sort: relevant first, then not-recently-used, random within
+    fresh.sort(key=lambda c: (not _mentions(c[2], subject), c[0] in avoid))
+    return fresh
+
+
+def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None):
+    """Returns a local mp4 path, normalized to vertical 720x1280 @24fps, or
+    None if no suitable footage exists. `used` is a set of clip ids already
+    used (this episode + recent ones); the chosen clip's id is added to it.
+    `avoid` holds clip ids from older episodes: allowed, but tried last.
+    `subject` is the creature the footage must actually show."""
+    used = used if used is not None else set()
+    avoid = avoid or set()
+    subject = subject or query
+    broad = f"{subject} underwater"
+    cands = _pexels_search(query) + _pixabay_search(query)
+    broadened = len(cands) < 5
+    if broadened:  # very specific phrasing found little; broaden once
+        cands += _pexels_search(broad) + _pixabay_search(broad)
+    fresh = _ranked(cands, used, avoid, subject)
     if not fresh:
         print(f"[footage] No results for '{query}' on Pexels or Pixabay")
         return None
 
     fallback = None
-    for n, (clip_id, url, _text, duration) in enumerate(fresh[:_MAX_TRIES]):
-        raw_path = str(work_dir / f"{tag}_raw{n}.mp4")
-        out_path = str(work_dir / f"{tag}_vertical{n}.mp4")
-        try:
-            _download(url, raw_path, out_path, ff_exe)
-        except Exception as exc:
-            print(f"[footage] download failed for {clip_id}: {exc}")
-            continue
-        visible, safe = _vision_check(out_path, duration, subject, ff_exe)
-        if not safe:
-            print(f"[footage] rejected {clip_id}: not kid-safe")
-            continue
-        if visible:
-            used.add(clip_id)
-            print(f"[footage] {clip_id}: '{query}' -> {out_path}")
-            return out_path
-        print(f"[footage] rejected {clip_id}: no {subject} visible")
-        fallback = fallback or (clip_id, out_path)
+    tried = set()
+    for round_no in range(2):
+        if round_no == 1:
+            # Nothing clearly showed the creature: before settling for an
+            # unclear clip (or none), try a few more from a broader search.
+            more = [] if broadened else _pexels_search(broad) + _pixabay_search(broad)
+            batch = _ranked(fresh + more, used, avoid, subject, exclude=tried)[:_EXTRA_TRIES]
+        else:
+            batch = fresh[:_MAX_TRIES]
+        for clip_id, url, _text, duration in batch:
+            n = len(tried)
+            tried.add(clip_id)
+            raw_path = str(work_dir / f"{tag}_raw{n}.mp4")
+            out_path = str(work_dir / f"{tag}_vertical{n}.mp4")
+            try:
+                _download(url, raw_path, out_path, ff_exe)
+            except Exception as exc:
+                print(f"[footage] download failed for {clip_id}: {exc}")
+                continue
+            visible, safe = _vision_check(out_path, duration, subject, ff_exe)
+            if not safe:
+                print(f"[footage] rejected {clip_id}: not kid-safe")
+                continue
+            if visible:
+                used.add(clip_id)
+                print(f"[footage] {clip_id}: '{query}' -> {out_path}")
+                return out_path
+            print(f"[footage] rejected {clip_id}: no {subject} visible")
+            fallback = fallback or (clip_id, out_path)
     if fallback:  # safe but the creature wasn't clearly visible - better than nothing
         used.add(fallback[0])
         print(f"[footage] {fallback[0]}: using best available (subject unclear)")

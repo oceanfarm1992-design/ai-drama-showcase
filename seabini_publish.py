@@ -5,7 +5,7 @@ YouTube / TikTok / Facebook via Buffer's GraphQL API.
 Env: GH_TOKEN (the workflow's GITHUB_TOKEN), BUFFER_API_KEY.
 Run: python seabini_publish.py <video.mp4> --meta episode_meta.json
 """
-import base64, os, sys, json, datetime, pathlib, ssl, urllib.error, urllib.request
+import base64, os, sys, json, datetime, pathlib, shutil, ssl, subprocess, time, urllib.error, urllib.request
 
 try:
     import certifi
@@ -22,6 +22,9 @@ _BUFFER_CHANNELS = {
     "tiktok":   "6aa048c7cd8b9c702c2e9b3b",
     "facebook": "6aa047c5cd8b9c702c2e96ac",
 }
+# Facebook Reels rejects anything longer than 1m30s (Buffer InvalidInputError).
+_MAX_DURATION = {"facebook": 90.0}
+_RETRY_DELAYS = (5, 15, 45)  # seconds between attempts on GitHub 5xx / network errors
 
 _CREATE_POST = """
 mutation CreatePost($input: CreatePostInput!) {
@@ -204,12 +207,52 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
     return False
 
 
+def _video_duration(video_path: str):
+    """Seconds, or None if ffprobe isn't available / can't read the file."""
+    ffprobe = shutil.which("ffprobe")
+    if not ffprobe:
+        return None
+    try:
+        out = subprocess.run([ffprobe, "-v", "error", "-show_entries", "format=duration",
+                              "-of", "default=nw=1:nk=1", video_path],
+                             capture_output=True, text=True, check=True).stdout
+        return float(out.strip())
+    except (subprocess.CalledProcessError, ValueError):
+        return None
+
+
 def _post_all_channels(video_url: str, title: str, objective: str, series_title: str = "SEABINI",
-                       narrator: str = "Bini", search_hook: str = "") -> list:
-    """Posts to every channel even if one fails; returns the failed services."""
+                       narrator: str = "Bini", search_hook: str = "", duration: float = None) -> list:
+    """Posts to every channel even if one fails; returns the failed services.
+    Channels whose length limit the video exceeds are skipped, not failed."""
     caps = _captions(title, objective, series_title, narrator, search_hook)
-    return [service for service, channel_id in _BUFFER_CHANNELS.items()
-            if not _buffer_post(channel_id, service, video_url, caps, title, series_title, search_hook)]
+    failed = []
+    for service, channel_id in _BUFFER_CHANNELS.items():
+        limit = _MAX_DURATION.get(service)
+        if duration and limit and duration > limit:
+            print(f"::warning::[Buffer:{service}] skipped: video is {duration:.1f}s, limit is {limit:.0f}s")
+            continue
+        if not _buffer_post(channel_id, service, video_url, caps, title, series_title, search_hook):
+            failed.append(service)
+    return failed
+
+
+def _retryable(exc) -> bool:
+    if isinstance(exc, urllib.error.HTTPError):
+        return exc.code >= 500 or exc.code == 429
+    return isinstance(exc, (urllib.error.URLError, TimeoutError, ConnectionError))
+
+
+def _with_retry(what, fn):
+    """Run fn(), retrying transient GitHub failures (5xx, 429, network)."""
+    for attempt, delay in enumerate((*_RETRY_DELAYS, None)):
+        try:
+            return fn()
+        except Exception as exc:
+            if delay is None or not _retryable(exc):
+                raise
+            print(f"[{what}] transient error ({exc}), retry {attempt + 1}/{len(_RETRY_DELAYS)} in {delay}s")
+            time.sleep(delay)
 
 
 def _gh_api(method, path, body=None, content_type="application/json"):
@@ -225,7 +268,8 @@ def _gh_api(method, path, body=None, content_type="application/json"):
         "Content-Type": content_type,
     })
     try:
-        return json.loads(urllib.request.urlopen(req, context=_SSL_CTX, timeout=120).read())
+        raw = urllib.request.urlopen(req, context=_SSL_CTX, timeout=120).read()
+        return json.loads(raw) if raw else None
     except urllib.error.HTTPError as exc:
         err_body = exc.read().decode(errors="replace")
         print(f"[GitHub API] {exc.code} {method} {url}: {err_body[:500]}")
@@ -237,12 +281,20 @@ def _upload_release(video_path: str, title: str) -> str:
     token = _gh_token()
     print(f"[Release] Creating {tag} in {REPO} (token len={len(token)})")
 
-    # 1. Create the release
-    release = _gh_api("POST", f"/repos/{REPO}/releases", {
-        "tag_name": tag,
-        "name": title,
-        "body": "Auto-published by the SEABINI pipeline.",
-    })
+    # 1. Create the release. A 5xx can still have created it server-side, so
+    # a retry that hits 422 (tag exists) picks up the existing release.
+    def create():
+        try:
+            return _gh_api("POST", f"/repos/{REPO}/releases", {
+                "tag_name": tag,
+                "name": title,
+                "body": "Auto-published by the SEABINI pipeline.",
+            })
+        except urllib.error.HTTPError as exc:
+            if exc.code != 422:
+                raise
+            return _gh_api("GET", f"/repos/{REPO}/releases/tags/{tag}")
+    release = _with_retry("Release", create)
     upload_url = release["upload_url"].split("{")[0]  # strip {?name,label} template
     print(f"[Release] Created: {release['html_url']}")
 
@@ -255,8 +307,16 @@ def _upload_release(video_path: str, title: str) -> str:
         "Accept": "application/vnd.github+json",
         "Content-Type": "application/octet-stream",
     })
+    def upload():
+        # A failed attempt can leave a half-uploaded asset that blocks the name.
+        for a in _gh_api("GET", f"/repos/{REPO}/releases/{release['id']}/assets"):
+            if a["name"] == filename:
+                if a.get("state") == "uploaded" and a.get("size") == len(file_data):
+                    return a
+                _gh_api("DELETE", f"/repos/{REPO}/releases/assets/{a['id']}")
+        return json.loads(urllib.request.urlopen(req, context=_SSL_CTX, timeout=300).read())
     try:
-        asset = json.loads(urllib.request.urlopen(req, context=_SSL_CTX, timeout=300).read())
+        asset = _with_retry("Release", upload)
         print(f"[Release] Uploaded asset: {asset['name']} ({asset['size']} bytes)")
     except urllib.error.HTTPError as exc:
         # Stop here: carrying on would post a dead video link to every platform.
@@ -337,21 +397,35 @@ def publish(video_path: str, title: str, language: str = "en",
         "video_url": video_url,
         "published_at": datetime.datetime.utcnow().isoformat() + "Z",
     }
-    for attempt in range(3):  # retry if another run updated the manifest meanwhile
-        manifest, sha = _get_manifest()
-        n = sum(1 for e in manifest["episodes"] if e.get("series_title") == series_title) + 1
-        manifest["episodes"].insert(0, dict(entry, episode_number=n, series_length=n))
+    for attempt, delay in enumerate((*_RETRY_DELAYS, None)):
+        # Retry on conflicts (another run updated the manifest meanwhile) and
+        # transient errors. A 5xx PUT may still have committed, so skip the
+        # insert if this episode is already there.
         try:
+            manifest, sha = _get_manifest()
+            if any(e.get("video_url") == video_url for e in manifest["episodes"]):
+                print("[Manifest] Entry already present")
+                break
+            n = sum(1 for e in manifest["episodes"] if e.get("series_title") == series_title) + 1
+            manifest["episodes"].insert(0, dict(entry, episode_number=n, series_length=n))
             _put_manifest(manifest, title, sha)
             break
-        except urllib.error.HTTPError as exc:
-            if exc.code not in (409, 422) or attempt == 2:
+        except Exception as exc:
+            conflict = isinstance(exc, urllib.error.HTTPError) and exc.code in (409, 422)
+            if delay is None or not (conflict or _retryable(exc)):
                 raise
-            print(f"[Manifest] Conflict ({exc.code}), retrying...")
+            print(f"[Manifest] {exc}, retrying in {delay}s...")
+            time.sleep(delay)
 
-    failed = _post_all_channels(video_url, title, objective, series_title, narrator, search_hook)
-    if failed:
-        raise SystemExit(f"[Buffer] Posting failed for: {', '.join(failed)}")
+    # The episode is live (release + manifest) at this point, so a social
+    # posting problem is a warning, not a failed run — unless every channel
+    # failed, which points at the Buffer key/account rather than one post.
+    failed = _post_all_channels(video_url, title, objective, series_title, narrator, search_hook,
+                                _video_duration(video_path))
+    if failed and len(failed) == len(_BUFFER_CHANNELS):
+        raise SystemExit(f"[Buffer] Posting failed for every channel: {', '.join(failed)}")
+    for service in failed:
+        print(f"::warning::[Buffer:{service}] posting failed; episode is published, post manually if needed")
     return video_url
 
 

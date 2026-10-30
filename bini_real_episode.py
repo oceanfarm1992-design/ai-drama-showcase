@@ -17,20 +17,28 @@ from bini_real_script import CREATURES, generate_real_episode
 
 SERIES_TITLE = "Bini's Real Ocean"
 _MANIFEST_URL = "https://raw.githubusercontent.com/oceanfarm1992-design/ai-drama-showcase/master/manifest.json"
-_RECENT_CREATURES = 10   # with 22 creatures and 5 episodes/day, no animal repeats within 2 days
-_RECENT_EPISODES_FOR_CLIPS = 15
+_RECENT_CREATURES = 15   # with 22 creatures and 5 episodes/day, no animal repeats within 3 days
+_RECENT_EPISODES_FOR_CLIPS = 15   # clips from these are never reused
+_SOFT_EPISODES_FOR_CLIPS = 60     # clips from these are only used if nothing fresher fits
+_RECENT_TITLES = 30
 _MIN_SEGMENTS = 2
 _MUSIC_GAIN = 0.15
+_END_CARD_SEC = 1.8
+# Facebook Reels rejects videos over 1m30s; leave a little headroom for
+# encoder rounding. Bini's song is trimmed (with a fade) to fit.
+_MAX_EPISODE_SEC = 88.0
+_MIN_SONG_SEC = 20.0      # shorter than this the song feels cut off, so drop it
+_SONG_FADE_SEC = 2.5
 
 
 def _recent_history():
-    """Best-effort (creatures, footage_ids) from the most recent episodes in
-    the public manifest, so a new episode avoids repeating either. Public
-    repo, no auth needed; any failure just means no exclusion."""
+    """Best-effort (creatures, hard_clips, soft_clips, titles) from the most
+    recent episodes in the public manifest, so a new episode avoids repeating
+    them. Public repo, no auth needed; any failure just means no exclusion."""
     try:
         data = json.loads(urllib.request.urlopen(_MANIFEST_URL, context=sr._SSL, timeout=10).read())
     except Exception:
-        return [], set()
+        return [], set(), set(), []
     eps = [e for e in data.get("episodes", []) if e.get("series_title") == SERIES_TITLE]
     creatures = []
     for ep in eps[:_RECENT_CREATURES]:
@@ -38,7 +46,9 @@ def _recent_history():
         if c:
             creatures.append(c)
     clips = {i for ep in eps[:_RECENT_EPISODES_FOR_CLIPS] for i in ep.get("footage_ids", [])}
-    return creatures, clips
+    soft = {i for ep in eps[:_SOFT_EPISODES_FOR_CLIPS] for i in ep.get("footage_ids", [])}
+    titles = [ep.get("title", "") for ep in eps[:_RECENT_TITLES]]
+    return creatures, clips, soft - clips, titles
 
 
 def _pick_theme(theme, recent_creatures):
@@ -73,10 +83,31 @@ def _samples(frames):
     return int(round(len(frames) / sr.FPS * sr.SR))
 
 
+def _fit_song(song_wav, budget):
+    """Trim the song to `budget` seconds with a fade-out so the episode stays
+    under the platform length limit. Returns the wav to use, or None if the
+    budget is too short for the song to be worth keeping."""
+    w = wave.open(song_wav, "rb")
+    dur = w.getnframes() / w.getframerate()
+    w.close()
+    if dur <= budget:
+        return song_wav
+    if budget < _MIN_SONG_SEC:
+        print(f"  song skipped: only {budget:.1f}s left under the {_MAX_EPISODE_SEC:.0f}s cap")
+        return None
+    trimmed = str(sr.WORK / "realsong0_fit.wav")
+    fade_start = max(0.0, budget - _SONG_FADE_SEC)
+    subprocess.run([sr.FF, "-y", "-i", song_wav, "-t", f"{budget:.2f}",
+                    "-af", f"afade=t=out:st={fade_start:.2f}:d={_SONG_FADE_SEC}", trimmed],
+                   check=True, capture_output=True)
+    print(f"  song trimmed {dur:.1f}s -> {budget:.1f}s to fit the {_MAX_EPISODE_SEC:.0f}s cap")
+    return trimmed
+
+
 def build_real_episode(theme, out_path, character="bini"):
-    recent_creatures, recent_clips = _recent_history()
+    recent_creatures, recent_clips, older_clips, recent_titles = _recent_history()
     theme = _pick_theme(theme, recent_creatures)
-    episode = generate_real_episode(theme, character)
+    episode = generate_real_episode(theme, character, avoid_titles=recent_titles)
     creature = episode["creature"]
     name = character.title()
     title = episode.get("title", f"{name}'s Real Ocean: {creature}")
@@ -91,7 +122,8 @@ def build_real_episode(theme, out_path, character="bini"):
     for i, seg in enumerate(episode["segments"]):
         query = seg.get("search_query", creature)
         print(f"  [{seg.get('behavior', '?')}] fetching '{query}' ...")
-        video_path = brf.fetch_footage(query, f"seg{i}", sr.WORK, sr.FF, used_clips, subject=creature)
+        video_path = brf.fetch_footage(query, f"seg{i}", sr.WORK, sr.FF, used_clips, subject=creature,
+                                       avoid=older_clips)
         if not video_path:
             print("    no suitable footage, skipping this segment")
             continue
@@ -110,7 +142,7 @@ def build_real_episode(theme, out_path, character="bini"):
         chunks.append(sr._wav_samples(wav, _samples(frames)))
     narration_audio = np.vstack(chunks).astype(np.float32)
 
-    end_frames, _ = sr._card(f"{name}'s Real Ocean", "New episode every day!", dur=1.8, character=character)
+    end_frames, _ = sr._card(f"{name}'s Real Ocean", "New episode every day!", dur=_END_CARD_SEC, character=character)
     end_len = _samples(end_frames)
     bed = _music_bed(len(narration_audio) + end_len)
     end_audio = np.zeros((end_len, 2), dtype=np.float32)
@@ -125,10 +157,13 @@ def build_real_episode(theme, out_path, character="bini"):
         print("generating song...")
         song_mp3 = sr.get_song(song["lyrics"], "realsong0")
         song_wav = sr._song_to_wav(song_mp3, "realsong0")
-        song_frames, _ = brr.render_real_dance_scene(song_wav, segment_videos[0], "realsong0", character)
-        all_frames = all_frames + song_frames
-        narration_audio = np.vstack([narration_audio, sr._wav_samples(song_wav, _samples(song_frames)).astype(np.float32)])
-        print("added song:", song.get("title"), round(len(song_frames) / sr.FPS, 1), "s")
+        budget = _MAX_EPISODE_SEC - len(all_frames) / sr.FPS - _END_CARD_SEC
+        song_wav = _fit_song(song_wav, budget)
+        if song_wav:
+            song_frames, _ = brr.render_real_dance_scene(song_wav, segment_videos[0], "realsong0", character)
+            all_frames = all_frames + song_frames
+            narration_audio = np.vstack([narration_audio, sr._wav_samples(song_wav, _samples(song_frames)).astype(np.float32)])
+            print("added song:", song.get("title"), round(len(song_frames) / sr.FPS, 1), "s")
 
     all_frames = all_frames + end_frames
     final = np.clip(np.vstack([narration_audio, end_audio]), -32768, 32767).astype(np.int16)

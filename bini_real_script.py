@@ -7,7 +7,7 @@ Same "general LLM + house bible in the system prompt" approach as
 seabini_script.py, reusing its curated creature list and OpenAI key
 handling. ~$0.001/episode.
 """
-import os, sys, json, urllib.request, pathlib
+import os, re, sys, json, urllib.request, pathlib
 
 import seabini_script as ss  # reuse _openai_key() and the verified creature facts
 
@@ -89,7 +89,7 @@ whether the algorithm surfaces the video to people actively searching):
 Return ONLY JSON in this exact shape:
 {{
   "creature": "the creature name, lowercase, simple (e.g. \\"jellyfish\\")",
-  "title": "short episode title, e.g. \\"Jellyfish: A Closer Look\\"",
+  "title": "short episode title naming this episode's specific behavior, e.g. \\"Jellyfish: Glowing in the Dark\\" (never generic like \\"A Closer Look\\")",
   "search_hook": "the search-style question, e.g. \\"why do jellyfish glow in the dark\\"",
   "segments": [
     {{"behavior": "short behavior label, e.g. swimming",
@@ -122,13 +122,32 @@ def _problems(ep: dict, include_song: bool) -> list:
     return probs
 
 
-def generate_real_episode(theme: str = "", character: str = "bini", include_song: bool = None) -> dict:
+def _norm_title(t: str) -> str:
+    return re.sub(r"[^a-z0-9 ]", "", t.lower()).strip()
+
+
+def _title_problem(ep: dict, avoid_titles: list) -> str:
+    """Soft check: a stale title is worth a retry but never fails the run."""
+    t = _norm_title(ep.get("title", ""))
+    if "closer look" in t:
+        return "generic 'A Closer Look' title"
+    if t in {_norm_title(a) for a in avoid_titles}:
+        return "title repeats a recent episode"
+    return ""
+
+
+def generate_real_episode(theme: str = "", character: str = "bini", include_song: bool = None,
+                          avoid_titles: list = None) -> dict:
     if include_song is None:
         include_song = (character == "bini")
+    avoid_titles = [t for t in (avoid_titles or []) if t]
     creature_hint = ", ".join(CREATURES)
     user = (f"Write today's Bini's Real Ocean episode. Theme/creature seed: {theme}.\n"
             if theme else
             f"Write today's Bini's Real Ocean episode about any one of these (or a similar) sea creature: {creature_hint}.\n")
+    if avoid_titles:
+        user += ("Recent episode titles (pick a fresh angle and a title unlike these): "
+                 + "; ".join(avoid_titles) + "\n")
     body = {
         "model": "gpt-4o-mini",
         "response_format": {"type": "json_object"},
@@ -136,7 +155,7 @@ def generate_real_episode(theme: str = "", character: str = "bini", include_song
         "messages": [{"role": "system", "content": _build_system(character, include_song)},
                      {"role": "user", "content": user}],
     }
-    probs = []
+    probs, usable = [], None
     for attempt in range(3):
         req = urllib.request.Request(
             "https://api.openai.com/v1/chat/completions",
@@ -151,8 +170,15 @@ def generate_real_episode(theme: str = "", character: str = "bini", include_song
         else:
             probs = _problems(ep, include_song)
             if not probs:
-                return ep
+                stale = _title_problem(ep, avoid_titles)
+                if not stale:
+                    return ep
+                usable = usable or ep
+                probs = [stale]
         print(f"[script] attempt {attempt + 1} unusable: {'; '.join(probs)}")
+    if usable:
+        print(f"[script] keeping a valid script despite: {'; '.join(probs)}")
+        return usable
     raise SystemExit(f"Script generation failed after 3 attempts: {'; '.join(probs)}")
 
 
