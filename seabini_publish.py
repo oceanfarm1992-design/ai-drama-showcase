@@ -241,7 +241,9 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
         print(f"[Buffer:{service}] GraphQL error: {errs}")
     elif typename == "PostActionSuccess" and post:
         print(f"[Buffer:{service}] Queued → id={post['id']} status={post['status']}")
-        return True
+        # Buffer can accept the request but report the post itself as failed
+        # (seen for TikTok); that is a failed post, not a queued one.
+        return str(post.get("status", "")).lower() != "error"
     elif err_msg:
         print(f"[Buffer:{service}] {typename}: {err_msg}")
     else:
