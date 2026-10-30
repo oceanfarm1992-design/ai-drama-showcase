@@ -449,7 +449,9 @@ def publish(video_path: str, title: str, language: str = "en",
             if any(e.get("video_url") == video_url for e in manifest["episodes"]):
                 print("[Manifest] Entry already present")
                 break
-            n = sum(1 for e in manifest["episodes"] if e.get("series_title") == series_title) + 1
+            # max+1, not count+1: episodes can be removed from the manifest
+            n = max((e.get("episode_number", 0) for e in manifest["episodes"]
+                     if e.get("series_title") == series_title), default=0) + 1
             manifest["episodes"].insert(0, dict(entry, episode_number=n, series_length=n))
             _put_manifest(manifest, title, sha)
             break

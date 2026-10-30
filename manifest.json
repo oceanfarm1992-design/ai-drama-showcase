@@ -2,24 +2,6 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
-      "title": "Sea Urchin: Spiky Friends",
-      "narrator": "Bini",
-      "creature": "sea urchin",
-      "language": "en",
-      "learning_objective": "Look at the sea urchin! It's slowly rolling along the ocean floor, using its tiny tube feet. What a safe little traveler!",
-      "search_hook": "how do sea urchins move around",
-      "footage_ids": [
-        "pexels:30211485",
-        "pexels:9116191",
-        "pixabay:38861"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261030-084148/episode.mp4",
-      "published_at": "2026-10-30T08:41:51.050458Z",
-      "episode_number": 210,
-      "series_length": 210
-    },
-    {
-      "series_title": "Bini's Real Ocean",
       "title": "Penguins: A Swimmer's Joy",
       "narrator": "Pipi",
       "creature": "penguin",
@@ -112,25 +94,6 @@
     },
     {
       "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Pipi",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid! It can change colors. Wow, it's like a rainbow underwater!",
-      "search_hook": "how do squids change color",
-      "footage_ids": [
-        "pexels:39501365",
-        "pixabay:15063",
-        "pixabay:180691",
-        "pixabay:23780"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261029-000440/episode.mp4",
-      "published_at": "2026-10-29T00:04:42.686556Z",
-      "episode_number": 204,
-      "series_length": 204
-    },
-    {
-      "series_title": "Bini's Real Ocean",
       "title": "Seahorse: A Closer Look",
       "narrator": "Dodo",
       "creature": "seahorse",
@@ -147,25 +110,6 @@
       "published_at": "2026-10-28T20:24:59.313753Z",
       "episode_number": 203,
       "series_length": 203
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Octopus: A Closer Look",
-      "narrator": "Ollo",
-      "creature": "octopus",
-      "language": "en",
-      "learning_objective": "Look at that octopus swim! It glides through the water with its wiggly arms. So smooth and graceful!",
-      "search_hook": "how does an octopus change color",
-      "footage_ids": [
-        "pexels:10990148",
-        "pexels:35703524",
-        "pexels:35703527",
-        "pexels:9984064"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261028-165649/episode.mp4",
-      "published_at": "2026-10-28T16:56:52.823825Z",
-      "episode_number": 202,
-      "series_length": 202
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -376,25 +320,6 @@
     },
     {
       "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Pipi",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid! It swims so elegantly through the water. Isn't it beautiful?",
-      "search_hook": "how does a squid change color",
-      "footage_ids": [
-        "pexels:27862865",
-        "pixabay:1496",
-        "pixabay:1497",
-        "pixabay:26241"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261025-224906/episode.mp4",
-      "published_at": "2026-10-25T22:49:08.977716Z",
-      "episode_number": 190,
-      "series_length": 190
-    },
-    {
-      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: A Closer Look",
       "narrator": "Dodo",
       "creature": "clownfish",
@@ -599,24 +524,6 @@
       "published_at": "2026-10-23T19:22:58.897050Z",
       "episode_number": 179,
       "series_length": 179
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Shrimp: Tiny Ocean Dancers",
-      "narrator": "Ollo",
-      "creature": "shrimp",
-      "language": "en",
-      "learning_objective": "Look how those little shrimp swim! They move their tails back and forth. It’s like a tiny dance in the water!",
-      "search_hook": "how do shrimp swim in the water",
-      "footage_ids": [
-        "pexels:8856782",
-        "pixabay:133871",
-        "pixabay:3625"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261023-153336/episode.mp4",
-      "published_at": "2026-10-23T15:33:37.966493Z",
-      "episode_number": 178,
-      "series_length": 178
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -1127,25 +1034,6 @@
     },
     {
       "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Pipi",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid gliding through the water! It moves so gracefully, just like a little dancer!",
-      "search_hook": "how do squids change color",
-      "footage_ids": [
-        "pexels:35631575",
-        "pexels:37906967",
-        "pexels:39501362",
-        "pixabay:136431"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261017-221911/episode.mp4",
-      "published_at": "2026-10-17T22:19:14.206739Z",
-      "episode_number": 150,
-      "series_length": 150
-    },
-    {
-      "series_title": "Bini's Real Ocean",
       "title": "Coral: Colorful Life Underwater",
       "narrator": "Dodo",
       "creature": "coral",
@@ -1385,24 +1273,6 @@
       "published_at": "2026-10-15T12:08:28.598983Z",
       "episode_number": 137,
       "series_length": 137
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Bini",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid go! It swims so smoothly through the water, like a little dancer.",
-      "search_hook": "how do squids change color",
-      "footage_ids": [
-        "pixabay:1496",
-        "pixabay:1497",
-        "pixabay:26241"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261015-072903/episode.mp4",
-      "published_at": "2026-10-15T07:29:05.862776Z",
-      "episode_number": 136,
-      "series_length": 136
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -1687,25 +1557,6 @@
     },
     {
       "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Pipi",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Wow! Look at that squid! It's changing colors. It can use its skin to blend in with the ocean!",
-      "search_hook": "how do squids change color",
-      "footage_ids": [
-        "pexels:10466414",
-        "pexels:28539798",
-        "pexels:7565625",
-        "pixabay:269913"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261011-234327/episode.mp4",
-      "published_at": "2026-10-11T23:43:29.388745Z",
-      "episode_number": 120,
-      "series_length": 120
-    },
-    {
-      "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Colorful Ocean Friends",
       "narrator": "Dodo",
       "creature": "clownfish",
@@ -1949,24 +1800,6 @@
       "published_at": "2026-10-09T13:47:39.342889Z",
       "episode_number": 107,
       "series_length": 107
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Bini",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid! It's swimming so gracefully. Its arms are moving like a wavy dance. How cool!",
-      "search_hook": "how do squids change color",
-      "footage_ids": [
-        "pexels:14200833",
-        "pixabay:1496",
-        "pixabay:1497"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261009-090434/episode.mp4",
-      "published_at": "2026-10-09T09:04:37.016941Z",
-      "episode_number": 106,
-      "series_length": 106
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -2249,25 +2082,6 @@
       "published_at": "2026-10-06T09:02:03.966262Z",
       "episode_number": 91,
       "series_length": 91
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Pipi",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Wow! Look at that squid! It can change color. Isn't that amazing? It helps it hide!",
-      "search_hook": "how does a squid change color",
-      "footage_ids": [
-        "pexels:38210834",
-        "pixabay:1496",
-        "pixabay:1497",
-        "pixabay:207990"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261006-012215/episode.mp4",
-      "published_at": "2026-10-06T01:22:16.912073Z",
-      "episode_number": 90,
-      "series_length": 90
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -2663,25 +2477,6 @@
       "published_at": "2026-10-01T17:44:29.251411Z",
       "episode_number": 69,
       "series_length": 69
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Tula",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look how the squid swims! It glides through the water like it's dancing.",
-      "search_hook": "how do squids change color to hide",
-      "footage_ids": [
-        "pexels:27862865",
-        "pixabay:1496",
-        "pixabay:1497",
-        "pixabay:26241"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261001-135738/episode.mp4",
-      "published_at": "2026-10-01T13:57:41.814355Z",
-      "episode_number": 68,
-      "series_length": 68
     },
     {
       "series_title": "Bini's Real Ocean",
@@ -3093,25 +2888,6 @@
       "published_at": "2026-09-26T22:46:23.593861Z",
       "episode_number": 46,
       "series_length": 46
-    },
-    {
-      "series_title": "Bini's Real Ocean",
-      "title": "Squid: A Closer Look",
-      "narrator": "Dodo",
-      "creature": "squid",
-      "language": "en",
-      "learning_objective": "Look at that squid swim! It's so smooth and fast, just like a superhero in the water!",
-      "search_hook": "how does a squid change color",
-      "footage_ids": [
-        "pexels:39501365",
-        "pixabay:1496",
-        "pixabay:1497",
-        "pixabay:67069"
-      ],
-      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20260926-184310/episode.mp4",
-      "published_at": "2026-09-26T18:43:12.160314Z",
-      "episode_number": 45,
-      "series_length": 45
     },
     {
       "series_title": "Bini's Real Ocean",
