@@ -13,6 +13,7 @@ from moviepy.editor import ImageSequenceClip
 import seabini_render as sr
 import bini_real_footage as brf
 import bini_real_render as brr
+import bini_real_script as brs
 from bini_real_script import CREATURES, generate_real_episode
 
 SERIES_TITLE = "Bini's Real Ocean"
@@ -33,13 +34,13 @@ _SONG_FADE_SEC = 2.5
 
 
 def _recent_history():
-    """Best-effort (creatures, hard_clips, soft_clips, titles) from the most
+    """Best-effort (creatures, hard_clips, soft_clips, titles, angles) from the most
     recent episodes in the public manifest, so a new episode avoids repeating
     them. Public repo, no auth needed; any failure just means no exclusion."""
     try:
         data = json.loads(urllib.request.urlopen(_MANIFEST_URL, context=sr._SSL, timeout=10).read())
     except Exception:
-        return [], set(), set(), []
+        return [], set(), set(), [], {}
     eps = [e for e in data.get("episodes", []) if e.get("series_title") == SERIES_TITLE]
     creatures = []
     for ep in eps[:_RECENT_CREATURES]:
@@ -49,7 +50,14 @@ def _recent_history():
     clips = {i for ep in eps[:_RECENT_EPISODES_FOR_CLIPS] for i in ep.get("footage_ids", [])}
     soft = {i for ep in eps[:_SOFT_EPISODES_FOR_CLIPS] for i in ep.get("footage_ids", [])}
     titles = [ep.get("title", "") for ep in eps[:_RECENT_TITLES]]
-    return creatures, clips, soft - clips, titles
+    # Every earlier title + search question per creature, so a returning
+    # animal gets a fresh angle instead of a near-identical episode.
+    angles = {}
+    for ep in eps:
+        c = ep.get("creature") or next((c for c in CREATURES if c in ep.get("title", "").lower()), None)
+        if c:
+            angles.setdefault(c, []).extend(x for x in (ep.get("title"), ep.get("search_hook")) if x)
+    return creatures, clips, soft - clips, titles, angles
 
 
 def _pick_theme(theme, recent_creatures):
@@ -106,52 +114,64 @@ def _fit_song(song_wav, budget):
 
 
 def _shoot(episode, character, hook, recent_clips, older_clips):
-    """Fetch + render each segment's footage; segments without a verified
-    clip are dropped. Returns (segments, segment_videos, used_clips)."""
+    """Fetch a verified clip per segment (segments without one are dropped),
+    rewrite the narration to match what each clip really shows, then render.
+    Returns (segments, segment_videos, used_clips, narrations); segments is
+    empty if fewer than _MIN_SEGMENTS clips verified."""
     creature = episode["creature"]
+    used_clips = set(recent_clips)
+    found = []
+    for i, seg in enumerate(episode["segments"]):
+        query = seg.get("search_query", creature)
+        print(f"  [{seg.get('behavior', '?')}] fetching '{query}' ...")
+        got = brf.fetch_footage(query, f"seg{i}", sr.WORK, sr.FF, used_clips, subject=creature,
+                                avoid=older_clips)
+        if not got:
+            print("    no verified footage, dropping this segment")
+            continue
+        found.append((i, seg, *got))
+    if len(found) < _MIN_SEGMENTS:
+        return [], [], used_clips, []
+
+    # The script was written before the footage existed; make each line talk
+    # about what its clip actually shows.
+    narrations = brs.match_narration(episode, [(seg, shows) for _, seg, _, shows in found], character)
+
     # Open straight on real footage with the search question on screen:
     # on Shorts/TikTok the first second decides whether a viewer swipes away,
     # so the branded title card moved to the end.
     segments, segment_videos = [], []
-    used_clips = set(recent_clips)
-    for i, seg in enumerate(episode["segments"]):
-        query = seg.get("search_query", creature)
-        print(f"  [{seg.get('behavior', '?')}] fetching '{query}' ...")
-        video_path = brf.fetch_footage(query, f"seg{i}", sr.WORK, sr.FF, used_clips, subject=creature,
-                                       avoid=older_clips)
-        if not video_path:
-            print("    no suitable footage, skipping this segment")
-            continue
+    for (i, _seg, video_path, _shows), text in zip(found, narrations):
         hook_text = f"{hook[0].upper()}{hook[1:]}?" if hook and not segments else None
-        frames, wav = brr.render_real_scene(seg["narration"], video_path, f"seg{i}", character, hook_text=hook_text)
+        frames, wav = brr.render_real_scene(text, video_path, f"seg{i}", character, hook_text=hook_text)
         segments.append((frames, wav))
         segment_videos.append(video_path)
-        print(f"    rendered {len(frames)} frames")
-    return segments, segment_videos, used_clips
+        print(f"    rendered segment {i}: {len(frames)} frames")
+    return segments, segment_videos, used_clips, narrations
 
 
-def _objective(episode):
+def _objective(text):
     """The caption's fact line: the first narration minus its opening
     "How do ...? Let's find out!" question, which the caption already
     leads with."""
-    text = episode["segments"][0]["narration"]
     m = re.search(r"let'?s find out[!.]*\s*", text, re.I)
     rest = text[m.end():].strip() if m else text
     return rest or text
 
 
 def build_real_episode(theme, out_path, character="bini"):
-    recent_creatures, recent_clips, older_clips, recent_titles = _recent_history()
+    recent_creatures, recent_clips, older_clips, recent_titles, angles = _recent_history()
     name = character.title()
     tried = []
     for attempt in range(_CREATURE_ATTEMPTS):
         pick = _pick_theme(theme, recent_creatures + tried)
-        episode = generate_real_episode(pick, character, avoid_titles=recent_titles)
+        episode = generate_real_episode(pick, character,
+                                        avoid_titles=recent_titles + angles.get(pick, [])[:12])
         creature = episode["creature"]
         title = episode.get("title", f"{name}'s Real Ocean: {creature}")
         hook = episode.get("search_hook", "").strip()
         print(f"EPISODE: {title} ({creature}) — narrated by {character}")
-        segments, segment_videos, used_clips = _shoot(episode, character, hook, recent_clips, older_clips)
+        segments, segment_videos, used_clips, narrations = _shoot(episode, character, hook, recent_clips, older_clips)
         if len(segments) >= _MIN_SEGMENTS:
             break
         print(f"Only {len(segments)} segment(s) of {creature} had verified footage.")
@@ -207,7 +227,7 @@ def build_real_episode(theme, out_path, character="bini"):
     meta = {"title": title, "creature": creature, "series_title": SERIES_TITLE,
             "character": character, "narrator": name, "search_hook": hook,
             "footage_ids": sorted(used_clips - recent_clips),
-            "learning_objective": _objective(episode)}
+            "learning_objective": _objective(narrations[0])}
     pathlib.Path("episode_meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
     return out_path
 

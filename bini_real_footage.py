@@ -27,7 +27,8 @@ except ImportError:
 HERE = pathlib.Path(__file__).resolve().parent
 _MIN_DUR, _MAX_DUR = 6, 40  # seconds — long enough to loop cleanly, short enough to stay small
 _MAX_TRIES = 4              # candidate clips downloaded + vision-checked per segment
-_EXTRA_TRIES = 3            # more tries from a broadened search before settling for an unclear clip
+_EXTRA_TRIES = 3            # more tries from broader searches before giving up on a segment
+_REJECTED = set()           # clips that failed the check this run; never retried for another segment
 _STOP = {"sea", "of", "the", "school", "moon", "a"}
 # Whole words from a clip's slug/tags that mean food, cooking or fishing.
 _FOOD = {
@@ -133,7 +134,9 @@ def _normalize_vertical(src_path, dst_path, ff_exe):
 
 
 def _vision_check(video_path, duration, subject, ff_exe):
-    """(usable, reason) from 3 frames. If the check can't run (no key,
+    """(usable, reason_or_what_it_shows) from 3 frames: on success the second
+    item is a short description of what the clip shows (used to make the
+    narration match it), otherwise why it was rejected. If the check can't run (no key,
     network) the clip is rejected: unverified real footage once put cooked
     squid and a sushi bar into kids' episodes."""
     try:
@@ -153,24 +156,31 @@ def _vision_check(video_path, duration, subject, ff_exe):
         return False, "could not extract frames"
     prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video about a LIVE {subject}. "
               'Reply with JSON only: {"subject_visible": true/false, "alive_in_habitat": true/false, '
-              '"is_food": true/false, "kid_safe": true/false}. '
-              f"subject_visible = a real {subject} (not a different animal) is clearly visible in at least one frame. "
+              '"is_food": true/false, "kid_safe": true/false, "shows": "..."}. '
+              f"subject_visible = a real {subject} is clearly the main subject in most frames (not a tiny "
+              "speck, not a different animal, not a toy, drawing or ride). "
               f"alive_in_habitat = the {subject} is a living animal in the sea, on a shore, or in an aquarium "
               "(false if it is dead, dried, a shell or decoration, held out of water, or a cartoon/toy/costume). "
               "is_food = ANY frame shows food or eating by people: cooking, a pan or wok, a plate or dish, "
               "a restaurant, sushi, a drink or glass, a fish market, or a caught animal. "
               "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
               "or eaten animal, hunting/attacking, fishing hooks or nets with caught animals, trash-choked "
-              "animals, or anything violent. Divers, boats and ordinary ocean scenes are fine.")
+              "animals, or anything violent. Divers, boats and ordinary ocean scenes are fine. "
+              f"shows = one plain sentence (max 15 words) saying what the {subject} is doing and where.")
     body = {"model": "gpt-4o-mini", "response_format": {"type": "json_object"}, "temperature": 0,
             "messages": [{"role": "user", "content": [{"type": "text", "text": prompt}, *images]}]}
-    try:
-        req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=json.dumps(body).encode(),
-                                     headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
-        verdict = json.loads(json.loads(urllib.request.urlopen(req, context=_SSL, timeout=60).read())
-                             ["choices"][0]["message"]["content"])
-    except Exception as exc:
-        return False, f"vision check unavailable ({exc})"
+    verdict, error = None, ""
+    for _attempt in range(2):  # one retry: a transient API error shouldn't cost a good clip
+        try:
+            req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=json.dumps(body).encode(),
+                                         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
+            verdict = json.loads(json.loads(urllib.request.urlopen(req, context=_SSL, timeout=60).read())
+                                 ["choices"][0]["message"]["content"])
+            break
+        except Exception as exc:
+            error = str(exc)
+    if verdict is None:
+        return False, f"vision check unavailable ({error})"
     if verdict.get("is_food") is not False:
         return False, "shows food/cooking"
     if verdict.get("kid_safe") is not True:
@@ -179,7 +189,7 @@ def _vision_check(video_path, duration, subject, ff_exe):
         return False, f"no {subject} visible"
     if verdict.get("alive_in_habitat") is not True:
         return False, f"{subject} not alive in its habitat"
-    return True, ""
+    return True, str(verdict.get("shows", "")).strip()
 
 
 def _download(url, raw_path, out_path, ff_exe):
@@ -191,7 +201,7 @@ def _download(url, raw_path, out_path, ff_exe):
 def _ranked(cands, used, avoid, subject, exclude=()):
     """Dedupe and order candidates: never-used before `used`, relevant
     before not, older-episode clips (`avoid`) after fresh ones."""
-    seen, pool = set(exclude), []
+    seen, pool = set(exclude) | _REJECTED, []
     for c in cands:
         if _is_food(c[2]):
             continue
@@ -205,8 +215,8 @@ def _ranked(cands, used, avoid, subject, exclude=()):
 
 
 def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None):
-    """Returns a local mp4 path, normalized to vertical 720x1280 @24fps, or
-    None if no suitable footage exists. `used` is a set of clip ids already
+    """Returns (local mp4 path, what the clip shows) — normalized to vertical
+    720x1280 @24fps — or None if no verified footage exists. `used` is a set of clip ids already
     used (this episode + recent ones); the chosen clip's id is added to it.
     `avoid` holds clip ids from older episodes: allowed, but tried last.
     `subject` is the creature the footage must actually show."""
@@ -226,9 +236,11 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
     tried = set()
     for round_no in range(2):
         if round_no == 1:
-            # Nothing passed: try a few more from a broader search before
-            # giving up on this segment.
-            more = [] if broadened else _pexels_search(broad) + _pixabay_search(broad)
+            # Nothing passed: try a few more from broader searches (the plain
+            # creature name, then "<creature> underwater") before giving up.
+            more = _pexels_search(subject) + _pixabay_search(subject) if subject != query else []
+            if not broadened:
+                more += _pexels_search(broad) + _pixabay_search(broad)
             batch = _ranked(fresh + more, used, avoid, subject, exclude=tried)[:_EXTRA_TRIES]
         else:
             batch = fresh[:_MAX_TRIES]
@@ -242,12 +254,13 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
             except Exception as exc:
                 print(f"[footage] download failed for {clip_id}: {exc}")
                 continue
-            ok, reason = _vision_check(out_path, duration, subject, ff_exe)
+            ok, info = _vision_check(out_path, duration, subject, ff_exe)
             if ok:
                 used.add(clip_id)
-                print(f"[footage] {clip_id}: '{query}' -> {out_path}")
-                return out_path
-            print(f"[footage] rejected {clip_id}: {reason}")
+                print(f"[footage] {clip_id}: '{query}' -> {info}")
+                return out_path, info
+            _REJECTED.add(clip_id)
+            print(f"[footage] rejected {clip_id}: {info}")
     # No clip verifiably shows a live, real one: skip the segment rather than
     # narrate "look at the squid!" over something else.
     return None

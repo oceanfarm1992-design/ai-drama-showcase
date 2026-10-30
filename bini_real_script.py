@@ -188,6 +188,42 @@ def generate_real_episode(theme: str = "", character: str = "bini", include_song
     raise SystemExit(f"Script generation failed after 3 attempts: {'; '.join(probs)}")
 
 
+def match_narration(episode: dict, clips: list, character: str) -> list:
+    """Rewrites each kept segment's narration so it talks about what its
+    clip really shows (`clips`: [(segment, shows)]). The script is written
+    before the footage exists, so without this a "curling its tail" line can
+    play over a seahorse that is just floating. Falls back to the original."""
+    lines = [{"behavior": seg["behavior"], "planned_narration": seg["narration"], "clip_shows": shows}
+             for seg, shows in clips]
+    system = (f"You narrate a preschool (ages 2-6) nature short as {CHARACTER_PROFILES[character]} "
+              f"Topic creature: {episode['creature']}. The episode answers: \"{episode.get('search_hook', '')}\". "
+              "For each clip, rewrite the planned narration as 2 short, warm sentences in the narrator's "
+              "voice: first react to what the clip ACTUALLY shows (never claim it shows something it "
+              "doesn't), then keep the planned fun fact as a general statement (e.g. \"Sea turtles love "
+              "to munch on seagrass!\"), so the episode still teaches it. Facts must be true and simple. "
+              "If the FIRST planned narration opens with a question and \"Let's find out!\", keep that "
+              "opening word for word at the start of the first entry. "
+              "Never mention cameras, footage, clips or videos. "
+              'Return JSON: {"narrations": ["...", ...]} with exactly one entry per clip, in order.')
+    body = {"model": "gpt-4o-mini", "response_format": {"type": "json_object"}, "temperature": 0.7,
+            "messages": [{"role": "system", "content": system},
+                         {"role": "user", "content": json.dumps(lines, ensure_ascii=False)}]}
+    original = [seg["narration"] for seg, _ in clips]
+    try:
+        req = urllib.request.Request(
+            "https://api.openai.com/v1/chat/completions", data=json.dumps(body).encode(),
+            headers={"Authorization": f"Bearer {ss._openai_key()}", "Content-Type": "application/json"})
+        out = json.loads(json.load(urllib.request.urlopen(req, timeout=60))["choices"][0]["message"]["content"])
+        new = out.get("narrations")
+        if (isinstance(new, list) and len(new) == len(original)
+                and all(isinstance(n, str) and len(n.split()) >= 8 for n in new)):
+            return new
+        print("[script] narration rewrite malformed, keeping original lines")
+    except Exception as exc:
+        print(f"[script] narration rewrite failed ({exc}), keeping original lines")
+    return original
+
+
 if __name__ == "__main__":
     theme = sys.argv[1] if len(sys.argv) > 1 else ""
     character = sys.argv[2] if len(sys.argv) > 2 else "bini"
