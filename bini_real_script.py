@@ -76,6 +76,10 @@ HARD RULES (preschool safety & footage-search accuracy):
   sentences, said as if watching it live and reacting to it. Total across
   all segments should read aloud in about 25-40 seconds combined (roughly
   60-100 words total).
+- The FIRST segment's narration must open by asking the search_hook
+  question out loud in simple words, naming the creature, then "Let's find
+  out!" (e.g. "How do jellyfish glow? Let's find out!"). Platforms index the
+  spoken words, and a question in the first second keeps viewers watching.
 - Facts must be true and simple. Prefer well-known, easily-verified facts.{song_section}
 
 SEARCH SEO (how real people type into TikTok/YouTube search — this drives

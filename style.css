@@ -105,3 +105,16 @@ footer {
   max-width: 600px;
   margin: 0 auto;
 }
+
+.ep-hook {
+  margin: 0.3rem 0 0;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.ep-fact {
+  margin: 0.3rem 0 0;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}

@@ -6,7 +6,7 @@ Run: python bini_real_episode.py ["optional theme"] out.mp4 [character]
 Mirrors seabini_render.build_episode()'s stitching pattern so both series
 produce consistent output (same W/H/FPS, same audio-mixing approach).
 """
-import json, pathlib, random, subprocess, sys, urllib.request, wave
+import json, pathlib, random, re, subprocess, sys, urllib.request, wave
 import numpy as np
 from moviepy.editor import ImageSequenceClip
 
@@ -130,6 +130,16 @@ def _shoot(episode, character, hook, recent_clips, older_clips):
     return segments, segment_videos, used_clips
 
 
+def _objective(episode):
+    """The caption's fact line: the first narration minus its opening
+    "How do ...? Let's find out!" question, which the caption already
+    leads with."""
+    text = episode["segments"][0]["narration"]
+    m = re.search(r"let'?s find out[!.]*\s*", text, re.I)
+    rest = text[m.end():].strip() if m else text
+    return rest or text
+
+
 def build_real_episode(theme, out_path, character="bini"):
     recent_creatures, recent_clips, older_clips, recent_titles = _recent_history()
     name = character.title()
@@ -197,7 +207,7 @@ def build_real_episode(theme, out_path, character="bini"):
     meta = {"title": title, "creature": creature, "series_title": SERIES_TITLE,
             "character": character, "narrator": name, "search_hook": hook,
             "footage_ids": sorted(used_clips - recent_clips),
-            "learning_objective": episode["segments"][0]["narration"]}
+            "learning_objective": _objective(episode)}
     pathlib.Path("episode_meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
     return out_path
 

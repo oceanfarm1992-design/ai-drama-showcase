@@ -28,15 +28,13 @@ function renderEpisodes(episodes) {
     const block = document.createElement("section");
     block.className = "series-block";
 
-    const seriesLength = eps[0]?.series_length ?? 30;
-    const latestEp = Math.max(...eps.map((e) => e.episode_number));
-    const isComplete = latestEp >= seriesLength;
-
+    // series_length is written as the latest episode number (the series is
+    // open-ended), so show a count rather than a misleading "COMPLETE".
     const heading = document.createElement("h2");
     heading.textContent = seriesTitle;
     const badge = document.createElement("span");
     badge.className = "badge";
-    badge.textContent = isComplete ? "COMPLETE" : `EP ${latestEp}/${seriesLength}`;
+    badge.textContent = `${eps.length} EPISODES`;
     heading.appendChild(badge);
     block.appendChild(heading);
 
@@ -63,10 +61,16 @@ function renderCard(ep) {
 
   const meta = document.createElement("div");
   meta.className = "episode-meta";
+  // The search question + fact give each card the words people search for.
+  const hook = ep.search_hook ? `${ep.search_hook[0].toUpperCase()}${ep.search_hook.slice(1)}?` : "";
+  const byline = ep.narrator ? `with ${escapeHtml(ep.narrator)} · ` : "";
   meta.innerHTML = `
     <p class="ep-title">${escapeHtml(ep.title)}</p>
-    <p class="ep-num">Episode ${ep.episode_number}/${ep.series_length} · ${escapeHtml(ep.language)}</p>
+    ${hook ? `<p class="ep-hook">${escapeHtml(hook)}</p>` : ""}
+    ${ep.learning_objective ? `<p class="ep-fact">${escapeHtml(ep.learning_objective)}</p>` : ""}
+    <p class="ep-num">${byline}Episode ${ep.episode_number}</p>
   `;
+  video.setAttribute("aria-label", ep.title || "Episode video");
 
   card.appendChild(video);
   card.appendChild(meta);

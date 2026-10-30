@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://oceanfarm1992-design.github.io/ai-drama-showcase/sitemap.xml

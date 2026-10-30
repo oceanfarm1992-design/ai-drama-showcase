@@ -88,32 +88,68 @@ _HASHTAGS_YT = (
     "#SEABINI #KidsCartoon #OceanForKids #Preschool #ToddlerLearning "
     "#SeaAnimals #KidsShow #Shorts #ChildrensContent #EducationalKids"
 )
+# Bini's Real Ocean is real nature footage, not a cartoon: tagging it
+# #kidscartoon sent it to the wrong audience. The creature's own tag goes
+# first (YouTube shows the first 3 description hashtags above the title).
+_REAL_TAGS_YT = "#OceanAnimals #AnimalsForKids #KidsLearning #SeaLife #Preschool #ToddlerLearning #NatureForKids #Shorts #SEABINI"
+_REAL_TAGS_TT = "#oceananimals #animalsforkids #kidslearning #sealife"
+_REAL_TAGS_FB = "#OceanAnimals #AnimalsForKids #KidsLearning #Preschool #SeaLife #FamilyFriendly"
+SITE_URL = "https://oceanfarm1992-design.github.io/ai-drama-showcase/"
 
-def _captions(title: str, objective: str, series_title: str = "SEABINI", narrator: str = "Bini", search_hook: str = "") -> dict:
+
+def _creature_tag(creature: str) -> str:
+    """'sea urchin' -> '#SeaUrchin' (empty if unknown)."""
+    words = [w for w in creature.replace("-", " ").split() if w.isalpha()]
+    return "#" + "".join(w.capitalize() for w in words) if words else ""
+
+
+def _creature_name(creature: str) -> str:
+    return " ".join(w.capitalize() for w in creature.split())
+
+
+def _creature_plural(creature: str) -> str:
+    """'penguin' -> 'Penguins' (what parents type: "penguins for kids");
+    fish/shrimp/coral and already-plural names stay as they are."""
+    name = _creature_name(creature)
+    if not name or name.endswith(("fish", "Fish", "s", "Shrimp", "Coral")):
+        return name
+    return name + "s"
+
+def _captions(title: str, objective: str, series_title: str = "SEABINI", narrator: str = "Bini",
+              search_hook: str = "", creature: str = "") -> dict:
     if series_title == "Bini's Real Ocean":
         # Lead with the question exactly as a curious viewer would type it
         # into search — this is the actual SEO lever (matching real search
         # phrasing), not the hashtag list, which TikTok/YouTube weight far
         # less than caption + spoken-audio text for surfacing search results.
+        # "<animal> for kids" is the other phrase parents search for.
         hook_line = f"{search_hook[0].upper()}{search_hook[1:]}?\n\n" if search_hook else ""
+        tag = _creature_tag(creature)
+        name = _creature_name(creature)
+        about = (f"A real {creature} video for kids: {narrator} shows little ones how the {creature} "
+                 "lives, moves and eats, using real underwater footage." if creature else "")
         yt_desc = (
-            f"🌊 {hook_line}{title} | Bini's Real Ocean — a closer look at real sea life!\n\n"
+            f"🌊 {hook_line}{title} | Bini's Real Ocean, real sea animals for kids!\n\n"
             f"{objective}\n\n"
-            f"Bini's Real Ocean is a preschool-friendly series (ages 2–6) where {narrator} "
+            + (f"{about}\n\n" if about else "")
+            + f"Bini's Real Ocean is a preschool-friendly series (ages 2–6) where {narrator} "
             "narrates real underwater footage of ocean animals. 🐠🦀🪼\n\n"
             "✅ Safe for kids  ✅ Real nature footage  ✅ New episode every day\n\n"
-            + _HASHTAGS_YT
+            f"▶️ Watch every episode: {SITE_URL}\n\n"
+            + f"{tag} {_REAL_TAGS_YT}".strip()
         )
         tt_text = (
-            f"{hook_line}🌊 {title}! Join {narrator} for a real look at ocean life! "
-            f"{objective} 🐠 New episode daily! " + _HASHTAGS_TT
+            f"{hook_line}🌊 {title}! Join {narrator} for a real look at "
+            f"{f'the {creature}' if creature else 'ocean life'}! "
+            f"{objective} 🐠 New episode daily! " + f"{tag.lower()} {_REAL_TAGS_TT}".strip()
         )
         fb_text = (
             f"🌊 {hook_line}New Bini's Real Ocean episode: {title}!\n\n"
             f"{objective} 🐠\n\n"
             f"Real ocean footage with {narrator} as your guide, every day! "
             "Perfect for little ones ages 2–6. Share with a parent today! 💙\n\n"
-            + _HASHTAGS_FB
+            f"▶️ All episodes: {SITE_URL}\n\n"
+            + f"{tag} {_REAL_TAGS_FB}".strip()
         )
         return {"youtube": yt_desc, "tiktok": tt_text, "facebook": fb_text}
 
@@ -139,29 +175,35 @@ def _captions(title: str, objective: str, series_title: str = "SEABINI", narrato
     return {"youtube": yt_desc, "tiktok": tt_text, "facebook": fb_text}
 
 
-def _video_titles(title: str, series_title: str, search_hook: str) -> tuple:
+def _video_titles(title: str, series_title: str, search_hook: str, creature: str = "") -> tuple:
     """(youtube_title, tiktok_title). The YouTube title is its strongest
-    search signal, so real-footage episodes lead with the search question."""
+    search signal, so real-footage episodes lead with the search question,
+    then "<animal> for kids". No #Shorts: YouTube detects Shorts by format,
+    and the tag only spent characters."""
     if series_title == "Bini's Real Ocean":
-        hook = f"{search_hook[0].upper()}{search_hook[1:]}? " if search_hook else ""
-        yt = f"{hook}{title} | Real Ocean for Kids #Shorts"
-        return yt[:100], f"{hook}{title} 🌊"[:90]
+        hook = f"{search_hook[0].upper()}{search_hook[1:]}?" if search_hook else title
+        topic = f"Real {_creature_plural(creature)} for Kids" if creature else "Real Sea Animals for Kids"
+        yt = f"{hook} 🌊 {topic} | Bini's Real Ocean"
+        if len(yt) > 100:
+            yt = f"{hook} 🌊 {topic}"
+        return yt[:100], f"{hook} 🌊 {title}"[:90]
     return (f"SEABINI | {title} 🌊 | Kids Ocean Cartoon | #Shorts"[:100],
             f"SEABINI | {title} 🌊"[:90])
 
 
 def _buffer_post(channel_id: str, service: str, video_url: str,
                  captions: dict, title: str, series_title: str = SERIES_TITLE,
-                 search_hook: str = "") -> bool:
+                 search_hook: str = "", creature: str = "") -> bool:
     text = captions.get(service, captions["youtube"])
     assets = [{"video": {"url": video_url, "metadata": {"title": title}}}]
-    yt_title, tt_title = _video_titles(title, series_title, search_hook)
+    yt_title, tt_title = _video_titles(title, series_title, search_hook, creature)
     metadata = {}
     if service == "youtube":
         metadata["youtube"] = {
             "title": yt_title,
             "privacy": "public",
-            "categoryId": "1",       # Film & Animation
+            # Real nature footage is Education (27); the cartoon is Film & Animation (1)
+            "categoryId": "27" if series_title == "Bini's Real Ocean" else "1",
             "madeForKids": True,
             "isAiGenerated": True,
             "embeddable": True,
@@ -222,17 +264,18 @@ def _video_duration(video_path: str):
 
 
 def _post_all_channels(video_url: str, title: str, objective: str, series_title: str = "SEABINI",
-                       narrator: str = "Bini", search_hook: str = "", duration: float = None) -> list:
+                       narrator: str = "Bini", search_hook: str = "", duration: float = None,
+                       creature: str = "") -> list:
     """Posts to every channel even if one fails; returns the failed services.
     Channels whose length limit the video exceeds are skipped, not failed."""
-    caps = _captions(title, objective, series_title, narrator, search_hook)
+    caps = _captions(title, objective, series_title, narrator, search_hook, creature)
     failed = []
     for service, channel_id in _BUFFER_CHANNELS.items():
         limit = _MAX_DURATION.get(service)
         if duration and limit and duration > limit:
             print(f"::warning::[Buffer:{service}] skipped: video is {duration:.1f}s, limit is {limit:.0f}s")
             continue
-        if not _buffer_post(channel_id, service, video_url, caps, title, series_title, search_hook):
+        if not _buffer_post(channel_id, service, video_url, caps, title, series_title, search_hook, creature):
             failed.append(service)
     return failed
 
@@ -421,7 +464,7 @@ def publish(video_path: str, title: str, language: str = "en",
     # posting problem is a warning, not a failed run — unless every channel
     # failed, which points at the Buffer key/account rather than one post.
     failed = _post_all_channels(video_url, title, objective, series_title, narrator, search_hook,
-                                _video_duration(video_path))
+                                _video_duration(video_path), creature)
     if failed and len(failed) == len(_BUFFER_CHANNELS):
         raise SystemExit(f"[Buffer] Posting failed for every channel: {', '.join(failed)}")
     for service in failed:
