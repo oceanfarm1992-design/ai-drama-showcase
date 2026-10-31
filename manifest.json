@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Whales: Singing Underwater Melodies",
+      "narrator": "Ollo",
+      "creature": "whale",
+      "language": "en",
+      "learning_objective": "Whales sing beautiful songs that travel far, helping them talk to each other in the deep sea.",
+      "search_hook": "how do whales make sounds underwater",
+      "footage_ids": [
+        "pexels:13433624",
+        "pexels:28668320",
+        "pexels:30987950",
+        "pexels:39355913"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261031-082717/episode.mp4",
+      "published_at": "2026-10-31T08:27:19.900558Z",
+      "episode_number": 211,
+      "series_length": 211
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crabs: Sideways Explorers",
       "narrator": "Bini",
       "creature": "crab",
