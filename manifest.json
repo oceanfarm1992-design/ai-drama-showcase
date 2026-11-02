@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Dolphins: Bouncing Through the Waves",
+      "narrator": "Pipi",
+      "creature": "dolphin",
+      "language": "en",
+      "learning_objective": "Wow! Look at that dolphin swimming gracefully in the ocean! Dolphins love to jump out of the water and show how happy they are!",
+      "search_hook": "why do dolphins jump out of the water",
+      "footage_ids": [
+        "pexels:11042821",
+        "pexels:33768424",
+        "pexels:33768426",
+        "pexels:35120301"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261102-093037/episode.mp4",
+      "published_at": "2026-11-02T09:30:40.018043Z",
+      "episode_number": 213,
+      "series_length": 213
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Shrimp: Little Dancers of the Sea",
       "narrator": "Dodo",
       "creature": "shrimp",
