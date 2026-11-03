@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Octopus: Fun with Tentacles",
+      "narrator": "Bini",
+      "creature": "octopus",
+      "language": "en",
+      "learning_objective": "Wow! This octopus is exploring a colorful coral reef! Octopuses are known for their soft, wiggly tentacles that help them swim gracefully.",
+      "search_hook": "how does an octopus swim with tentacles",
+      "footage_ids": [
+        "pexels:39501362",
+        "pixabay:310715",
+        "pixabay:326223",
+        "pixabay:332384"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261103-093443/episode.mp4",
+      "published_at": "2026-11-03T09:34:47.174608Z",
+      "episode_number": 214,
+      "series_length": 214
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Dolphins: Bouncing Through the Waves",
       "narrator": "Pipi",
       "creature": "dolphin",
