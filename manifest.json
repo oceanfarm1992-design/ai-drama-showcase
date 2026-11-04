@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Jellyfish: The Art of Floating",
+      "narrator": "Tula",
+      "creature": "jellyfish",
+      "language": "en",
+      "learning_objective": "Look at the jellyfish! It floats so gracefully in the water, just like a gentle dancer. Jellyfish can drift along with the ocean currents, allowing them to move effortlessly through the sea.",
+      "search_hook": "how do jellyfish float gracefully",
+      "footage_ids": [
+        "pixabay:15063",
+        "pixabay:158",
+        "pixabay:383087",
+        "pixabay:385792"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261104-091041/episode.mp4",
+      "published_at": "2026-11-04T09:10:44.463389Z",
+      "episode_number": 215,
+      "series_length": 215
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Octopus: Fun with Tentacles",
       "narrator": "Bini",
       "creature": "octopus",
