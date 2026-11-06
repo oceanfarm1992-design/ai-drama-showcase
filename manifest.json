@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Coral: The Colorful Garden Builders",
+      "narrator": "Dodo",
+      "creature": "coral",
+      "language": "en",
+      "learning_objective": "Look at the coral thriving underwater! Wow, they're like little tiny gardeners! Corals build colorful reefs that create amazing homes for sea creatures.",
+      "search_hook": "how do corals build their colorful reefs",
+      "footage_ids": [
+        "pexels:31855228",
+        "pexels:32376199",
+        "pexels:34632965",
+        "pixabay:123272"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261106-092423/episode.mp4",
+      "published_at": "2026-11-06T09:24:26.371299Z",
+      "episode_number": 217,
+      "series_length": 217
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Pelican: The Dive and Fetch",
       "narrator": "Ollo",
       "creature": "pelican",
