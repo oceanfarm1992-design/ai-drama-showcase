@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Lions: Bouncing in the Waves",
+      "narrator": "Bini",
+      "creature": "sea lion",
+      "language": "en",
+      "learning_objective": "Look at those sea lions swimming and splashing around! They glide so smoothly through the water, like they're dancing!",
+      "search_hook": "how do sea lions swim and play",
+      "footage_ids": [
+        "pexels:36118170",
+        "pexels:36991056",
+        "pexels:4434202",
+        "pixabay:261048"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261108-090223/episode.mp4",
+      "published_at": "2026-11-08T09:02:26.579820Z",
+      "episode_number": 219,
+      "series_length": 219
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Manta Rays: The Ocean's Gentle Gliders",
       "narrator": "Pipi",
       "creature": "manta ray",
