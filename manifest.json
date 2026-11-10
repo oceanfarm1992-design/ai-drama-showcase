@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Turtles: Graceful Gliders of the Sea",
+      "narrator": "Ollo",
+      "creature": "sea turtle",
+      "language": "en",
+      "learning_objective": "Look at that sea turtle! It's gliding over a colorful coral reef in the ocean. Sea turtles love to munch on seagrass!",
+      "search_hook": "how do sea turtles glide through the water",
+      "footage_ids": [
+        "pexels:35774564",
+        "pexels:35774568",
+        "pexels:36529189",
+        "pexels:39358131"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261110-094651/episode.mp4",
+      "published_at": "2026-11-10T09:46:53.960811Z",
+      "episode_number": 221,
+      "series_length": 221
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Whale Shark: Gentle Feeders of the Sea",
       "narrator": "Tula",
       "creature": "whale shark",
