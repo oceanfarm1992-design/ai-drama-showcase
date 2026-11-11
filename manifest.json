@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Urchin: Tiny Spiky Movers",
+      "narrator": "Dodo",
+      "creature": "sea urchin",
+      "language": "en",
+      "learning_objective": "Wow! Look how this sea urchin finds a cozy spot to stay safe and hidden! Sea urchins love to snuggle into rocks for protection!",
+      "search_hook": "how do sea urchins move underwater",
+      "footage_ids": [
+        "pixabay:133544",
+        "pixabay:38861",
+        "pixabay:96506"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261111-092610/episode.mp4",
+      "published_at": "2026-11-11T09:26:12.929385Z",
+      "episode_number": 222,
+      "series_length": 222
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Turtles: Graceful Gliders of the Sea",
       "narrator": "Ollo",
       "creature": "sea turtle",
