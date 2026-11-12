@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Clownfish: Colorful Swimmers of the Reef",
+      "narrator": "Pipi",
+      "creature": "clownfish",
+      "language": "en",
+      "learning_objective": "Look at the clownfish swim! They move so quickly and gracefully in the coral! Clownfish are known for their amazing swimming skills in the reef.",
+      "search_hook": "how do clownfish swim in the reef",
+      "footage_ids": [
+        "pexels:33127756",
+        "pexels:33377766",
+        "pexels:33759513",
+        "pexels:34484804"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261112-095116/episode.mp4",
+      "published_at": "2026-11-12T09:51:20.340659Z",
+      "episode_number": 223,
+      "series_length": 223
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Sea Urchin: Tiny Spiky Movers",
       "narrator": "Dodo",
       "creature": "sea urchin",
