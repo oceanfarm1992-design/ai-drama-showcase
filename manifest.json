@@ -1,6 +1,100 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Ocean Discovery",
+      "title": "Bini's Ocean Discovery: From Sandy Beach to Glowing Night Sea",
+      "narrator": "Bini & friends",
+      "creature": "",
+      "language": "en",
+      "learning_objective": "Hello, little explorers! I'm Bini the seahorse. Today, we will visit different ocean homes. Let's look closely at all the amazing creatures and plants that live in these habitats. Are you ready for an adventure?",
+      "search_hook": "what animals live in a sandy beach",
+      "footage_ids": [
+        "pexels:12523779",
+        "pexels:29933016",
+        "pexels:30987363",
+        "pexels:32267289",
+        "pexels:33032826",
+        "pexels:34647588",
+        "pexels:34973058",
+        "pexels:35091021",
+        "pexels:35131446",
+        "pexels:35541609",
+        "pexels:35766248",
+        "pexels:35774561",
+        "pexels:35819966",
+        "pexels:36906736",
+        "pexels:37929966",
+        "pexels:37951770",
+        "pexels:38886020",
+        "pexels:39071829",
+        "pexels:39154972",
+        "pexels:40442715",
+        "pixabay:105322",
+        "pixabay:110879",
+        "pixabay:113456",
+        "pixabay:136515",
+        "pixabay:13833",
+        "pixabay:156147",
+        "pixabay:183960",
+        "pixabay:210498",
+        "pixabay:217839",
+        "pixabay:224808",
+        "pixabay:243619",
+        "pixabay:262215",
+        "pixabay:27279",
+        "pixabay:292808",
+        "pixabay:329837",
+        "pixabay:330090",
+        "pixabay:332921",
+        "pixabay:347000",
+        "pixabay:357223",
+        "pixabay:360206",
+        "pixabay:43544",
+        "pixabay:9220"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261113-154404/discovery.mp4",
+      "published_at": "2026-11-13T15:44:10.970702Z",
+      "habitats": [
+        "Sandy Beach",
+        "Mangrove Forest",
+        "Lagoon",
+        "Seagrass Meadow",
+        "Coral Reef"
+      ],
+      "chapters": [
+        [
+          "0:00",
+          "Welcome"
+        ],
+        [
+          "0:15",
+          "Sandy Beach"
+        ],
+        [
+          "1:37",
+          "Mangrove Forest"
+        ],
+        [
+          "3:02",
+          "Lagoon"
+        ],
+        [
+          "5:27",
+          "Seagrass Meadow"
+        ],
+        [
+          "7:00",
+          "Coral Reef"
+        ],
+        [
+          "9:20",
+          "Goodbye"
+        ]
+      ],
+      "episode_number": 1,
+      "series_length": 1
+    },
+    {
       "series_title": "Bini's Real Ocean",
       "title": "Clownfish: Colorful Swimmers of the Reef",
       "narrator": "Pipi",
