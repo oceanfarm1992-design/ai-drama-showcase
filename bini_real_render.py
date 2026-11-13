@@ -133,38 +133,3 @@ def render_real_scene(text, video_path, tag, character="bini", hook_text=None, s
 
     clip.close()
     return frames, baby
-
-
-def render_real_dance_scene(song_wav, video_path, tag, character="bini"):
-    """Mirrors seabini_render._dance_scene()'s bounce/sway motion, but over
-    real video like render_real_scene() instead of a static cartoon bg — so
-    the closing song stays visually consistent with the narration segments."""
-    ch, heads, (BW, BH) = _rig(character)
-    wf = wave.open(song_wav, "rb")
-    dur = wf.getnframes() / wf.getframerate()
-    wf.close()
-
-    clip = VideoFileClip(video_path)
-    blink_times = sr._blink_times(dur, sum(ord(c) for c in tag))
-    gaze = sr._gaze_schedule(dur, sum(ord(c) for c in tag))
-    mouth_cycle = ["closed", "wide", "round", "mid"]
-
-    frames = []
-    for i in range(int(dur * FPS)):
-        t = i / FPS
-        win = Image.fromarray(clip.get_frame(t % clip.duration)).convert("RGBA")
-
-        beat = t * 1.5  # same gentle, unhurried tempo as the cartoon dance scene
-        bounce = 10 * abs(math.sin(beat)); sway = 10 * math.sin(beat * 0.6)
-        sc = CORNER_SCALE * (1 + 0.05 * abs(math.sin(beat)))
-        rot = 8 * math.sin(beat * 0.6)
-        head = heads[mouth_cycle[int(t * 2.2) % 4]]
-        if ch.get("blink_ready") and sr._is_blinking(t, blink_times): head = sr._blink_frame(head, ch)
-        elif ch.get("look_ready"): head = sr._look_frame(head, ch, sr._gaze_at(t, gaze))
-        im2 = head.resize((int(BW * sc), int(BH * sc))).rotate(
-            rot, expand=True, resample=Image.BICUBIC, fillcolor=(0, 0, 0, 0))
-        win.alpha_composite(im2, (int(CORNER_X + sway - im2.width / 2), int(CORNER_Y - bounce - im2.height / 2)))
-        frames.append(np.array(win.convert("RGB")))
-
-    clip.close()
-    return frames, song_wav

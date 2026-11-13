@@ -40,7 +40,7 @@ jobs:
       - name: Determine narrator for this run
         id: narrator
         # Scheduled runs rotate through the five narrators by UTC day number,
-        # so each one (Bini with the song) comes round every 5 days.
+        # so each one comes round every 5 days.
         run: |
           if [ "${{ github.event_name }}" = "schedule" ]; then
             narrators=(bini tula ollo dodo pipi)
@@ -88,7 +88,6 @@ jobs:
       - name: Render episode
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           SEABINI_RHUBARB: ${{ github.workspace }}/rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb

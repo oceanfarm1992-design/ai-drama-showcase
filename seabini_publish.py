@@ -4,6 +4,8 @@ YouTube / TikTok / Facebook via Buffer's GraphQL API.
 
 Env: GH_TOKEN (the workflow's GITHUB_TOKEN), BUFFER_API_KEY.
 Run: python seabini_publish.py <video.mp4> --meta episode_meta.json
+The meta file may limit "platforms" and set "facebook_type" ("post" for
+long-form video; the default "reel" is for shorts).
 """
 import base64, os, sys, json, datetime, pathlib, shutil, ssl, subprocess, time, urllib.error, urllib.request
 
@@ -22,9 +24,16 @@ _BUFFER_CHANNELS = {
     "tiktok":   "6aa048c7cd8b9c702c2e9b3b",
     "facebook": "6aa047c5cd8b9c702c2e96ac",
 }
-# Facebook Reels rejects anything longer than 1m30s (Buffer InvalidInputError).
-_MAX_DURATION = {"facebook": 90.0}
+# Facebook Reels rejects anything longer than 1m30s (Buffer InvalidInputError);
+# long videos go up as regular Facebook video posts instead (type "post").
+_MAX_REEL_SEC = 90.0
 _RETRY_DELAYS = (5, 15, 45)  # seconds between attempts on GitHub 5xx / network errors
+# Buffer sometimes can't fetch a just-uploaded release asset yet ("Video could
+# not be read from its URL" took out a whole day on 2026-11-08); one delayed
+# retry of just those posts is cheap.
+_UNREADABLE = "could not be read"
+_UNREADABLE_RETRY_SEC = 90
+DISCOVERY = "Bini's Ocean Discovery"
 
 _CREATE_POST = """
 mutation CreatePost($input: CreatePostInput!) {
@@ -95,6 +104,14 @@ _REAL_TAGS_YT = "#OceanAnimals #AnimalsForKids #KidsLearning #SeaLife #Preschool
 _REAL_TAGS_TT = "#oceananimals #animalsforkids #kidslearning #sealife"
 _REAL_TAGS_FB = "#OceanAnimals #AnimalsForKids #KidsLearning #Preschool #SeaLife #FamilyFriendly"
 SITE_URL = "https://oceanfarm1992-design.github.io/ai-drama-showcase/"
+_DISC_TAGS_TT = "#oceanforkids #sealife #animalsforkids #kidslearning #natureforkids"
+_DISC_TAGS_FB = "#OceanForKids #SeaLife #AnimalsForKids #KidsLearning #Preschool #FamilyFriendly #NatureForKids"
+_HABITAT_TAGS = {
+    "Sandy Beach": "#Beach", "Rocky Shore": "#RockPools", "Mangrove Forest": "#Mangroves",
+    "Lagoon": "#Lagoon", "Seagrass Meadow": "#Seagrass", "Coral Reef": "#CoralReef",
+    "Shipwreck Reef": "#Shipwreck", "Seaweed Forest": "#Seaweed", "Open Ocean": "#OpenOcean",
+    "Icy Polar Seas": "#PolarAnimals", "Glowing Night Sea": "#Bioluminescence",
+}
 
 
 def _creature_tag(creature: str) -> str:
@@ -114,6 +131,27 @@ def _creature_plural(creature: str) -> str:
     if not name or name.endswith(("fish", "Fish", "s", "Shrimp", "Coral")):
         return name
     return name + "s"
+
+def _discovery_captions(title: str, search_hook: str, chapters: list, minutes: int) -> dict:
+    """Long-form journey: lead with the search question, then the habitats
+    as timestamped chapters (Facebook turns them into clickable links)."""
+    hook_line = f"{search_hook[0].upper()}{search_hook[1:]}?\n\n" if search_hook else ""
+    places = [name for _, name in chapters if name not in ("Welcome", "Goodbye")]
+    tags = " ".join(_HABITAT_TAGS[p] for p in places if p in _HABITAT_TAGS)
+    low = [p.lower() for p in places]
+    journey = (", ".join(low[:-1]) + f" and {low[-1]}") if len(low) > 1 else "".join(low)
+    stamps = "\n".join(f"{t} {name}" for t, name in chapters)
+    tt_text = (f"{hook_line}🌊 {title}! A {minutes}-minute real ocean journey with Bini and friends "
+               f"through the {journey}. 🐢🦀🐠\n\n{stamps}\n\n{tags.lower()} {_DISC_TAGS_TT}")
+    fb_text = (f"🌊 {hook_line}{title}\n\n"
+               f"Join Bini and friends on a {minutes}-minute journey through real ocean homes: "
+               f"the {journey}! Real nature footage, gentle narration and simple facts, "
+               "made for little explorers ages 2–6. 🐢🦀🐠\n\n"
+               f"Chapters:\n{stamps}\n\n"
+               "A brand-new ocean journey every week! 💙\n\n"
+               f"▶️ All episodes: {SITE_URL}\n\n{tags} {_DISC_TAGS_FB}")
+    return {"youtube": fb_text, "tiktok": tt_text, "facebook": fb_text}
+
 
 def _captions(title: str, objective: str, series_title: str = "SEABINI", narrator: str = "Bini",
               search_hook: str = "", creature: str = "") -> dict:
@@ -180,6 +218,9 @@ def _video_titles(title: str, series_title: str, search_hook: str, creature: str
     search signal, so real-footage episodes lead with the search question,
     then "<animal> for kids". No #Shorts: YouTube detects Shorts by format,
     and the tag only spent characters."""
+    if series_title == DISCOVERY:
+        hook = f"{search_hook[0].upper()}{search_hook[1:]}?" if search_hook else ""
+        return title[:100], (f"{hook} 🌊 {title}" if hook else title)[:90]
     if series_title == "Bini's Real Ocean":
         hook = f"{search_hook[0].upper()}{search_hook[1:]}?" if search_hook else title
         topic = f"Real {_creature_plural(creature)} for Kids" if creature else "Real Sea Animals for Kids"
@@ -193,7 +234,8 @@ def _video_titles(title: str, series_title: str, search_hook: str, creature: str
 
 def _buffer_post(channel_id: str, service: str, video_url: str,
                  captions: dict, title: str, series_title: str = SERIES_TITLE,
-                 search_hook: str = "", creature: str = "") -> bool:
+                 search_hook: str = "", creature: str = "", facebook_type: str = "reel") -> tuple:
+    """(posted, error message)."""
     text = captions.get(service, captions["youtube"])
     assets = [{"video": {"url": video_url, "metadata": {"title": title}}}]
     yt_title, tt_title = _video_titles(title, series_title, search_hook, creature)
@@ -215,9 +257,8 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
             "isAiGenerated": True,
         }
     if service == "facebook":
-        metadata["facebook"] = {
-            "type": "reel",   # vertical short-form video → Facebook Reels
-        }
+        # Reels for shorts; long-form goes up as a regular Facebook video post.
+        metadata["facebook"] = {"type": facebook_type}
     post_input = {
         "channelId": channel_id,
         "text": text,
@@ -231,7 +272,7 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
 
     resp = _buffer_gql(_CREATE_POST, {"input": post_input})
     if not resp:
-        return False
+        return False, "no response"
     errs = resp.get("errors")
     data = (resp.get("data") or {}).get("createPost") or {}
     typename = data.get("__typename", "")
@@ -243,12 +284,13 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
         print(f"[Buffer:{service}] Queued → id={post['id']} status={post['status']}")
         # Buffer can accept the request but report the post itself as failed
         # (seen for TikTok); that is a failed post, not a queued one.
-        return str(post.get("status", "")).lower() != "error"
+        ok = str(post.get("status", "")).lower() != "error"
+        return ok, "" if ok else "post status error"
     elif err_msg:
         print(f"[Buffer:{service}] {typename}: {err_msg}")
     else:
         print(f"[Buffer:{service}] Response: {resp}")
-    return False
+    return False, str(err_msg or errs or resp)
 
 
 def _video_duration(video_path: str):
@@ -267,18 +309,39 @@ def _video_duration(video_path: str):
 
 def _post_all_channels(video_url: str, title: str, objective: str, series_title: str = "SEABINI",
                        narrator: str = "Bini", search_hook: str = "", duration: float = None,
-                       creature: str = "") -> list:
-    """Posts to every channel even if one fails; returns the failed services.
-    Channels whose length limit the video exceeds are skipped, not failed."""
-    caps = _captions(title, objective, series_title, narrator, search_hook, creature)
-    failed = []
+                       creature: str = "", platforms: list = None, facebook_type: str = "reel",
+                       chapters: list = None) -> list:
+    """Posts to every chosen channel even if one fails; returns the failed
+    services. A Reel the video is too long for is skipped, not failed."""
+    if series_title == DISCOVERY:
+        caps = _discovery_captions(title, search_hook, chapters or [], round((duration or 0) / 60))
+    else:
+        caps = _captions(title, objective, series_title, narrator, search_hook, creature)
+    todo = {}
     for service, channel_id in _BUFFER_CHANNELS.items():
-        limit = _MAX_DURATION.get(service)
-        if duration and limit and duration > limit:
-            print(f"::warning::[Buffer:{service}] skipped: video is {duration:.1f}s, limit is {limit:.0f}s")
+        if platforms and service not in platforms:
             continue
-        if not _buffer_post(channel_id, service, video_url, caps, title, series_title, search_hook, creature):
-            failed.append(service)
+        if service == "facebook" and facebook_type == "reel" and duration and duration > _MAX_REEL_SEC:
+            print(f"::warning::[Buffer:facebook] skipped: video is {duration:.1f}s, Reels limit is {_MAX_REEL_SEC:.0f}s")
+            continue
+        todo[service] = channel_id
+    failed = []
+    for attempt in range(2):
+        retry = {}
+        for service, channel_id in todo.items():
+            ok, err = _buffer_post(channel_id, service, video_url, caps, title, series_title,
+                                   search_hook, creature, facebook_type)
+            if ok:
+                continue
+            if attempt == 0 and _UNREADABLE in err:
+                retry[service] = channel_id
+            else:
+                failed.append(service)
+        if not retry:
+            break
+        print(f"[Buffer] video not readable yet for {', '.join(retry)}; retrying in {_UNREADABLE_RETRY_SEC}s")
+        time.sleep(_UNREADABLE_RETRY_SEC)
+        todo = retry
     return failed
 
 
@@ -427,7 +490,11 @@ def publish(video_path: str, title: str, language: str = "en",
             narrator: str = "Bini",
             search_hook: str = "",
             footage_ids: list = None,
-            creature: str = "") -> str:
+            creature: str = "",
+            platforms: list = None,
+            facebook_type: str = "reel",
+            habitats: list = None,
+            chapters: list = None) -> str:
     video_url = _upload_release(video_path, title)
 
     entry = {
@@ -442,6 +509,10 @@ def publish(video_path: str, title: str, language: str = "en",
         "video_url": video_url,
         "published_at": datetime.datetime.utcnow().isoformat() + "Z",
     }
+    if habitats:
+        entry["habitats"] = habitats
+    if chapters:
+        entry["chapters"] = chapters
     for attempt, delay in enumerate((*_RETRY_DELAYS, None)):
         # Retry on conflicts (another run updated the manifest meanwhile) and
         # transient errors. A 5xx PUT may still have committed, so skip the
@@ -468,8 +539,8 @@ def publish(video_path: str, title: str, language: str = "en",
     # posting problem is a warning, not a failed run — unless every channel
     # failed, which points at the Buffer key/account rather than one post.
     failed = _post_all_channels(video_url, title, objective, series_title, narrator, search_hook,
-                                _video_duration(video_path), creature)
-    if failed and len(failed) == len(_BUFFER_CHANNELS):
+                                _video_duration(video_path), creature, platforms, facebook_type, chapters)
+    if failed and len(failed) == len(platforms or _BUFFER_CHANNELS):
         raise SystemExit(f"[Buffer] Posting failed for every channel: {', '.join(failed)}")
     for service in failed:
         print(f"::warning::[Buffer:{service}] posting failed; episode is published, post manually if needed")
@@ -483,7 +554,9 @@ if __name__ == "__main__":
         print("PUBLISHED:", publish(video, m["title"], "en", m.get("learning_objective", ""),
                                     m.get("series_title", SERIES_TITLE), m.get("narrator", "Bini"),
                                     m.get("search_hook", ""), m.get("footage_ids", []),
-                                    m.get("creature", "")))
+                                    m.get("creature", ""), m.get("platforms"),
+                                    m.get("facebook_type", "reel"), m.get("habitats"),
+                                    m.get("chapters")))
     else:  # legacy positional form, still used by the (disabled) SEABINI workflow
         title = sys.argv[2] if len(sys.argv) > 2 else "SEABINI Short"
         language = sys.argv[3] if len(sys.argv) > 3 else "en"

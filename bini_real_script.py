@@ -34,21 +34,8 @@ CHARACTER_PROFILES = {
 }
 
 
-def _build_system(character: str, include_song: bool) -> str:
+def _build_system(character: str) -> str:
     profile = CHARACTER_PROFILES[character]
-    song_section = ""
-    song_schema = ""
-    if include_song:
-        song_section = f"""
-
-SONG (every episode ends with a {character.title()} sing-and-dance number sung in {character.title()}'s own voice):
-- MUST be about the SAME creature as this episode. Never generic or reused across episodes.
-- Structure: one verse (4 short lines), then the chorus (4 short lines) sung TWICE. Combined lyrics text, including every line, must be between 300 and 400 characters total. Keep every line under 30 characters.
-- Gentle, unhurried, lullaby-adjacent tempo — NOT fast or hyper. Put a blank line between every line of lyrics (a real pause in the sung output, not just formatting).
-- Simple words, concrete objects, repetition, positive emotions, actions kids can imitate.
-- No complicated metaphors, no dense facts crammed into the lyrics."""
-        song_schema = ',\n  "song": {"title": "short song title", "lyrics": "[Verse]\\nline\\n\\nline\\n\\nline\\n\\nline\\n\\n[Chorus]\\nline\\n\\nline\\n\\nline\\n\\nline\\n\\n[Chorus]\\nline\\n\\nline\\n\\nline\\n\\nline"}'
-
     return f"""You are the writer for "Bini's Real Ocean" — a preschool (ages 2-6) educational
 short where {profile} shows kids REAL nature footage of one sea creature and
 talks about what it's doing on screen, in their own distinct personality.
@@ -80,7 +67,7 @@ HARD RULES (preschool safety & footage-search accuracy):
   question out loud in simple words, naming the creature, then "Let's find
   out!" (e.g. "How do jellyfish glow? Let's find out!"). Platforms index the
   spoken words, and a question in the first second keeps viewers watching.
-- Facts must be true and simple. Prefer well-known, easily-verified facts.{song_section}
+- Facts must be true and simple. Prefer well-known, easily-verified facts.
 
 SEARCH SEO (how real people type into TikTok/YouTube search — this drives
 whether the algorithm surfaces the video to people actively searching):
@@ -101,12 +88,12 @@ Return ONLY JSON in this exact shape:
     {{"behavior": "short behavior label, e.g. swimming",
      "search_query": "2-4 word visual search phrase for stock footage",
      "narration": "what the narrator says over this footage"}}
-  ]{song_schema}
+  ]
 }}
 The "segments" array must have exactly 3 or 4 entries."""
 
 
-def _problems(ep: dict, include_song: bool) -> list:
+def _problems(ep: dict) -> list:
     """Why an LLM episode is unusable ([] if it's fine). Checked before any
     rendering so a malformed script fails fast instead of mid-render."""
     probs = []
@@ -123,8 +110,6 @@ def _problems(ep: dict, include_song: bool) -> list:
     words = sum(len(s.get("narration", "").split()) for s in segs if isinstance(s, dict))
     if words < _MIN_NARRATION_WORDS:
         probs.append(f"narration only {words} words (need {_MIN_NARRATION_WORDS}+)")
-    if include_song and len(((ep.get("song") or {}).get("lyrics") or "")) < 150:
-        probs.append("song lyrics missing or too short")
     return probs
 
 
@@ -142,10 +127,7 @@ def _title_problem(ep: dict, avoid_titles: list) -> str:
     return ""
 
 
-def generate_real_episode(theme: str = "", character: str = "bini", include_song: bool = None,
-                          avoid_titles: list = None) -> dict:
-    if include_song is None:
-        include_song = (character == "bini")
+def generate_real_episode(theme: str = "", character: str = "bini", avoid_titles: list = None) -> dict:
     avoid_titles = [t for t in (avoid_titles or []) if t]
     creature_hint = ", ".join(CREATURES)
     user = (f"Write today's Bini's Real Ocean episode. Theme/creature seed: {theme}.\n"
@@ -158,7 +140,7 @@ def generate_real_episode(theme: str = "", character: str = "bini", include_song
         "model": "gpt-4o-mini",
         "response_format": {"type": "json_object"},
         "temperature": 0.9,
-        "messages": [{"role": "system", "content": _build_system(character, include_song)},
+        "messages": [{"role": "system", "content": _build_system(character)},
                      {"role": "user", "content": user}],
     }
     probs, usable = [], None
@@ -174,7 +156,7 @@ def generate_real_episode(theme: str = "", character: str = "bini", include_song
         except Exception as exc:
             probs = [f"request/parse failed: {exc}"]
         else:
-            probs = _problems(ep, include_song)
+            probs = _problems(ep)
             if not probs:
                 stale = _title_problem(ep, avoid_titles)
                 if not stale:

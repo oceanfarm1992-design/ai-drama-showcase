@@ -1,0 +1,100 @@
+name: Bini's Ocean Discovery Weekly (long video)
+
+on:
+  schedule:
+    # Saturdays, off the hour (crons pinned to :00 are the most likely to be
+    # delayed/dropped). Waits behind the daily short via the shared group.
+    - cron: '35 4 * * 6'    # ~04:35 UTC Saturday
+  workflow_dispatch:
+    inputs:
+      habitats:
+        description: 'Optional comma-separated habitats, e.g. "Mangrove Forest,Seagrass Meadow,Coral Reef"'
+        required: false
+        default: ''
+
+# Lets the automatic GITHUB_TOKEN create releases and commit the manifest.
+permissions:
+  contents: write
+
+# Same group as the daily short: both commit manifest.json, so they queue.
+concurrency:
+  group: real-ocean-publish
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    # ~40 verified clips + ~14,000 rendered frames; normally well under an hour.
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+
+      - name: Install system deps (ffmpeg)
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Cache Rhubarb Lip Sync
+        id: rhubarb-cache
+        uses: actions/cache@v5
+        with:
+          path: rhubarb
+          key: rhubarb-1.14.0-linux
+
+      - name: Download Rhubarb Lip Sync
+        if: steps.rhubarb-cache.outputs.cache-hit != 'true'
+        run: |
+          curl -sL -o rhubarb.zip "https://github.com/DanielSWolf/rhubarb-lip-sync/releases/download/v1.14.0/Rhubarb-Lip-Sync-1.14.0-Linux.zip"
+          mkdir -p rhubarb
+          unzip -q rhubarb.zip -d rhubarb
+          chmod +x rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb
+
+      - name: Cache Kokoro TTS model
+        id: kokoro-cache
+        uses: actions/cache@v5
+        with:
+          path: kokoro_model
+          key: kokoro-v1.0-int8
+
+      - name: Download Kokoro TTS model
+        if: steps.kokoro-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p kokoro_model
+          curl -sL -o kokoro_model/kokoro-v1.0.int8.onnx "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.int8.onnx"
+          curl -sL -o kokoro_model/voices-v1.0.bin "https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/voices-v1.0.bin"
+
+      - name: Install Python deps
+        run: |
+          pip install --quiet -r requirements.txt
+
+      - name: Render long episode
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+          SEABINI_RHUBARB: ${{ github.workspace }}/rhubarb/Rhubarb-Lip-Sync-1.14.0-Linux/rhubarb
+          SEABINI_VOICE_ENGINE: kokoro
+          SEABINI_KOKORO_MODEL: ${{ github.workspace }}/kokoro_model/kokoro-v1.0.int8.onnx
+          SEABINI_KOKORO_VOICES: ${{ github.workspace }}/kokoro_model/voices-v1.0.bin
+          DISCOVERY_HABITATS: ${{ github.event.inputs.habitats }}
+        run: |
+          python bini_discovery_episode.py discovery.mp4
+
+      - name: Publish (GitHub Release + manifest commit + TikTok/Facebook via Buffer)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: |
+          cat episode_meta.json
+          python seabini_publish.py discovery.mp4 --meta episode_meta.json
+
+      - name: Upload episode as workflow artifact (backup)
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: bini-ocean-discovery
+          path: discovery.mp4
+          if-no-files-found: ignore
+          retention-days: 7
