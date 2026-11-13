@@ -8,7 +8,7 @@ Two kinds of LLM call (gpt-4o-mini, ~$0.01/episode in total):
                      subject chosen from that habitat's curated list
 match_chapter() then rewrites each line to fit the clip actually found.
 """
-import json, urllib.request
+import json, re, urllib.request
 
 import seabini_script as ss  # reuse _openai_key()
 from bini_real_script import CHARACTER_PROFILES
@@ -41,8 +41,11 @@ HABITATS = {
     "Glowing Night Sea": {"places": ["bioluminescent sea"],
                           "animals": ["jellyfish", "plankton"]},
 }
-_MIN_SEGMENTS, _MAX_SEGMENTS = 6, 8
-_MIN_WORDS_PER_LINE = 15
+# A local test came out at ~7s a segment with 2-3 sentence lines, which
+# can't fill 8 minutes; fuller lines + more segments land a chapter ~1:45.
+_MIN_SEGMENTS, _MAX_SEGMENTS = 7, 9
+_MIN_WORDS_PER_LINE = 24
+_REWRITE_KEEP = 0.8  # a rewrite may not shrink a line below this share of its words
 
 _SAFETY = """SAFETY (this is REAL footage for ages 2-6):
 - Only peaceful, observable behaviour: swimming, floating, resting, walking,
@@ -110,6 +113,17 @@ Return ONLY JSON:
     return _retrying("frame", lambda: _chat(system, user), problems)
 
 
+def _canonical(subject, allowed):
+    """Map the writer's wording onto an allowed subject: it says "seagrass" or
+    "mangrove forest" where the list says "sea grass" / "mangrove"."""
+    key = re.sub(r"[^a-z]", "", str(subject).lower())
+    norm = {re.sub(r"[^a-z]", "", a): a for a in allowed}
+    if key in norm:
+        return norm[key]
+    starts = [a for k, a in norm.items() if key.startswith(k)]
+    return max(starts, key=len) if starts else None
+
+
 def write_chapter(habitat, guide):
     """{"title", "segments": [{"subject", "kind", "search_query", "narration"}]}"""
     spec = HABITATS[habitat]
@@ -129,8 +143,10 @@ Write {_MIN_SEGMENTS}-{_MAX_SEGMENTS} segments. Each plays over one real video c
   animals; use each subject at most twice.
 - "search_query": 2-4 word stock-footage search containing the subject,
   concrete and visual (e.g. "heron walking mangrove", "sea turtle eating seagrass").
-- "narration": 2-3 short sentences (25-35 words): react to what we see, then
-  one simple true fact about how this animal lives in the {habitat}.
+- "narration": 3-4 short sentences (35-45 words): react to what we see,
+  share one simple true fact about how it lives in the {habitat}, and add a
+  playful question or "can you..." invitation for the child (e.g. "Can you
+  flap your arms like a heron?").
   The last segment says a cheerful goodbye to the {habitat} (don't name
   the next place).
 
@@ -145,17 +161,17 @@ Return ONLY JSON:
         for i, s in enumerate(segs):
             if not isinstance(s, dict) or not all(_str(s, k) for k in ("subject", "search_query", "narration")):
                 probs.append(f"segment {i} incomplete")
-            elif s["subject"].strip().lower() not in allowed:
+            elif not _canonical(s["subject"], allowed):
                 probs.append(f"segment {i} subject '{s['subject']}' not allowed")
             elif len(s["narration"].split()) < _MIN_WORDS_PER_LINE:
                 probs.append(f"segment {i} narration too short")
-        if not probs and allowed[segs[0]["subject"].strip().lower()] != "place":
+        if not probs and allowed[_canonical(segs[0]["subject"], allowed)] != "place":
             probs.append("first segment must show the place")
         return probs
 
     chapter = _retrying(habitat, lambda: _chat(system, f"Write the {habitat} chapter."), problems)
     for s in chapter["segments"]:
-        s["subject"] = s["subject"].strip().lower()
+        s["subject"] = _canonical(s["subject"], allowed)
         s["kind"] = allowed[s["subject"]]
     chapter["title"] = habitat
     return chapter
@@ -168,16 +184,18 @@ def match_chapter(habitat, guide, clips):
     lines = [{"subject": seg["subject"], "planned_narration": seg["narration"], "clip_shows": shows}
              for seg, shows in clips]
     system = (f"You narrate a preschool (ages 2-6) nature show as {CHARACTER_PROFILES[guide]} "
-              f"We are visiting the {habitat}. For each clip, rewrite the planned narration as 2-3 short, "
-              "warm sentences in the narrator's voice: first react to what the clip ACTUALLY shows (never "
-              "claim it shows something it doesn't), then keep the planned fun fact as a general statement. "
+              f"We are visiting the {habitat}. For each clip, rewrite the planned narration as 3-4 short, "
+              "warm sentences in the narrator's voice, about as long as the plan (35-45 words): first react "
+              "to what the clip ACTUALLY shows (never claim it shows something it doesn't), then keep the "
+              "planned fun fact as a general statement and the playful question for the child. "
               "Keep the first line's welcome and the last line's goodbye. Never mention cameras, footage, "
               "clips or videos. Facts must be true and simple. "
               'Return JSON: {"narrations": ["...", ...]} with exactly one entry per clip, in order.')
     try:
         new = _chat(system, json.dumps(lines, ensure_ascii=False), temperature=0.7).get("narrations")
         if (isinstance(new, list) and len(new) == len(original)
-                and all(isinstance(n, str) and len(n.split()) >= 10 for n in new)):
+                and all(isinstance(n, str) and len(n.split()) >= _REWRITE_KEEP * len(o.split())
+                        for n, o in zip(new, original))):
             return new
         print(f"[discovery-script] {habitat}: narration rewrite malformed, keeping the plan")
     except Exception as exc:

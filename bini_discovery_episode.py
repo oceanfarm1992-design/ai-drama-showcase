@@ -25,7 +25,7 @@ _MANIFEST_URL = "https://raw.githubusercontent.com/oceanfarm1992-design/ai-drama
 # TikTok's posting API caps most accounts at 10 minutes, so aim for ~9:15
 # and never plan past ~9:50, even though Facebook would take longer.
 _MIN_SEC, _TARGET_SEC, _MAX_SEC = 480.0, 555.0, 590.0
-_PLANNED_CHAPTERS = 7         # one or two usually get dropped/skipped; ~85s each
+_PLANNED_CHAPTERS = 8         # ~1:45 each; the run stops at ~9:15, so spares cover skipped habitats
 _MIN_CHAPTER_SEGMENTS = 3     # fewer verified clips than this: skip the habitat
 _CARD_SEC, _END_CARD_SEC = 2.5, 3.0
 _MUSIC_GAIN = 0.12
@@ -170,7 +170,11 @@ def _shoot_chapter(tl, n, habitat, guide, used, soft, budget_sec):
     """Fetch + verify footage for one habitat, then render its card and
     segments, trimmed to end by `budget_sec`. Returns False (adding nothing)
     if too little footage verified."""
-    chapter = bds.write_chapter(habitat, guide)
+    try:
+        chapter = bds.write_chapter(habitat, guide)
+    except SystemExit as exc:  # one unwritable habitat shouldn't sink the week
+        print(f"  {habitat}: {exc}; skipping this habitat")
+        return False
     found = []
     for i, seg in enumerate(chapter["segments"]):
         print(f"  [{habitat}] {seg['subject']}: '{seg['search_query']}'")
@@ -219,7 +223,7 @@ def build_discovery(out_path, forced_habitats=None):
     outro_est = lambda: _words(frame["outro"]) * tl.sec_per_word() + _END_CARD_SEC
     for n, (habitat, guide) in enumerate(zip(habitats, guides)):
         budget = _MAX_SEC - outro_est()
-        smallest = _CARD_SEC + _MIN_CHAPTER_SEGMENTS * 25 * tl.sec_per_word()
+        smallest = _CARD_SEC + _MIN_CHAPTER_SEGMENTS * 35 * tl.sec_per_word()
         if tl.seconds >= _TARGET_SEC or tl.seconds + smallest > budget:
             break
         start = tl.seconds
