@@ -1,6 +1,25 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Real Ocean",
+      "title": "Starfish: The Amazing Arm Walkers",
+      "narrator": "Bini",
+      "creature": "starfish",
+      "language": "en",
+      "learning_objective": "Look at that starfish! It's resting on the sandy ocean floor. Starfish have arms that help them move all around!",
+      "search_hook": "how do starfish move with their arms",
+      "footage_ids": [
+        "pexels:29277599",
+        "pexels:35196035",
+        "pexels:36481878",
+        "pexels:40954678"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261113-162112/episode.mp4",
+      "published_at": "2026-11-13T16:21:17.266739Z",
+      "episode_number": 224,
+      "series_length": 224
+    },
+    {
       "series_title": "Bini's Ocean Discovery",
       "title": "Bini's Ocean Discovery: From Sandy Beach to Glowing Night Sea",
       "narrator": "Bini & friends",
