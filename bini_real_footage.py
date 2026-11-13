@@ -133,7 +133,7 @@ def _normalize_vertical(src_path, dst_path, ff_exe):
     ], check=True, capture_output=True)
 
 
-def _vision_check(video_path, duration, subject, ff_exe):
+def _vision_check(video_path, duration, subject, ff_exe, kind="animal"):
     """(usable, reason_or_what_it_shows) from 3 frames: on success the second
     item is a short description of what the clip shows (used to make the
     narration match it), otherwise why it was rejected. If the check can't run (no key,
@@ -154,19 +154,32 @@ def _vision_check(video_path, duration, subject, ff_exe):
             images.append({"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{b64}", "detail": "low"}})
     if not images:
         return False, "could not extract frames"
-    prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video about a LIVE {subject}. "
-              'Reply with JSON only: {"subject_visible": true/false, "alive_in_habitat": true/false, '
-              '"is_food": true/false, "kid_safe": true/false, "shows": "..."}. '
-              f"subject_visible = a real {subject} is clearly the main subject in most frames (not a tiny "
-              "speck, not a different animal, not a toy, drawing or ride). "
-              f"alive_in_habitat = the {subject} is a living animal in the sea, on a shore, or in an aquarium "
-              "(false if it is dead, dried, a shell or decoration, held out of water, or a cartoon/toy/costume). "
-              "is_food = ANY frame shows food or eating by people: cooking, a pan or wok, a plate or dish, "
-              "a restaurant, sushi, a drink or glass, a fish market, or a caught animal. "
-              "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
-              "or eaten animal, hunting/attacking, fishing hooks or nets with caught animals, trash-choked "
-              "animals, or anything violent. Divers, boats and ordinary ocean scenes are fine. "
-              f"shows = one plain sentence (max 15 words) saying what the {subject} is doing and where.")
+    if kind == "place":
+        # A habitat (mangrove forest, seagrass meadow...) rather than one animal:
+        # it must clearly be that place, and "alive" doesn't apply.
+        prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video showing a real {subject}. "
+                  'Reply with JSON only: {"subject_visible": true/false, '
+                  '"is_food": true/false, "kid_safe": true/false, "shows": "..."}. '
+                  f"subject_visible = the clip clearly shows a real {subject} in nature (not a city, pool, "
+                  "aquarium shop, drawing or text-heavy graphic). "
+                  "is_food = ANY frame shows food or eating by people, a restaurant, a fish market or a caught animal. "
+                  "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
+                  "animal, hunting/attacking, storms with danger, trash or pollution, or anything violent. "
+                  f"shows = one plain sentence (max 15 words) saying what the {subject} looks like and what is in it.")
+    else:
+        prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video about a LIVE {subject}. "
+                  'Reply with JSON only: {"subject_visible": true/false, "alive_in_habitat": true/false, '
+                  '"is_food": true/false, "kid_safe": true/false, "shows": "..."}. '
+                  f"subject_visible = a real {subject} is clearly the main subject in most frames (not a tiny "
+                  "speck, not a different animal, not a toy, drawing or ride). "
+                  f"alive_in_habitat = the {subject} is a living animal in the sea, on a shore, or in an aquarium "
+                  "(false if it is dead, dried, a shell or decoration, held out of water, or a cartoon/toy/costume). "
+                  "is_food = ANY frame shows food or eating by people: cooking, a pan or wok, a plate or dish, "
+                  "a restaurant, sushi, a drink or glass, a fish market, or a caught animal. "
+                  "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
+                  "or eaten animal, hunting/attacking, fishing hooks or nets with caught animals, trash-choked "
+                  "animals, or anything violent. Divers, boats and ordinary ocean scenes are fine. "
+                  f"shows = one plain sentence (max 15 words) saying what the {subject} is doing and where.")
     body = {"model": "gpt-4o-mini", "response_format": {"type": "json_object"}, "temperature": 0,
             "messages": [{"role": "user", "content": [{"type": "text", "text": prompt}, *images]}]}
     verdict, error = None, ""
@@ -187,7 +200,7 @@ def _vision_check(video_path, duration, subject, ff_exe):
         return False, "not kid-safe"
     if verdict.get("subject_visible") is not True:
         return False, f"no {subject} visible"
-    if verdict.get("alive_in_habitat") is not True:
+    if kind == "animal" and verdict.get("alive_in_habitat") is not True:
         return False, f"{subject} not alive in its habitat"
     return True, str(verdict.get("shows", "")).strip()
 
@@ -214,16 +227,17 @@ def _ranked(cands, used, avoid, subject, exclude=()):
     return fresh
 
 
-def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None):
+def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None, kind="animal"):
     """Returns (local mp4 path, what the clip shows) — normalized to vertical
     720x1280 @24fps — or None if no verified footage exists. `used` is a set of clip ids already
     used (this episode + recent ones); the chosen clip's id is added to it.
     `avoid` holds clip ids from older episodes: allowed, but tried last.
-    `subject` is the creature the footage must actually show."""
+    `subject` is the creature (kind="animal") or habitat (kind="place") the
+    footage must actually show."""
     used = used if used is not None else set()
     avoid = avoid or set()
     subject = subject or query
-    broad = f"{subject} underwater"
+    broad = f"{subject} underwater" if kind == "animal" else f"{subject} nature"
     cands = _pexels_search(query) + _pixabay_search(query)
     broadened = len(cands) < 5
     if broadened:  # very specific phrasing found little; broaden once
@@ -254,7 +268,7 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
             except Exception as exc:
                 print(f"[footage] download failed for {clip_id}: {exc}")
                 continue
-            ok, info = _vision_check(out_path, duration, subject, ff_exe)
+            ok, info = _vision_check(out_path, duration, subject, ff_exe, kind)
             if ok:
                 used.add(clip_id)
                 print(f"[footage] {clip_id}: '{query}' -> {info}")
