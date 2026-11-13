@@ -95,7 +95,8 @@ sea habitats; friends guide each one. You write only the episode frame.
 
 Return ONLY JSON:
 {{"title": "Bini's Ocean Discovery: <short journey name, e.g. From Mangroves to Coral Reefs>",
- "search_hook": "the question a parent would type into search that this episode answers, lowercase,
+ "search_hook": "ONE natural, grammatical question a parent would type into search that this
+                 episode answers, about ONE of today's habitats (never a list of them), lowercase,
                  no punctuation, 6-10 words, e.g. what animals live in a mangrove forest",
  "intro": "Bini's welcome, 3-4 short sentences (40-60 words): greet the little explorers,
            say we'll visit these habitats today, invite them to look closely",
