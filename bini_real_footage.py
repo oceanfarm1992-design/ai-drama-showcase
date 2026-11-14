@@ -62,12 +62,14 @@ def _get_json(url, headers):
     return json.loads(urllib.request.urlopen(req, context=_SSL, timeout=20).read())
 
 
-def _pexels_search(query):
-    """[(clip_id, download_url, descriptive_text, duration)]"""
+def _pexels_search(query, wide=False):
+    """[(clip_id, download_url, descriptive_text, duration)]. `wide` asks for
+    landscape sources, which can be cut to both 16:9 and 9:16."""
     key = _api_key("PEXELS_API_KEY")
     if not key:
         return []
-    url = f"https://api.pexels.com/videos/search?query={urllib.parse.quote(query)}&per_page=40&orientation=portrait"
+    orientation = "landscape" if wide else "portrait"
+    url = f"https://api.pexels.com/videos/search?query={urllib.parse.quote(query)}&per_page=40&orientation={orientation}"
     try:
         data = _get_json(url, {"Authorization": key})
     except Exception as exc:
@@ -77,16 +79,17 @@ def _pexels_search(query):
     for v in data.get("videos", []):
         if not (_MIN_DUR <= v.get("duration", 0) <= _MAX_DUR):
             continue
-        # Prefer the file closest to our target 720x1280 without upscaling past it
-        files = sorted(v["video_files"], key=lambda f: abs(f.get("width", 0) - 720))
+        # Prefer the file closest to our target width without upscaling past it
+        target = 1280 if wide else 720
+        files = sorted(v["video_files"], key=lambda f: abs(f.get("width", 0) - target))
         for f in files:
-            if f.get("width", 0) >= 720 and f.get("file_type") == "video/mp4":
+            if f.get("width", 0) >= target and f.get("file_type") == "video/mp4":
                 out.append((f"pexels:{v['id']}", f["link"], v.get("url", ""), v["duration"]))
                 break
     return out
 
 
-def _pixabay_search(query):
+def _pixabay_search(query, wide=False):
     """[(clip_id, download_url, descriptive_text, duration)]"""
     key = _api_key("PIXABAY_API_KEY")
     if not key:
@@ -102,6 +105,9 @@ def _pixabay_search(query):
         if not (_MIN_DUR <= v.get("duration", 0) <= _MAX_DUR):
             continue
         for tier in ("medium", "large", "small"):
+            f = v["videos"].get(tier) or {}
+            if wide and (f.get("width", 0) < 1280 or f.get("height", 0) > f.get("width", 0)):
+                continue  # a landscape cut from a small or upright source looks soft/zoomed
             if tier in v["videos"]:
                 out.append((f"pixabay:{v['id']}", v["videos"][tier]["url"], v.get("tags", ""), v["duration"]))
                 break
@@ -124,13 +130,18 @@ def _mentions(text, subject):
     return all(re.sub(r"[^a-z]", "", w) in norm for w in words)
 
 
-def _normalize_vertical(src_path, dst_path, ff_exe):
-    """Cover-fit crop to exactly 720x1280, whatever the source aspect ratio."""
+def _normalize(src_path, dst_path, ff_exe, w=720, h=1280):
+    """Cover-fit crop to exactly w x h, whatever the source aspect ratio."""
     subprocess.run([
         ff_exe, "-y", "-i", src_path,
-        "-vf", "scale=720:1280:force_original_aspect_ratio=increase,crop=720:1280",
+        "-vf", f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}",
         "-an", "-r", "24", dst_path,
     ], check=True, capture_output=True)
+
+
+def wide_path(vertical_path):
+    """The 1280x720 cut made alongside a vertical clip by fetch_footage(wide=True)."""
+    return vertical_path.replace("_vertical", "_wide")
 
 
 def _vision_check(video_path, duration, subject, ff_exe, kind="animal"):
@@ -160,8 +171,9 @@ def _vision_check(video_path, duration, subject, ff_exe, kind="animal"):
         prompt = (f"These are 3 frames from a stock clip for a preschool (ages 2-6) nature video showing a real {subject}. "
                   'Reply with JSON only: {"subject_visible": true/false, '
                   '"is_food": true/false, "kid_safe": true/false, "shows": "..."}. '
-                  f"subject_visible = the clip clearly shows a real {subject} in nature (not a city, pool, "
-                  "aquarium shop, drawing or text-heavy graphic). "
+                  f"subject_visible = the clip clearly shows a real {subject} in or right beside the SEA "
+                  "(false for rivers, lakes, waterfalls, forests away from the coast, a city, a swimming pool, "
+                  "an aquarium shop, a drawing or a text-heavy graphic). "
                   "is_food = ANY frame shows food or eating by people, a restaurant, a fish market or a caught animal. "
                   "kid_safe = false if anything could scare or upset a small child: blood, injury, a dead "
                   "animal, hunting/attacking, storms with danger, trash or pollution, or anything violent. "
@@ -205,10 +217,12 @@ def _vision_check(video_path, duration, subject, ff_exe, kind="animal"):
     return True, str(verdict.get("shows", "")).strip()
 
 
-def _download(url, raw_path, out_path, ff_exe):
+def _download(url, raw_path, out_path, ff_exe, wide=False):
     req = urllib.request.Request(url, headers={"User-Agent": _UA})
     pathlib.Path(raw_path).write_bytes(urllib.request.urlopen(req, context=_SSL, timeout=60).read())
-    _normalize_vertical(raw_path, out_path, ff_exe)
+    _normalize(raw_path, out_path, ff_exe)
+    if wide:
+        _normalize(raw_path, wide_path(out_path), ff_exe, 1280, 720)
 
 
 def _ranked(cands, used, avoid, subject, exclude=()):
@@ -227,21 +241,24 @@ def _ranked(cands, used, avoid, subject, exclude=()):
     return fresh
 
 
-def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None, kind="animal"):
+def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=None, kind="animal",
+                  wide=False):
     """Returns (local mp4 path, what the clip shows) — normalized to vertical
     720x1280 @24fps — or None if no verified footage exists. `used` is a set of clip ids already
     used (this episode + recent ones); the chosen clip's id is added to it.
     `avoid` holds clip ids from older episodes: allowed, but tried last.
     `subject` is the creature (kind="animal") or habitat (kind="place") the
-    footage must actually show."""
+    footage must actually show. With `wide`, landscape sources are used and a
+    1280x720 cut is written too (see wide_path); the check runs on the tighter
+    vertical cut, so whatever passes is visible in both."""
     used = used if used is not None else set()
     avoid = avoid or set()
     subject = subject or query
     broad = f"{subject} underwater" if kind == "animal" else f"{subject} nature"
-    cands = _pexels_search(query) + _pixabay_search(query)
+    cands = _pexels_search(query, wide) + _pixabay_search(query, wide)
     broadened = len(cands) < 5
     if broadened:  # very specific phrasing found little; broaden once
-        cands += _pexels_search(broad) + _pixabay_search(broad)
+        cands += _pexels_search(broad, wide) + _pixabay_search(broad, wide)
     fresh = _ranked(cands, used, avoid, subject)
     if not fresh:
         print(f"[footage] No results for '{query}' on Pexels or Pixabay")
@@ -252,9 +269,9 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
         if round_no == 1:
             # Nothing passed: try a few more from broader searches (the plain
             # creature name, then "<creature> underwater") before giving up.
-            more = _pexels_search(subject) + _pixabay_search(subject) if subject != query else []
+            more = _pexels_search(subject, wide) + _pixabay_search(subject, wide) if subject != query else []
             if not broadened:
-                more += _pexels_search(broad) + _pixabay_search(broad)
+                more += _pexels_search(broad, wide) + _pixabay_search(broad, wide)
             batch = _ranked(fresh + more, used, avoid, subject, exclude=tried)[:_EXTRA_TRIES]
         else:
             batch = fresh[:_MAX_TRIES]
@@ -264,7 +281,7 @@ def fetch_footage(query, tag, work_dir, ff_exe, used=None, subject=None, avoid=N
             raw_path = str(work_dir / f"{tag}_raw{n}.mp4")
             out_path = str(work_dir / f"{tag}_vertical{n}.mp4")
             try:
-                _download(url, raw_path, out_path, ff_exe)
+                _download(url, raw_path, out_path, ff_exe, wide)
             except Exception as exc:
                 print(f"[footage] download failed for {clip_id}: {exc}")
                 continue

@@ -4,8 +4,11 @@ YouTube / TikTok / Facebook via Buffer's GraphQL API.
 
 Env: GH_TOKEN (the workflow's GITHUB_TOKEN), BUFFER_API_KEY.
 Run: python seabini_publish.py <video.mp4> --meta episode_meta.json
-The meta file may limit "platforms" and set "facebook_type" ("post" for
-long-form video; the default "reel" is for shorts).
+The meta file may limit "platforms", set "facebook_type" ("post" for
+long-form video; the default "reel" is for shorts), add "extra_videos"
+({cut name: file}) uploaded to the same release, and pick a cut per
+platform with "platform_video" ({service: cut name}; the main file is the
+"portrait" cut).
 """
 import base64, os, sys, json, datetime, pathlib, shutil, ssl, subprocess, time, urllib.error, urllib.request
 
@@ -220,7 +223,8 @@ def _video_titles(title: str, series_title: str, search_hook: str, creature: str
     and the tag only spent characters."""
     if series_title == DISCOVERY:
         hook = f"{search_hook[0].upper()}{search_hook[1:]}?" if search_hook else ""
-        return title[:100], (f"{hook} 🌊 {title}" if hook else title)[:90]
+        full = f"{hook} 🌊 {title}" if hook else title
+        return full[:100], full[:90]
     if series_title == "Bini's Real Ocean":
         hook = f"{search_hook[0].upper()}{search_hook[1:]}?" if search_hook else title
         topic = f"Real {_creature_plural(creature)} for Kids" if creature else "Real Sea Animals for Kids"
@@ -245,7 +249,7 @@ def _buffer_post(channel_id: str, service: str, video_url: str,
             "title": yt_title,
             "privacy": "public",
             # Real nature footage is Education (27); the cartoon is Film & Animation (1)
-            "categoryId": "27" if series_title == "Bini's Real Ocean" else "1",
+            "categoryId": "27" if series_title in ("Bini's Real Ocean", DISCOVERY) else "1",
             "madeForKids": True,
             "isAiGenerated": True,
             "embeddable": True,
@@ -310,7 +314,7 @@ def _video_duration(video_path: str):
 def _post_all_channels(video_url: str, title: str, objective: str, series_title: str = "SEABINI",
                        narrator: str = "Bini", search_hook: str = "", duration: float = None,
                        creature: str = "", platforms: list = None, facebook_type: str = "reel",
-                       chapters: list = None) -> list:
+                       chapters: list = None, service_urls: dict = None) -> list:
     """Posts to every chosen channel even if one fails; returns the failed
     services. A Reel the video is too long for is skipped, not failed."""
     if series_title == DISCOVERY:
@@ -329,7 +333,8 @@ def _post_all_channels(video_url: str, title: str, objective: str, series_title:
     for attempt in range(2):
         retry = {}
         for service, channel_id in todo.items():
-            ok, err = _buffer_post(channel_id, service, video_url, caps, title, series_title,
+            url = (service_urls or {}).get(service, video_url)
+            ok, err = _buffer_post(channel_id, service, url, caps, title, series_title,
                                    search_hook, creature, facebook_type)
             if ok:
                 continue
@@ -384,7 +389,8 @@ def _gh_api(method, path, body=None, content_type="application/json"):
         raise
 
 
-def _upload_release(video_path: str, title: str) -> str:
+def _upload_release(video_paths: list, title: str) -> list:
+    """Create one release holding every file; returns their download URLs."""
     tag = "seabini-" + datetime.datetime.utcnow().strftime("%Y%m%d-%H%M%S")
     token = _gh_token()
     print(f"[Release] Creating {tag} in {REPO} (token len={len(token)})")
@@ -406,7 +412,11 @@ def _upload_release(video_path: str, title: str) -> str:
     upload_url = release["upload_url"].split("{")[0]  # strip {?name,label} template
     print(f"[Release] Created: {release['html_url']}")
 
-    # 2. Upload the video asset
+    # 2. Upload the video asset(s)
+    return [_upload_asset(release, upload_url, tag, path, token) for path in video_paths]
+
+
+def _upload_asset(release, upload_url, tag, video_path, token):
     filename = pathlib.Path(video_path).name
     file_data = pathlib.Path(video_path).read_bytes()
     asset_url = f"{upload_url}?name={filename}"
@@ -422,14 +432,13 @@ def _upload_release(video_path: str, title: str) -> str:
                 if a.get("state") == "uploaded" and a.get("size") == len(file_data):
                     return a
                 _gh_api("DELETE", f"/repos/{REPO}/releases/assets/{a['id']}")
-        return json.loads(urllib.request.urlopen(req, context=_SSL_CTX, timeout=300).read())
+        return json.loads(urllib.request.urlopen(req, context=_SSL_CTX, timeout=600).read())
     try:
         asset = _with_retry("Release", upload)
         print(f"[Release] Uploaded asset: {asset['name']} ({asset['size']} bytes)")
     except urllib.error.HTTPError as exc:
         # Stop here: carrying on would post a dead video link to every platform.
         raise SystemExit(f"[Release] Asset upload failed: {exc.code} {exc.read().decode(errors='replace')[:300]}")
-
     return f"https://github.com/{REPO}/releases/download/{tag}/{filename}"
 
 
@@ -494,8 +503,14 @@ def publish(video_path: str, title: str, language: str = "en",
             platforms: list = None,
             facebook_type: str = "reel",
             habitats: list = None,
-            chapters: list = None) -> str:
-    video_url = _upload_release(video_path, title)
+            chapters: list = None,
+            extra_videos: dict = None,
+            platform_video: dict = None) -> str:
+    extra_videos = extra_videos or {}
+    urls = _upload_release([video_path, *extra_videos.values()], title)
+    video_url = urls[0]
+    cut_urls = {"portrait": video_url, **dict(zip(extra_videos, urls[1:]))}
+    service_urls = {svc: cut_urls[cut] for svc, cut in (platform_video or {}).items() if cut in cut_urls}
 
     entry = {
         "series_title": series_title,
@@ -513,6 +528,8 @@ def publish(video_path: str, title: str, language: str = "en",
         entry["habitats"] = habitats
     if chapters:
         entry["chapters"] = chapters
+    if "landscape" in cut_urls:
+        entry["video_url_wide"] = cut_urls["landscape"]
     for attempt, delay in enumerate((*_RETRY_DELAYS, None)):
         # Retry on conflicts (another run updated the manifest meanwhile) and
         # transient errors. A 5xx PUT may still have committed, so skip the
@@ -539,7 +556,8 @@ def publish(video_path: str, title: str, language: str = "en",
     # posting problem is a warning, not a failed run — unless every channel
     # failed, which points at the Buffer key/account rather than one post.
     failed = _post_all_channels(video_url, title, objective, series_title, narrator, search_hook,
-                                _video_duration(video_path), creature, platforms, facebook_type, chapters)
+                                _video_duration(video_path), creature, platforms, facebook_type, chapters,
+                                service_urls)
     if failed and len(failed) == len(platforms or _BUFFER_CHANNELS):
         raise SystemExit(f"[Buffer] Posting failed for every channel: {', '.join(failed)}")
     for service in failed:
@@ -556,7 +574,7 @@ if __name__ == "__main__":
                                     m.get("search_hook", ""), m.get("footage_ids", []),
                                     m.get("creature", ""), m.get("platforms"),
                                     m.get("facebook_type", "reel"), m.get("habitats"),
-                                    m.get("chapters")))
+                                    m.get("chapters"), m.get("extra_videos"), m.get("platform_video")))
     else:  # legacy positional form, still used by the (disabled) SEABINI workflow
         title = sys.argv[2] if len(sys.argv) > 2 else "SEABINI Short"
         language = sys.argv[3] if len(sys.argv) > 3 else "en"
