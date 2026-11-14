@@ -1,6 +1,101 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Ocean Discovery",
+      "title": "Bini's Ocean Discovery: From Rocky Shores to Glowing Night Sea",
+      "narrator": "Bini & friends",
+      "creature": "",
+      "language": "en",
+      "learning_objective": "Hello little explorers! I'm Bini, your friendly seahorse. Today, we will journey through amazing ocean habitats. Let's look closely at all the beautiful creatures that live in the water. Are you ready for an adventure?",
+      "search_hook": "what animals live in a rocky shore",
+      "footage_ids": [
+        "pexels:11358452",
+        "pexels:18568945",
+        "pexels:31496845",
+        "pexels:33598053",
+        "pexels:33983401",
+        "pexels:34096144",
+        "pexels:34213432",
+        "pexels:34732419",
+        "pexels:35616036",
+        "pexels:35631575",
+        "pexels:35691340",
+        "pexels:36060688",
+        "pexels:36417046",
+        "pexels:36514933",
+        "pexels:39773158",
+        "pexels:40301486",
+        "pexels:40470269",
+        "pexels:40550980",
+        "pexels:7008037",
+        "pexels:9338321",
+        "pixabay:10287",
+        "pixabay:116266",
+        "pixabay:16166",
+        "pixabay:220828",
+        "pixabay:245968",
+        "pixabay:263034",
+        "pixabay:263236",
+        "pixabay:265150",
+        "pixabay:292831",
+        "pixabay:327852",
+        "pixabay:329847",
+        "pixabay:367019",
+        "pixabay:368698",
+        "pixabay:368699",
+        "pixabay:386257",
+        "pixabay:386544",
+        "pixabay:3918",
+        "pixabay:40057",
+        "pixabay:50638",
+        "pixabay:74888",
+        "pixabay:750",
+        "pixabay:96504",
+        "pixabay:99548"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261114-122658/discovery.mp4",
+      "published_at": "2026-11-14T12:27:07.145853Z",
+      "habitats": [
+        "Rocky Shore",
+        "Seagrass Meadow",
+        "Coral Reef",
+        "Shipwreck Reef",
+        "Seaweed Forest"
+      ],
+      "chapters": [
+        [
+          "0:00",
+          "Welcome"
+        ],
+        [
+          "0:15",
+          "Rocky Shore"
+        ],
+        [
+          "1:48",
+          "Seagrass Meadow"
+        ],
+        [
+          "2:57",
+          "Coral Reef"
+        ],
+        [
+          "5:15",
+          "Shipwreck Reef"
+        ],
+        [
+          "7:14",
+          "Seaweed Forest"
+        ],
+        [
+          "9:14",
+          "Goodbye"
+        ]
+      ],
+      "episode_number": 2,
+      "series_length": 2
+    },
+    {
       "series_title": "Bini's Real Ocean",
       "title": "Sea Anemone: Nature's Colorful Waves",
       "narrator": "Tula",
