@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Sea Anemone: Nature's Colorful Waves",
+      "narrator": "Tula",
+      "creature": "sea anemone",
+      "language": "en",
+      "learning_objective": "Look at the sea anemone! It waves its colorful tentacles gently in the water. Sea anemones have beautiful tentacles that help them catch food and wave in the water.",
+      "search_hook": "why do sea anemones wave their tentacles",
+      "footage_ids": [
+        "pixabay:182908",
+        "pixabay:265144",
+        "pixabay:265145",
+        "pixabay:273756"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261114-090011/episode.mp4",
+      "published_at": "2026-11-14T09:00:14.283431Z",
+      "episode_number": 225,
+      "series_length": 225
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Starfish: The Amazing Arm Walkers",
       "narrator": "Bini",
       "creature": "starfish",
