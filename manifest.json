@@ -1,6 +1,25 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Real Ocean",
+      "title": "Seals: Amazing Underwater Acrobatics",
+      "narrator": "Ollo",
+      "creature": "seal",
+      "language": "en",
+      "learning_objective": "Look at those seals swimming smoothly in the water! Seals can dive underwater and hold their breath for a long time!",
+      "search_hook": "how do seals dive underwater",
+      "footage_ids": [
+        "pexels:16913218",
+        "pexels:36076662",
+        "pexels:36084294",
+        "pixabay:284575"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261115-092231/episode.mp4",
+      "published_at": "2026-11-15T09:22:33.689851Z",
+      "episode_number": 226,
+      "series_length": 226
+    },
+    {
       "series_title": "Bini's Ocean Discovery",
       "title": "Bini's Ocean Discovery: From Rocky Shores to Glowing Night Sea",
       "narrator": "Bini & friends",
