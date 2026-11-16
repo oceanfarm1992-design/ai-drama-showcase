@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Stingray: The Gentle Glide of the Ocean",
+      "narrator": "Dodo",
+      "creature": "stingray",
+      "language": "en",
+      "learning_objective": "Wow! Look at that stingray swimming gracefully over the sandy ocean floor! Stingrays are amazing swimmers, moving through the water like big, smooth birds!",
+      "search_hook": "how do stingrays move through the water",
+      "footage_ids": [
+        "pexels:33873173",
+        "pexels:33873174",
+        "pexels:39608305",
+        "pexels:6205988"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261116-093914/episode.mp4",
+      "published_at": "2026-11-16T09:39:17.149843Z",
+      "episode_number": 227,
+      "series_length": 227
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seals: Amazing Underwater Acrobatics",
       "narrator": "Ollo",
       "creature": "seal",
