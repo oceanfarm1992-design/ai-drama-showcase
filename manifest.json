@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Penguins: The Sliding Superstars",
+      "narrator": "Pipi",
+      "creature": "penguin",
+      "language": "en",
+      "learning_objective": "Look at the penguins! They are exploring their home! Penguins love sliding on ice!",
+      "search_hook": "how do penguins slide on ice",
+      "footage_ids": [
+        "pexels:34660141",
+        "pexels:35279584",
+        "pexels:37095285",
+        "pixabay:94458"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261117-104352/episode.mp4",
+      "published_at": "2026-11-17T10:43:55.992243Z",
+      "episode_number": 228,
+      "series_length": 228
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Stingray: The Gentle Glide of the Ocean",
       "narrator": "Dodo",
       "creature": "stingray",
