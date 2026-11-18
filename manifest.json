@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Crabs: Amazing Sand Diggers",
+      "narrator": "Bini",
+      "creature": "crab",
+      "language": "en",
+      "learning_objective": "Look at that crab! It's resting on the sandy ocean floor. Crabs use their claws to dig in the sand, creating little homes beneath the surface!",
+      "search_hook": "how do crabs dig in the sand",
+      "footage_ids": [
+        "pexels:34757842",
+        "pexels:36852904",
+        "pexels:5507055",
+        "pixabay:78535"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261118-100939/episode.mp4",
+      "published_at": "2026-11-18T10:09:42.361809Z",
+      "episode_number": 229,
+      "series_length": 229
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Penguins: The Sliding Superstars",
       "narrator": "Pipi",
       "creature": "penguin",
