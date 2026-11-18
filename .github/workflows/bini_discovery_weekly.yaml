@@ -24,7 +24,7 @@ concurrency:
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
-    # ~40 verified clips + ~14,000 rendered frames; normally well under an hour.
+    # ~40 verified clips, ~14,000 frames drawn in two layouts: ~75 min.
     timeout-minutes: 180
     steps:
       - uses: actions/checkout@v5
@@ -82,7 +82,7 @@ jobs:
         run: |
           python bini_discovery_episode.py discovery.mp4
 
-      - name: Publish (GitHub Release + manifest commit + TikTok/Facebook via Buffer)
+      - name: Publish (GitHub Release + manifest commit + TikTok portrait, Facebook/YouTube landscape)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
@@ -95,6 +95,8 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: bini-ocean-discovery
-          path: discovery.mp4
+          path: |
+            discovery.mp4
+            discovery_wide.mp4
           if-no-files-found: ignore
           retention-days: 7

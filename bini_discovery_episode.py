@@ -1,4 +1,5 @@
-"""Weekly long-form "Bini's Ocean Discovery" (~8-10 min) for TikTok + Facebook.
+"""Weekly long-form "Bini's Ocean Discovery" (~8-10 min): a portrait cut for
+TikTok and a landscape cut for Facebook + YouTube, sharing one soundtrack.
 
 Bini opens over real ocean footage, then a friend guides each habitat
 chapter (beach, rock pools, mangroves, seagrass, coral reef, polar seas...),
@@ -10,6 +11,7 @@ shorts do, so every segment is encoded to its own file as soon as it's
 rendered and the files are joined losslessly at the end.
 
 Run: python bini_discovery_episode.py out.mp4 ["Habitat A,Habitat B"]
+(writes out.mp4 in portrait and out_wide.mp4 in landscape)
 """
 import datetime, json, math, os, pathlib, random, subprocess, sys, urllib.request, wave
 import numpy as np
@@ -27,6 +29,7 @@ _MANIFEST_URL = "https://raw.githubusercontent.com/oceanfarm1992-design/ai-drama
 _MIN_SEC, _TARGET_SEC, _MAX_SEC = 480.0, 555.0, 590.0
 _PLANNED_CHAPTERS = 8         # ~1:45 each; the run stops at ~9:15, so spares cover skipped habitats
 _MIN_CHAPTER_SEGMENTS = 3     # fewer verified clips than this: skip the habitat
+_MIN_HABITATS = 3             # fewer habitats than this: not a real journey, do not publish
 _CARD_SEC, _END_CARD_SEC = 2.5, 3.0
 _MUSIC_GAIN = 0.12
 _HARD_CLIP_ENTRIES = 40       # clips in the newest manifest entries (any series) are never reused
@@ -34,6 +37,10 @@ _SOFT_CLIP_ENTRIES = 150      # older ones only if nothing fresher passes
 _GUIDES = ["tula", "ollo", "dodo", "pipi", "bini"]
 # ~2 Mbps cap keeps a 10-minute 720p file around 150 MB for Buffer to fetch.
 _X264 = ["-crf", "27", "-maxrate", "2000k", "-bufsize", "4000k"]
+_LAYOUTS = ("portrait", "landscape")
+# Which cut each platform gets: TikTok is vertical-first; long viewing on
+# Facebook/YouTube happens on tablets and TVs, held sideways.
+_PLATFORM_CUT = {"tiktok": "portrait", "facebook": "landscape", "youtube": "landscape"}
 
 
 def _history():
@@ -78,11 +85,13 @@ def _fmt(sec):
 
 
 class _Timeline:
-    """Appends rendered pieces: each piece's video goes straight to disk,
-    its audio (int16 stereo) is kept, padded/trimmed to the frame count."""
+    """Appends rendered pieces: each piece's video (one per layout) goes
+    straight to disk; its audio (int16 stereo, shared by both layouts) is
+    kept, padded/trimmed to the frame count."""
 
     def __init__(self):
-        self.parts, self.audio, self.frames = [], [], 0
+        self.parts = {name: [] for name in _LAYOUTS}
+        self.audio, self.frames = [], 0
         self.speech_sec, self.speech_words = 0.0, 0
 
     @property
@@ -93,24 +102,23 @@ class _Timeline:
         return self.speech_sec / self.speech_words if self.speech_words else 1 / 2.3
 
     def add(self, frames, wav=None, words=0):
-        path = str(sr.WORK / f"disc_part{len(self.parts):03d}.mp4")
-        ImageSequenceClip(frames, fps=sr.FPS).write_videofile(
-            path, fps=sr.FPS, codec="libx264", audio=False, preset="medium",
-            ffmpeg_params=_X264, logger=None)
-        n = _samples(len(frames))
+        """`frames`: {layout name: frames}, all the same length."""
+        count = len(frames[_LAYOUTS[0]])
+        for name in _LAYOUTS:
+            path = str(sr.WORK / f"disc_{name}{len(self.audio):03d}.mp4")
+            ImageSequenceClip(frames[name], fps=sr.FPS).write_videofile(
+                path, fps=sr.FPS, codec="libx264", audio=False, preset="medium",
+                ffmpeg_params=_X264, logger=None)
+            self.parts[name].append(path)
+        n = _samples(count)
         self.audio.append(sr._wav_samples(wav, n) if wav else np.zeros((n, 2), dtype=np.int16))
-        self.parts.append(path)
-        self.frames += len(frames)
+        self.frames += count
         if words:
-            self.speech_sec += len(frames) / sr.FPS
+            self.speech_sec += count / sr.FPS
             self.speech_words += words
 
-    def write(self, out_path):
-        listing = sr.WORK / "disc_parts.txt"
-        listing.write_text("".join(f"file '{pathlib.Path(p).as_posix()}'\n" for p in self.parts), encoding="utf-8")
-        video = str(sr.WORK / "disc_video.mp4")
-        subprocess.run([sr.FF, "-y", "-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", video],
-                       check=True, capture_output=True)
+    def write(self, outs):
+        """`outs`: {layout name: output mp4 path}."""
         audio = np.vstack(self.audio).astype(np.float32)
         bed = _music_bed(len(audio))
         if bed is not None:
@@ -119,8 +127,15 @@ class _Timeline:
         with wave.open(wav_path, "wb") as w:
             w.setnchannels(2); w.setsampwidth(2); w.setframerate(sr.SR)
             w.writeframes(np.clip(audio, -32768, 32767).astype(np.int16).tobytes())
-        subprocess.run([sr.FF, "-y", "-i", video, "-i", wav_path, "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
-                        "-shortest", "-movflags", "+faststart", out_path], check=True, capture_output=True)
+        for name, out_path in outs.items():
+            listing = sr.WORK / f"disc_{name}.txt"
+            listing.write_text("".join(f"file '{pathlib.Path(p).as_posix()}'\n" for p in self.parts[name]),
+                               encoding="utf-8")
+            video = str(sr.WORK / f"disc_{name}_video.mp4")
+            subprocess.run([sr.FF, "-y", "-f", "concat", "-safe", "0", "-i", str(listing), "-c", "copy", video],
+                           check=True, capture_output=True)
+            subprocess.run([sr.FF, "-y", "-i", video, "-i", wav_path, "-c:v", "copy", "-c:a", "aac", "-b:a", "128k",
+                            "-shortest", "-movflags", "+faststart", out_path], check=True, capture_output=True)
 
 
 def _music_bed(n_samples):
@@ -136,23 +151,38 @@ def _music_bed(n_samples):
 
 
 def _clean(tag, keep=None):
-    """Delete a segment's downloaded/rejected clips (dozens per episode)."""
+    """Delete a segment's downloaded/rejected clips (dozens per episode),
+    except the chosen clip's two cuts."""
+    kept = {keep, brf.wide_path(keep)} if keep else set()
     for f in sr.WORK.glob(f"{tag}_*"):
-        if keep is None or str(f) != keep:
+        if str(f) not in kept:
             f.unlink(missing_ok=True)
+
+
+def _cuts(path):
+    return {"portrait": path, "landscape": brf.wide_path(path)}
+
+
+def _drop(path):
+    for cut in _cuts(path).values():
+        pathlib.Path(cut).unlink(missing_ok=True)
 
 
 def _fetch(seg, tag, used, soft):
     got = brf.fetch_footage(seg["search_query"], tag, sr.WORK, sr.FF, used,
-                            subject=seg["subject"], avoid=soft, kind=seg["kind"])
+                            subject=seg["subject"], avoid=soft, kind=seg["kind"], wide=True)
     _clean(tag, keep=got[0] if got else None)
     return got
 
 
 def _render(tl, text, clip, tag, character, hook_text=None):
-    frames, wav = brr.render_real_scene(text, clip, tag, character, hook_text=hook_text)
+    frames, wav = brr.render_real_scenes(text, _cuts(clip), tag, character, hook_text=hook_text)
     tl.add(frames, wav, _words(text))
     del frames
+
+
+def _card(title, sub, dur, character="bini"):
+    return {name: brr.render_card(title, sub, dur, character, brr.LAYOUTS[name]) for name in _LAYOUTS}
 
 
 def _fit(found, texts, room_sec, sec_per_word):
@@ -161,7 +191,7 @@ def _fit(found, texts, room_sec, sec_per_word):
     pairs = list(zip(found, texts))
     while (len(pairs) > _MIN_CHAPTER_SEGMENTS
            and _CARD_SEC + sum(_words(t) for _, t in pairs) * sec_per_word > room_sec):
-        pathlib.Path(pairs[-2][0][1]).unlink(missing_ok=True)
+        _drop(pairs[-2][0][1])
         del pairs[-2]
     return pairs
 
@@ -184,15 +214,14 @@ def _shoot_chapter(tl, n, habitat, guide, used, soft, budget_sec):
     if len(found) < _MIN_CHAPTER_SEGMENTS:
         print(f"  {habitat}: only {len(found)} verified clip(s), skipping this habitat")
         for _, path, _ in found:
-            pathlib.Path(path).unlink(missing_ok=True)
+            _drop(path)
         return False
     texts = bds.match_chapter(habitat, guide, [(seg, shows) for seg, _, shows in found])
     pairs = _fit(found, texts, budget_sec - tl.seconds, tl.sec_per_word())
-    card, _ = sr._card(habitat, f"with {guide.title()}", dur=_CARD_SEC, character=guide)
-    tl.add(card)
+    tl.add(_card(habitat, f"with {guide.title()}", _CARD_SEC, guide))
     for i, ((_, path, _), text) in enumerate(pairs):
         _render(tl, text, path, f"c{n}s{i}", guide)
-        pathlib.Path(path).unlink(missing_ok=True)
+        _drop(path)
     print(f"  {habitat}: {len(pairs)} segments, total now {_fmt(tl.seconds)}")
     return True
 
@@ -231,25 +260,27 @@ def build_discovery(out_path, forced_habitats=None):
             chapters.append((start, habitat))
 
     shown = [h for _, h in chapters[1:]]
-    if len(shown) < 3:
+    if len(shown) < _MIN_HABITATS:
         raise SystemExit(f"Only {len(shown)} habitat(s) had verified footage — not publishing.")
     outro_clip = _bookend({"search_query": "ocean sunset", "subject": "ocean waves", "kind": "place"},
                           "outro", used, soft, fallback=intro_clip)
     chapters.append((tl.seconds, "Goodbye"))
     _render(tl, frame["outro"], outro_clip, "outro", "bini")
-    end, _ = sr._card("Bini's Ocean Discovery", "A new journey every week!", dur=_END_CARD_SEC)
-    tl.add(end)
+    tl.add(_card("Bini's Ocean Discovery", "A new journey every week!", _END_CARD_SEC))
 
     if tl.seconds < _MIN_SEC:
         raise SystemExit(f"Episode is only {_fmt(tl.seconds)} — under the {_fmt(_MIN_SEC)} minimum, not publishing.")
-    tl.write(out_path)
-    print(f"wrote {out_path} ({_fmt(tl.seconds)}, {len(shown)} habitats)")
+    wide_out = str(pathlib.Path(out_path).with_name(pathlib.Path(out_path).stem + "_wide.mp4"))
+    tl.write({"portrait": out_path, "landscape": wide_out})
+    print(f"wrote {out_path} + {wide_out} ({_fmt(tl.seconds)}, {len(shown)} habitats)")
 
     meta = {"title": frame["title"], "series_title": SERIES_TITLE, "character": "bini",
             "narrator": "Bini & friends", "search_hook": hook, "creature": "",
             "habitats": shown, "chapters": [[_fmt(t), name] for t, name in chapters],
             "footage_ids": sorted(used - hard), "learning_objective": frame["intro"],
-            "platforms": ["tiktok", "facebook"], "facebook_type": "post"}
+            "platforms": list(_PLATFORM_CUT), "facebook_type": "post",
+            "extra_videos": {"landscape": pathlib.Path(wide_out).name},
+            "platform_video": _PLATFORM_CUT}
     pathlib.Path("episode_meta.json").write_text(json.dumps(meta, ensure_ascii=False), encoding="utf-8")
     return out_path
 
