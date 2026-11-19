@@ -2,6 +2,25 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Seahorses: The Curious Swimmers",
+      "narrator": "Tula",
+      "creature": "seahorse",
+      "language": "en",
+      "learning_objective": "The seahorse swims gracefully in its underwater habitat. Seahorses have tiny fins that help them move gently through the water!",
+      "search_hook": "how do seahorses swim so uniquely",
+      "footage_ids": [
+        "pexels:34448747",
+        "pexels:38583389",
+        "pexels:40470273",
+        "pixabay:310639"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261119-102234/episode.mp4",
+      "published_at": "2026-11-19T10:22:37.458573Z",
+      "episode_number": 230,
+      "series_length": 230
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Crabs: Amazing Sand Diggers",
       "narrator": "Bini",
       "creature": "crab",
