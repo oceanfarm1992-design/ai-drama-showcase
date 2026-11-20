@@ -2,6 +2,24 @@
   "episodes": [
     {
       "series_title": "Bini's Real Ocean",
+      "title": "Shrimp: The Tiny Cleaners of the Sea",
+      "narrator": "Ollo",
+      "creature": "shrimp",
+      "language": "en",
+      "learning_objective": "Look at this little shrimp peeking out from its burrow! They help keep the water clean and healthy!",
+      "search_hook": "how do shrimp clean the ocean",
+      "footage_ids": [
+        "pexels:8856782",
+        "pixabay:332243",
+        "pixabay:5801"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261120-100338/episode.mp4",
+      "published_at": "2026-11-20T10:03:40.183349Z",
+      "episode_number": 231,
+      "series_length": 231
+    },
+    {
+      "series_title": "Bini's Real Ocean",
       "title": "Seahorses: The Curious Swimmers",
       "narrator": "Tula",
       "creature": "seahorse",
