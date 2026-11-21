@@ -1,6 +1,101 @@
 {
   "episodes": [
     {
+      "series_title": "Bini's Ocean Discovery",
+      "title": "Bini's Ocean Discovery: From Sandy Beach to Icy Polar Seas",
+      "narrator": "Bini & friends",
+      "creature": "",
+      "language": "en",
+      "learning_objective": "Hello, little explorers! I'm Bini the seahorse. Today, we're going on an exciting adventure to explore sandy beaches and icy polar seas. Let's look closely at all the amazing creatures we find along the way!",
+      "search_hook": "what animals live in icy polar seas",
+      "footage_ids": [
+        "pexels:18558569",
+        "pexels:26774656",
+        "pexels:27215647",
+        "pexels:28859274",
+        "pexels:32160197",
+        "pexels:32224000",
+        "pexels:32733926",
+        "pexels:32779470",
+        "pexels:34086299",
+        "pexels:34128388",
+        "pexels:34380685",
+        "pexels:34632799",
+        "pexels:34633003",
+        "pexels:35281730",
+        "pexels:35308280",
+        "pexels:35566063",
+        "pexels:35615606",
+        "pexels:35970925",
+        "pexels:36076664",
+        "pexels:36213572",
+        "pexels:36851620",
+        "pexels:36895916",
+        "pexels:37949924",
+        "pexels:38438837",
+        "pexels:38450638",
+        "pexels:38886024",
+        "pexels:39177075",
+        "pexels:39501364",
+        "pexels:41167057",
+        "pixabay:120394",
+        "pixabay:121463",
+        "pixabay:128420",
+        "pixabay:136494",
+        "pixabay:206772",
+        "pixabay:243732",
+        "pixabay:284837",
+        "pixabay:2944",
+        "pixabay:329241",
+        "pixabay:329385",
+        "pixabay:360803",
+        "pixabay:368891",
+        "pixabay:64744",
+        "pixabay:74154"
+      ],
+      "video_url": "https://github.com/oceanfarm1992-design/ai-drama-showcase/releases/download/seabini-20261121-134654/discovery.mp4",
+      "published_at": "2026-11-21T13:47:00.852384Z",
+      "habitats": [
+        "Sandy Beach",
+        "Mangrove Forest",
+        "Lagoon",
+        "Shipwreck Reef",
+        "Seaweed Forest"
+      ],
+      "chapters": [
+        [
+          "0:00",
+          "Welcome"
+        ],
+        [
+          "0:16",
+          "Sandy Beach"
+        ],
+        [
+          "1:32",
+          "Mangrove Forest"
+        ],
+        [
+          "3:57",
+          "Lagoon"
+        ],
+        [
+          "5:59",
+          "Shipwreck Reef"
+        ],
+        [
+          "8:16",
+          "Seaweed Forest"
+        ],
+        [
+          "9:10",
+          "Goodbye"
+        ]
+      ],
+      "episode_number": 3,
+      "series_length": 3
+    },
+    {
       "series_title": "Bini's Real Ocean",
       "title": "Jellyfish: The Gentle Pulses of the Ocean",
       "narrator": "Dodo",
